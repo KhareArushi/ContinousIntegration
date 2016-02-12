@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CIModelStoreContainer" CdmEntityContainer="CIEntities">
+    <EntitySetMapping Name="T_Projects">
+      <EntityTypeMapping TypeName="CIModel.T_Projects">
+        <MappingFragment StoreEntitySet="T_Projects">
+          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
+          <ScalarProperty Name="C_ProjectName" ColumnName="C_ProjectName" />
+          <ScalarProperty Name="C_ProjectDescription" ColumnName="C_ProjectDescription" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_ReleaseMappings">
+      <EntityTypeMapping TypeName="CIModel.T_ReleaseMappings">
+        <MappingFragment StoreEntitySet="T_ReleaseMappings">
+          <ScalarProperty Name="C_MapID" ColumnName="C_MapID" />
+          <ScalarProperty Name="C_SourceReleaseID" ColumnName="C_SourceReleaseID" />
+          <ScalarProperty Name="C_InclusiveReleaseID" ColumnName="C_InclusiveReleaseID" />
+          <ScalarProperty Name="C_InclusiveSubReleaseID" ColumnName="C_InclusiveSubReleaseID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Releases">
+      <EntityTypeMapping TypeName="CIModel.T_Releases">
+        <MappingFragment StoreEntitySet="T_Releases">
+          <ScalarProperty Name="C_ReleaseID" ColumnName="C_ReleaseID" />
+          <ScalarProperty Name="C_StreamID" ColumnName="C_StreamID" />
+          <ScalarProperty Name="C_ReleaseName" ColumnName="C_ReleaseName" />
+          <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Status">
+      <EntityTypeMapping TypeName="CIModel.T_Status">
+        <MappingFragment StoreEntitySet="T_Status">
+          <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+          <ScalarProperty Name="C_StatusName" ColumnName="C_StatusName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Streams">
+      <EntityTypeMapping TypeName="CIModel.T_Streams">
+        <MappingFragment StoreEntitySet="T_Streams">
+          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
+          <ScalarProperty Name="C_StreamID" ColumnName="C_StreamID" />
+          <ScalarProperty Name="C_StreamName" ColumnName="C_StreamName" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_SubReleases">
+      <EntityTypeMapping TypeName="CIModel.T_SubReleases">
+        <MappingFragment StoreEntitySet="T_SubReleases">
+          <ScalarProperty Name="C_SubReleaseID" ColumnName="C_SubReleaseID" />
+          <ScalarProperty Name="C_ReleaseID" ColumnName="C_ReleaseID" />
+          <ScalarProperty Name="C_SubReleaseName" ColumnName="C_SubReleaseName" />
+          <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

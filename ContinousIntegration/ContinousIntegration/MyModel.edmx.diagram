@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0beed3f51df040aba252447a3a85f5e4" Name="Diagram1">
+        <EntityTypeShape EntityType="CIModel.T_Projects" Width="1.5" PointX="1.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_ReleaseMappings" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Releases" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Status" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Streams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_SubReleases" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="CIModel.FK_T_Streams_T_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_Releases" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_Releases1" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_SubReleases" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_Releases_T_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_Releases_T_Streams" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_SubReleases_T_Releases" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_SubReleases_T_Status" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

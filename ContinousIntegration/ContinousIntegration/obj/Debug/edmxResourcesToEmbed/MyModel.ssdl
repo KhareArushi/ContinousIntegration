@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="T_Projects">
+    <Key>
+      <PropertyRef Name="C_ProjectID" />
+    </Key>
+    <Property Name="C_ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_ProjectName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_ProjectDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_ReleaseMappings">
+    <Key>
+      <PropertyRef Name="C_MapID" />
+    </Key>
+    <Property Name="C_MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_SourceReleaseID" Type="int" Nullable="false" />
+    <Property Name="C_InclusiveReleaseID" Type="int" Nullable="false" />
+    <Property Name="C_InclusiveSubReleaseID" Type="int" Nullable="false" />
+    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_Releases">
+    <Key>
+      <PropertyRef Name="C_ReleaseID" />
+    </Key>
+    <Property Name="C_ReleaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_StreamID" Type="int" Nullable="false" />
+    <Property Name="C_ReleaseName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="C_StatusID" Type="int" Nullable="false" />
+    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_Status">
+    <Key>
+      <PropertyRef Name="C_StatusID" />
+    </Key>
+    <Property Name="C_StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_StatusName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_Streams">
+    <Key>
+      <PropertyRef Name="C_StreamID" />
+    </Key>
+    <Property Name="C_ProjectID" Type="int" Nullable="false" />
+    <Property Name="C_StreamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_StreamName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_SubReleases">
+    <Key>
+      <PropertyRef Name="C_SubReleaseID" />
+    </Key>
+    <Property Name="C_SubReleaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_ReleaseID" Type="int" Nullable="false" />
+    <Property Name="C_SubReleaseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_StatusID" Type="int" Nullable="false" />
+    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_T_ReleaseMappings_T_Releases">
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="1" />
+    <End Role="T_ReleaseMappings" Type="Self.T_ReleaseMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Releases">
+        <PropertyRef Name="C_ReleaseID" />
+      </Principal>
+      <Dependent Role="T_ReleaseMappings">
+        <PropertyRef Name="C_InclusiveReleaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_ReleaseMappings_T_Releases1">
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="1" />
+    <End Role="T_ReleaseMappings" Type="Self.T_ReleaseMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Releases">
+        <PropertyRef Name="C_ReleaseID" />
+      </Principal>
+      <Dependent Role="T_ReleaseMappings">
+        <PropertyRef Name="C_SourceReleaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_ReleaseMappings_T_SubReleases">
+    <End Role="T_SubReleases" Type="Self.T_SubReleases" Multiplicity="1" />
+    <End Role="T_ReleaseMappings" Type="Self.T_ReleaseMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_SubReleases">
+        <PropertyRef Name="C_SubReleaseID" />
+      </Principal>
+      <Dependent Role="T_ReleaseMappings">
+        <PropertyRef Name="C_InclusiveSubReleaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_Releases_T_Status">
+    <End Role="T_Status" Type="Self.T_Status" Multiplicity="1" />
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Status">
+        <PropertyRef Name="C_StatusID" />
+      </Principal>
+      <Dependent Role="T_Releases">
+        <PropertyRef Name="C_StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_Releases_T_Streams">
+    <End Role="T_Streams" Type="Self.T_Streams" Multiplicity="1" />
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Streams">
+        <PropertyRef Name="C_StreamID" />
+      </Principal>
+      <Dependent Role="T_Releases">
+        <PropertyRef Name="C_StreamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_Streams_T_Projects">
+    <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="1" />
+    <End Role="T_Streams" Type="Self.T_Streams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Projects">
+        <PropertyRef Name="C_ProjectID" />
+      </Principal>
+      <Dependent Role="T_Streams">
+        <PropertyRef Name="C_ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_SubReleases_T_Releases">
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="1" />
+    <End Role="T_SubReleases" Type="Self.T_SubReleases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Releases">
+        <PropertyRef Name="C_ReleaseID" />
+      </Principal>
+      <Dependent Role="T_SubReleases">
+        <PropertyRef Name="C_ReleaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_T_SubReleases_T_Status">
+    <End Role="T_Status" Type="Self.T_Status" Multiplicity="1" />
+    <End Role="T_SubReleases" Type="Self.T_SubReleases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Status">
+        <PropertyRef Name="C_StatusID" />
+      </Principal>
+      <Dependent Role="T_SubReleases">
+        <PropertyRef Name="C_StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CIModelStoreContainer">
+    <EntitySet Name="T_Projects" EntityType="Self.T_Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_ReleaseMappings" EntityType="Self.T_ReleaseMappings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_Releases" EntityType="Self.T_Releases" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_Status" EntityType="Self.T_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_Streams" EntityType="Self.T_Streams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_SubReleases" EntityType="Self.T_SubReleases" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_T_ReleaseMappings_T_Releases" Association="Self.FK_T_ReleaseMappings_T_Releases">
+      <End Role="T_Releases" EntitySet="T_Releases" />
+      <End Role="T_ReleaseMappings" EntitySet="T_ReleaseMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_ReleaseMappings_T_Releases1" Association="Self.FK_T_ReleaseMappings_T_Releases1">
+      <End Role="T_Releases" EntitySet="T_Releases" />
+      <End Role="T_ReleaseMappings" EntitySet="T_ReleaseMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_ReleaseMappings_T_SubReleases" Association="Self.FK_T_ReleaseMappings_T_SubReleases">
+      <End Role="T_SubReleases" EntitySet="T_SubReleases" />
+      <End Role="T_ReleaseMappings" EntitySet="T_ReleaseMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_Releases_T_Status" Association="Self.FK_T_Releases_T_Status">
+      <End Role="T_Status" EntitySet="T_Status" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_Releases_T_Streams" Association="Self.FK_T_Releases_T_Streams">
+      <End Role="T_Streams" EntitySet="T_Streams" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_Streams_T_Projects" Association="Self.FK_T_Streams_T_Projects">
+      <End Role="T_Projects" EntitySet="T_Projects" />
+      <End Role="T_Streams" EntitySet="T_Streams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_SubReleases_T_Releases" Association="Self.FK_T_SubReleases_T_Releases">
+      <End Role="T_Releases" EntitySet="T_Releases" />
+      <End Role="T_SubReleases" EntitySet="T_SubReleases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_T_SubReleases_T_Status" Association="Self.FK_T_SubReleases_T_Status">
+      <End Role="T_Status" EntitySet="T_Status" />
+      <End Role="T_SubReleases" EntitySet="T_SubReleases" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
