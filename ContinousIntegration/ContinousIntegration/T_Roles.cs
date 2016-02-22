@@ -12,20 +12,17 @@ namespace ContinousIntegration
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Projects
+    public partial class T_Roles
     {
-        public T_Projects()
+        public T_Roles()
         {
-            this.T_Streams = new HashSet<T_Streams>();
-            this.T_UserProjectMappings = new HashSet<T_UserProjectMappings>();
+            this.T_UserRoleMappings = new HashSet<T_UserRoleMappings>();
         }
     
-        public int C_ProjectID { get; set; }
-        public string C_ProjectName { get; set; }
-        public string C_ProjectDescription { get; set; }
+        public int C_RoleID { get; set; }
+        public string C_RoleName { get; set; }
         public System.DateTime C_LastModified { get; set; }
     
-        public virtual ICollection<T_Streams> T_Streams { get; set; }
-        public virtual ICollection<T_UserProjectMappings> T_UserProjectMappings { get; set; }
+        public virtual ICollection<T_UserRoleMappings> T_UserRoleMappings { get; set; }
     }
 }

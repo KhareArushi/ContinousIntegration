@@ -45,6 +45,7 @@
     }
 </style>
 <div id:"content">
+    @*@{WebGrid grid = new WebGrid(Model,selectionFieldName:"Selected Row"*@
     @grid.GetHtml(
     tableStyle: "Webgrid-table",
     headerStyle: "webgrid-header",
@@ -54,7 +55,7 @@
     columns: grid.Columns(
     grid.Column("C_ProjectID", "Project Id"),
     grid.Column("C_ProjectName", "Project Name"),
-    grid.Column("", format: @<a href="View1.cshtml">Click Me</a>),
-                    grid.Column("C_ProjectDescription", "Project Description"),
-                    grid.Column("C_LastModified", "Last Modified")))
+    grid.Column("", format: @<text>@Html.ActionLink("Click me", "GetTreeView", new { id = item.C_ProjectID }) </text>),
+            grid.Column("C_ProjectDescription", "Project Description"),
+            grid.Column("C_LastModified", "Last Modified")))
 </div>

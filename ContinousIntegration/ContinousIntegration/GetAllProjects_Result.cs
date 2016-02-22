@@ -10,22 +10,12 @@
 namespace ContinousIntegration
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class T_Projects
+    public partial class GetAllProjects_Result
     {
-        public T_Projects()
-        {
-            this.T_Streams = new HashSet<T_Streams>();
-            this.T_UserProjectMappings = new HashSet<T_UserProjectMappings>();
-        }
-    
         public int C_ProjectID { get; set; }
         public string C_ProjectName { get; set; }
         public string C_ProjectDescription { get; set; }
         public System.DateTime C_LastModified { get; set; }
-    
-        public virtual ICollection<T_Streams> T_Streams { get; set; }
-        public virtual ICollection<T_UserProjectMappings> T_UserProjectMappings { get; set; }
     }
 }

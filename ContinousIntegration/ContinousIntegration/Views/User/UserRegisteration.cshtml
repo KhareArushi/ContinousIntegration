@@ -1,0 +1,73 @@
+﻿@model ContinousIntegration.Models.URegisteration
+
+@{
+    ViewBag.Title = "UserRegisteration";
+}
+
+<div class="container">
+   
+    <form>
+        <div class="row marTop15">
+            <div class="col-sm-12">
+                <h2 class="form-signin-heading">Sign Up for Your New Account</h2>
+            </div>
+
+        </div>
+        <div class="row marTop15">
+            <div class="col-sm-4">
+                <label for="inputFname" class="sr-only">User First Name</label>
+                <input type="text" id="inputFName" class="form-control" placeholder="User First Name" required autofocus>
+            </div>
+            <div class="col-sm-4">
+                <label for="inputLname" class="sr-only">User Last Name</label>
+                <input type="text" id="inputLName" class="form-control" placeholder="User Last Name" required>
+            </div>
+        </div>
+        <div class="row marTop15">
+            <div class="col-sm-4">
+                <label for="inputPassword" class="sr-only">User Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="User Password" required>
+            </div>
+            <div class="col-sm-4">
+                <label for="inputEmail" class="sr-only">User Email-ID</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="User Email-ID" required>
+            </div>
+        </div>
+
+
+
+
+        <div class="row marTop15">
+            <div class="col-sm-4">
+                <div class="checkbox marTop15">
+                    <label>
+                        <label><b><u>Roles</u></b></label><br />
+                        <input type="checkbox" value="Super User" />Super User<br />
+                        <input type="checkbox" value="Program Manager">Program Manager <br />
+                        <input type="checkbox" value="Config Admin">Config Admin <br />
+                        <input type="checkbox" value="System Admin">System Admin<br />
+                        <input type="checkbox" value="Project User">Project User<br />
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="checkbox marTop15">
+                    <label>
+                        <label><b><u>Projects</u></b></label><br />
+                        <input type="checkbox" value="Progresso"> Progresso<br />
+                        <input type="checkbox" value="E5-H5"> E5-H5<br />
+                        <input type="checkbox" value="Continuous Integration"> Continuous Integration<br />
+                        <input type="checkbox" value="Candid"> Candid<br />
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <button class="btn  btn-primary" type="submit">Create User</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <button class="btn  btn-primary" type="reset">Reset Details</button>
+    </form>
+
+</div>

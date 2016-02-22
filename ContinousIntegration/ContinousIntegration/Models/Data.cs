@@ -51,5 +51,16 @@ namespace ContinousIntegration.Models
                 return q.ToList();
             }
         }
+
+        public List<T_Users> GetallUsers()
+        {
+            using (var db = new CIEntities())
+            {
+                var q = from data in db.T_Users select data;
+                return q.ToList();
+            }
+        }
+
+
     }
 }

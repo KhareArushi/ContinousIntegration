@@ -20,19 +20,22 @@
 
                     @*Loops*@
 
-                    @foreach (var item in Model.Project)
+                    @foreach (var item in Model.Project) 
                     {
                         <th>@Html.DisplayFor(modelItem => item.C_StatusName)</th>
+                     
                     }
                 </tr>
 
                 @foreach (var item in Model.ProjectList)
                 {
-                    <tr data-tt-id="@item.C_ProjectID">
+                    @*<tr data-tt-id="@item.C_ProjectID">
+                        @Html.Label("", "Project Details Of")
                         <td>@Html.DisplayFor(modelItem => item.C_ProjectName)</td>
-                    </tr>
+                       
+                    </tr>*@
 
-
+                    
                     foreach (var item1 in Model.Streams)
                     {
                         if (@item.C_ProjectID == @item1.C_ProjectID)

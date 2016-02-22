@@ -12,5 +12,7 @@ namespace ContinousIntegration.Models
         public List<T_Streams> Streams { get; set; }
         public List<T_Releases> Release { get; set; }
         public List<T_SubReleases> SubReleases { get; set; }
+        public List<T_Users> Users { get; set; }
+     
     }
 }
