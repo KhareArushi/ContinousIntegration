@@ -1,0 +1,84 @@
+﻿@model ContinousIntegration.Models.URegisteration
+
+@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { htmlAttributes = new { @class = "date" } }))
+{
+
+    @Html.ValidationSummary("",  new{@style= "color: red; font-family:PoorRichard"} )
+
+    <div class="container">
+
+        <form name="formctrl" id="form1">
+            <div class="row marTop15">
+                <div class="col-sm-12">
+                    <h2 class="form-signin-heading">Sign Up for Your New Account</h2>
+                </div>
+            </div>
+
+            <div class="row marTop15">
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.C_FirstName, "", new { @class = "form-control", placeholder = "First Name",id="firstname"})
+                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">
+                        @*@Html.ValidationMessageFor(model => model.C_FirstName)*@                 
+                </div>
+            </div>
+
+            <div class="row marTop15">
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.C_LastName, "", new { @class = "form-control", placeholder = "Last Name" ,id="lastname"})
+                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">
+                </div>
+            </div>
+
+            <div class="row marTop15">
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.C_EmailID, "abc", new { @class = "form-control", placeholder = "EmailID" ,id="emailid"})
+                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">                   
+                </div>
+            </div>
+
+            <div class="row marTop15">
+                <div class="col-sm-4">
+                    @Html.PasswordFor(model => model.C_Password, new { @class = "form-control", placeholder = "Password",id="password1"})
+                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">                   
+                </div>
+            </div>
+
+            <div class="row marTop15">
+                <div class="col-sm-4">
+                    @Html.PasswordFor(model => model.C_CnfPassword, new { @class = "form-control", placeholder = "ReEnter Password",id="password2"})
+                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">                   
+                </div>
+            </div>
+            <br />
+
+            <button class="btn  btn-primary"  type="submit" >Create User</button>
+            <button class="btn  btn-primary" id="reset">Reset Details</button>
+            
+            @*Script for autofocus*@ 
+            <script type="text/javascript">
+                $("#firstname").focus();
+            </script>
+
+       @*Script for reset*@
+            <script type="text/javascript">
+                $("#cancel").click(function ()
+                {
+                    debugger;
+                    //$('#form1')[0].reset();
+                    $("#firstname").val("");
+                    $("#lastname").val("");
+                    $("#emailid").val("");
+                    $("#password1").val("");
+                    $("#password2").val("");
+                });
+            </script>
+    </form>
+        </div>
+}
+
+
+
+

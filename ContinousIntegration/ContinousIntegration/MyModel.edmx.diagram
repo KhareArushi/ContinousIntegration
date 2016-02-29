@@ -4,29 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0beed3f51df040aba252447a3a85f5e4" Name="Diagram1">
-        <EntityTypeShape EntityType="CIModel.T_Projects" PointX="1.5" PointY="7.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_ReleaseMappings" PointX="5.25" PointY="3.5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Releases" PointX="3" PointY="3.375" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Status" PointX="0.75" PointY="4" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Streams" PointX="0.75" PointY="0.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_SubReleases" PointX="8.25" PointY="3.5" Width="1.5" IsExpanded="true" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_Streams_T_Projects" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_ReleaseMappings_T_Releases" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_ReleaseMappings_T_Releases1" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_ReleaseMappings_T_SubReleases" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_Releases_T_Status" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_Releases_T_Streams" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_SubReleases_T_Releases" />
-        <AssociationConnector ManuallyRouted="false" Association="CIModel.FK_T_SubReleases_T_Status" />
-        <EntityTypeShape EntityType="CIModel.T_Roles" Width="1.5" PointX="3.5" PointY="12.75" />
-        <EntityTypeShape EntityType="CIModel.T_UserProjectMappings" Width="1.5" PointX="6.75" PointY="8.5" />
-        <EntityTypeShape EntityType="CIModel.T_UserRoleMappings" Width="1.5" PointX="6.625" PointY="11.5" />
-        <EntityTypeShape EntityType="CIModel.T_Users" Width="1.5" PointX="2.125" PointY="10.125" />
-        <AssociationConnector Association="CIModel.FK_T_UserProjectMappings_T_Projects" />
-        <AssociationConnector Association="CIModel.FK_T_UserRoleMappings_T_Roles" />
-        <AssociationConnector Association="CIModel.FK_T_UserProjectMappings_T_Users" />
-        <AssociationConnector Association="CIModel.FK_T_UserRoleMappings_T_Users" />
+      <Diagram DiagramId="3c81b6fd059c4b16a382babe20d68420" Name="Diagram1">
+        <EntityTypeShape EntityType="CIModel.T_Projects" Width="1.5" PointX="1.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Registrations" Width="1.5" PointX="3.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_ReleaseMappings" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Releases" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Status" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_Streams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIModel.T_SubReleases" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="CIModel.FK_T_Streams_T_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_Releases" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_Releases1" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_SubReleases" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_Releases_T_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_Releases_T_Streams" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_SubReleases_T_Releases" ManuallyRouted="false" />
+        <AssociationConnector Association="CIModel.FK_T_SubReleases_T_Status" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CIModel.T_Users" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

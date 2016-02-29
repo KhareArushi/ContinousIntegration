@@ -61,6 +61,24 @@ namespace ContinousIntegration.Models
             }
         }
 
+        public void SaveDetails(URegisteration register)
+        {
+            using(var db=new CIEntities())
+            {
+                T_Registrations xyz = new T_Registrations();
+                xyz.C_FirstName = register.C_FirstName;
+                xyz.C_LastName = register.C_LastName;
+                xyz.C_EmailID = register.C_EmailID;
+                xyz.C_Password = register.C_Password;
+               // xyz.C_CnfPassword = register.C_CnfPassword;
+                db.T_Registrations.Add(xyz);
+                db.SaveChanges();
+
+            }
+
+
+        }
+
 
     }
 }

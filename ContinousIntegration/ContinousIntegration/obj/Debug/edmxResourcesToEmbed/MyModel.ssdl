@@ -5,9 +5,19 @@
       <PropertyRef Name="C_ProjectID" />
     </Key>
     <Property Name="C_ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_ProjectName" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="C_ProjectDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="C_ProjectName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="C_ProjectDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="C_LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_Registrations">
+    <Key>
+      <PropertyRef Name="C_RegisterID" />
+    </Key>
+    <Property Name="C_RegisterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="C_FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_EmailID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_Password" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="T_ReleaseMappings">
     <Key>
@@ -25,16 +35,8 @@
     </Key>
     <Property Name="C_ReleaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="C_StreamID" Type="int" Nullable="false" />
-    <Property Name="C_ReleaseName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="C_ReleaseName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="C_StatusID" Type="int" Nullable="false" />
-    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="T_Roles">
-    <Key>
-      <PropertyRef Name="C_RoleID" />
-    </Key>
-    <Property Name="C_RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_RoleName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="C_LastModified" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="T_Status">
@@ -42,7 +44,7 @@
       <PropertyRef Name="C_StatusID" />
     </Key>
     <Property Name="C_StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_StatusName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_StatusName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="T_Streams">
     <Key>
@@ -50,7 +52,7 @@
     </Key>
     <Property Name="C_ProjectID" Type="int" Nullable="false" />
     <Property Name="C_StreamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_StreamName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_StreamName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="C_LastModified" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="T_SubReleases">
@@ -59,26 +61,8 @@
     </Key>
     <Property Name="C_SubReleaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="C_ReleaseID" Type="int" Nullable="false" />
-    <Property Name="C_SubReleaseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_SubReleaseName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="C_StatusID" Type="int" Nullable="false" />
-    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="T_UserProjectMappings">
-    <Key>
-      <PropertyRef Name="C_MapID" />
-    </Key>
-    <Property Name="C_MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_UserID" Type="int" Nullable="false" />
-    <Property Name="C_ProjectID" Type="int" Nullable="false" />
-    <Property Name="C_LastModified" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="T_UserRoleMappings">
-    <Key>
-      <PropertyRef Name="C_MapID" />
-    </Key>
-    <Property Name="C_MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_UserID" Type="int" Nullable="false" />
-    <Property Name="C_RoleID" Type="int" Nullable="false" />
     <Property Name="C_LastModified" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="T_Users">
@@ -86,8 +70,8 @@
       <PropertyRef Name="C_UserID" />
     </Key>
     <Property Name="C_UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="C_UserName" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="C_UserPassword" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="C_UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="C_UserPassword" Type="nvarchar" MaxLength="1000" />
     <Property Name="C_LastModified" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="FK_T_ReleaseMappings_T_Releases">
@@ -98,7 +82,7 @@
         <PropertyRef Name="C_ReleaseID" />
       </Principal>
       <Dependent Role="T_ReleaseMappings">
-        <PropertyRef Name="C_InclusiveReleaseID" />
+        <PropertyRef Name="C_SourceReleaseID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -110,7 +94,7 @@
         <PropertyRef Name="C_ReleaseID" />
       </Principal>
       <Dependent Role="T_ReleaseMappings">
-        <PropertyRef Name="C_SourceReleaseID" />
+        <PropertyRef Name="C_InclusiveReleaseID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -186,118 +170,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_T_UserProjectMappings_T_Projects">
-    <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="1" />
-    <End Role="T_UserProjectMappings" Type="Self.T_UserProjectMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Projects">
-        <PropertyRef Name="C_ProjectID" />
-      </Principal>
-      <Dependent Role="T_UserProjectMappings">
-        <PropertyRef Name="C_ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_UserProjectMappings_T_Users">
-    <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-    <End Role="T_UserProjectMappings" Type="Self.T_UserProjectMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Users">
-        <PropertyRef Name="C_UserID" />
-      </Principal>
-      <Dependent Role="T_UserProjectMappings">
-        <PropertyRef Name="C_UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_UserRoleMappings_T_Roles">
-    <End Role="T_Roles" Type="Self.T_Roles" Multiplicity="1" />
-    <End Role="T_UserRoleMappings" Type="Self.T_UserRoleMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Roles">
-        <PropertyRef Name="C_RoleID" />
-      </Principal>
-      <Dependent Role="T_UserRoleMappings">
-        <PropertyRef Name="C_RoleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_UserRoleMappings_T_Users">
-    <End Role="T_Users" Type="Self.T_Users" Multiplicity="1" />
-    <End Role="T_UserRoleMappings" Type="Self.T_UserRoleMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Users">
-        <PropertyRef Name="C_UserID" />
-      </Principal>
-      <Dependent Role="T_UserRoleMappings">
-        <PropertyRef Name="C_UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-  <Function Name="GetAllProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Project" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="Hove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="SourceRelease" Type="varchar" Mode="In" />
-    <Parameter Name="InclusiveRelease" Type="varchar" Mode="InOut" />
-    <Parameter Name="InclusiveSubRelease" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="Hover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="UReleaseName" Type="varchar" Mode="In" />
-  </Function>
-  <Function Name="OnHover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="SourceRelease" Type="varchar" Mode="In" />
-    <Parameter Name="InclusiveRelease" Type="varchar" Mode="InOut" />
-    <Parameter Name="InclusiveSubRelease" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="Prac1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="SourceReleaseName" Type="varchar" Mode="In" />
-  </Function>
-  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="Validate_User" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Username" Type="nvarchar" Mode="In" />
-    <Parameter Name="Password" Type="nvarchar" Mode="In" />
-  </Function>
   <EntityContainer Name="CIModelStoreContainer">
     <EntitySet Name="T_Projects" EntityType="Self.T_Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="T_Registrations" EntityType="Self.T_Registrations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_ReleaseMappings" EntityType="Self.T_ReleaseMappings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Releases" EntityType="Self.T_Releases" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="T_Roles" EntityType="Self.T_Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Status" EntityType="Self.T_Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Streams" EntityType="Self.T_Streams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_SubReleases" EntityType="Self.T_SubReleases" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="T_UserProjectMappings" EntityType="Self.T_UserProjectMappings" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="T_UserRoleMappings" EntityType="Self.T_UserRoleMappings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="T_Users" EntityType="Self.T_Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_T_ReleaseMappings_T_Releases" Association="Self.FK_T_ReleaseMappings_T_Releases">
       <End Role="T_Releases" EntitySet="T_Releases" />
@@ -330,22 +210,6 @@
     <AssociationSet Name="FK_T_SubReleases_T_Status" Association="Self.FK_T_SubReleases_T_Status">
       <End Role="T_Status" EntitySet="T_Status" />
       <End Role="T_SubReleases" EntitySet="T_SubReleases" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserProjectMappings_T_Projects" Association="Self.FK_T_UserProjectMappings_T_Projects">
-      <End Role="T_Projects" EntitySet="T_Projects" />
-      <End Role="T_UserProjectMappings" EntitySet="T_UserProjectMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserProjectMappings_T_Users" Association="Self.FK_T_UserProjectMappings_T_Users">
-      <End Role="T_Users" EntitySet="T_Users" />
-      <End Role="T_UserProjectMappings" EntitySet="T_UserProjectMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserRoleMappings_T_Roles" Association="Self.FK_T_UserRoleMappings_T_Roles">
-      <End Role="T_Roles" EntitySet="T_Roles" />
-      <End Role="T_UserRoleMappings" EntitySet="T_UserRoleMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserRoleMappings_T_Users" Association="Self.FK_T_UserRoleMappings_T_Users">
-      <End Role="T_Users" EntitySet="T_Users" />
-      <End Role="T_UserRoleMappings" EntitySet="T_UserRoleMappings" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

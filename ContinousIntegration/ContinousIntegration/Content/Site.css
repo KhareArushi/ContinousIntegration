@@ -95,6 +95,10 @@ table.treetable tr.expanded span.indenter a {
     text-align: center;
 }
 
+.right-text td {
+    text-align: right;
+}
+
 /*Sign in css*/
 
 .form-signin {
@@ -131,9 +135,30 @@ table.treetable tr.expanded span.indenter a {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
     }
+    #tree-table tr:hover{
+        background:#fad404 !important;
+    }
+    #tree-table tr:nth-child(even){
+        background:#f5f5f5;
+    }
 
 .marTop15 {
     margin-top: 15px;
+}
+
+#image{
+    
+
+    position:relative;
+    top:-20px;
+    right:-10px;
+}
+
+.text{
+
+    font-family:'Poor Richard';
+    font-size:18px;
+    color:red;
 }
 
 /*sign in css end*/

@@ -15,22 +15,40 @@ namespace ContinousIntegration.Controllers
 {
     public class UserController : Controller
     {
-        //
-        // GET: /User/
+       
+       [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
 
 
-        public ActionResult UserRegisteration()
+        [HttpPost]
+        public ActionResult Create(URegisteration reg) //reg will contain the values inserted by user
         {
             try
             {
-                return View();
-            }
-            catch (Exception e)
-            {
-                throw new ApplicationException("Error: " + e);
-            }
+                if (ModelState.IsValid)
+                {
+                    Data da = new Data();
+                    da.SaveDetails(reg);
+                   // ModelState.Clear();
+                    return RedirectToAction("List");
+                }
 
-        }
+                else
+                {
+                    return View("Index", reg);  //It will return view with  validation msg 
+
+                }             
+            }
+            catch(Exception e)
+            {
+                throw new ApplicationException("Plz fill out the data" + e);             
+            }
+          
+            return View(reg);
+          }
 
 
         public ActionResult List()
@@ -65,19 +83,7 @@ namespace ContinousIntegration.Controllers
             }
         }
 
-        //public actionresult validateuser()
-        //{
-        //    try
-        //    {
-        //        //calling stored procedure
-
-        //    }
-
-        //    catch (exception e)
-        //    {
-        //        throw new applicationexception("error:" + e);
-        //    }
-        //}
+      
         public ActionResult GetTreeView(int id)
         {
             try

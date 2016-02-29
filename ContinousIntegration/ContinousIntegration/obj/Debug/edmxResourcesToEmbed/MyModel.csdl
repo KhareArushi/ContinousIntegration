@@ -4,22 +4,31 @@
     <Key>
       <PropertyRef Name="C_ProjectID" />
     </Key>
-    <Property Name="C_ProjectID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-    <Property Name="C_ProjectName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-    <Property Name="C_ProjectDescription" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" Type="String" />
-    <Property Name="C_LastModified" Nullable="false" Precision="3" Type="DateTime" />
+    <Property Name="C_ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="C_ProjectDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="T_Streams" Relationship="Self.FK_T_Streams_T_Projects" FromRole="T_Projects" ToRole="T_Streams" />
-    <NavigationProperty Name="T_UserProjectMappings" Relationship="CIModel.FK_T_UserProjectMappings_T_Projects" FromRole="T_Projects" ToRole="T_UserProjectMappings" />
+  </EntityType>
+  <EntityType Name="T_Registrations">
+    <Key>
+      <PropertyRef Name="C_RegisterID" />
+    </Key>
+    <Property Name="C_RegisterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="C_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="C_EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="C_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <EntityType Name="T_ReleaseMappings">
     <Key>
       <PropertyRef Name="C_MapID" />
     </Key>
-    <Property Name="C_MapID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-    <Property Name="C_SourceReleaseID" Nullable="false" Type="Int32" />
-    <Property Name="C_InclusiveReleaseID" Nullable="false" Type="Int32" />
-    <Property Name="C_InclusiveSubReleaseID" Nullable="false" Type="Int32" />
-    <Property Name="C_LastModified" Nullable="false" Precision="3" Type="DateTime" />
+    <Property Name="C_MapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_SourceReleaseID" Type="Int32" Nullable="false" />
+    <Property Name="C_InclusiveReleaseID" Type="Int32" Nullable="false" />
+    <Property Name="C_InclusiveSubReleaseID" Type="Int32" Nullable="false" />
+    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="T_Releases" Relationship="Self.FK_T_ReleaseMappings_T_Releases" FromRole="T_ReleaseMappings" ToRole="T_Releases" />
     <NavigationProperty Name="T_Releases1" Relationship="Self.FK_T_ReleaseMappings_T_Releases1" FromRole="T_ReleaseMappings" ToRole="T_Releases" />
     <NavigationProperty Name="T_SubReleases" Relationship="Self.FK_T_ReleaseMappings_T_SubReleases" FromRole="T_ReleaseMappings" ToRole="T_SubReleases" />
@@ -28,11 +37,11 @@
     <Key>
       <PropertyRef Name="C_ReleaseID" />
     </Key>
-    <Property Name="C_ReleaseID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-    <Property Name="C_StreamID" Nullable="false" Type="Int32" />
-    <Property Name="C_ReleaseName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
-    <Property Name="C_StatusID" Nullable="false" Type="Int32" />
-    <Property Name="C_LastModified" Nullable="false" Precision="3" Type="DateTime" />
+    <Property Name="C_ReleaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_StreamID" Type="Int32" Nullable="false" />
+    <Property Name="C_ReleaseName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="C_StatusID" Type="Int32" Nullable="false" />
+    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="T_ReleaseMappings" Relationship="Self.FK_T_ReleaseMappings_T_Releases" FromRole="T_Releases" ToRole="T_ReleaseMappings" />
     <NavigationProperty Name="T_ReleaseMappings1" Relationship="Self.FK_T_ReleaseMappings_T_Releases1" FromRole="T_Releases" ToRole="T_ReleaseMappings" />
     <NavigationProperty Name="T_Status" Relationship="Self.FK_T_Releases_T_Status" FromRole="T_Releases" ToRole="T_Status" />
@@ -43,8 +52,8 @@
     <Key>
       <PropertyRef Name="C_StatusID" />
     </Key>
-    <Property Name="C_StatusID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-    <Property Name="C_StatusName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="C_StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_StatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="T_Releases" Relationship="Self.FK_T_Releases_T_Status" FromRole="T_Status" ToRole="T_Releases" />
     <NavigationProperty Name="T_SubReleases" Relationship="Self.FK_T_SubReleases_T_Status" FromRole="T_Status" ToRole="T_SubReleases" />
   </EntityType>
@@ -52,10 +61,10 @@
     <Key>
       <PropertyRef Name="C_StreamID" />
     </Key>
-    <Property Name="C_ProjectID" Nullable="false" Type="Int32" />
-    <Property Name="C_StreamID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-    <Property Name="C_StreamName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-    <Property Name="C_LastModified" Nullable="false" Precision="3" Type="DateTime" />
+    <Property Name="C_ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="C_StreamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_StreamName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="T_Projects" Relationship="Self.FK_T_Streams_T_Projects" FromRole="T_Streams" ToRole="T_Projects" />
     <NavigationProperty Name="T_Releases" Relationship="Self.FK_T_Releases_T_Streams" FromRole="T_Streams" ToRole="T_Releases" />
   </EntityType>
@@ -63,18 +72,18 @@
     <Key>
       <PropertyRef Name="C_SubReleaseID" />
     </Key>
-    <Property Name="C_SubReleaseID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-    <Property Name="C_ReleaseID" Nullable="false" Type="Int32" />
-    <Property Name="C_SubReleaseName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-    <Property Name="C_StatusID" Nullable="false" Type="Int32" />
-    <Property Name="C_LastModified" Nullable="false" Precision="3" Type="DateTime" />
+    <Property Name="C_SubReleaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="C_ReleaseID" Type="Int32" Nullable="false" />
+    <Property Name="C_SubReleaseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="C_StatusID" Type="Int32" Nullable="false" />
+    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="T_ReleaseMappings" Relationship="Self.FK_T_ReleaseMappings_T_SubReleases" FromRole="T_SubReleases" ToRole="T_ReleaseMappings" />
     <NavigationProperty Name="T_Releases" Relationship="Self.FK_T_SubReleases_T_Releases" FromRole="T_SubReleases" ToRole="T_Releases" />
     <NavigationProperty Name="T_Status" Relationship="Self.FK_T_SubReleases_T_Status" FromRole="T_SubReleases" ToRole="T_Status" />
   </EntityType>
   <Association Name="FK_T_Streams_T_Projects">
-    <End Type="Self.T_Projects" Multiplicity="1" Role="T_Projects" />
-    <End Type="Self.T_Streams" Multiplicity="*" Role="T_Streams" />
+    <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="1" />
+    <End Role="T_Streams" Type="Self.T_Streams" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_Projects">
         <PropertyRef Name="C_ProjectID" />
@@ -85,20 +94,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_T_ReleaseMappings_T_Releases">
-    <End Type="Self.T_Releases" Multiplicity="1" Role="T_Releases" />
-    <End Type="Self.T_ReleaseMappings" Multiplicity="*" Role="T_ReleaseMappings" />
-    <ReferentialConstraint>
-      <Principal Role="T_Releases">
-        <PropertyRef Name="C_ReleaseID" />
-      </Principal>
-      <Dependent Role="T_ReleaseMappings">
-        <PropertyRef Name="C_InclusiveReleaseID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_ReleaseMappings_T_Releases1">
-    <End Type="Self.T_Releases" Multiplicity="1" Role="T_Releases" />
-    <End Type="Self.T_ReleaseMappings" Multiplicity="*" Role="T_ReleaseMappings" />
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="1" />
+    <End Role="T_ReleaseMappings" Type="Self.T_ReleaseMappings" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_Releases">
         <PropertyRef Name="C_ReleaseID" />
@@ -108,9 +105,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_T_ReleaseMappings_T_Releases1">
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="1" />
+    <End Role="T_ReleaseMappings" Type="Self.T_ReleaseMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="T_Releases">
+        <PropertyRef Name="C_ReleaseID" />
+      </Principal>
+      <Dependent Role="T_ReleaseMappings">
+        <PropertyRef Name="C_InclusiveReleaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_T_ReleaseMappings_T_SubReleases">
-    <End Type="Self.T_SubReleases" Multiplicity="1" Role="T_SubReleases" />
-    <End Type="Self.T_ReleaseMappings" Multiplicity="*" Role="T_ReleaseMappings" />
+    <End Role="T_SubReleases" Type="Self.T_SubReleases" Multiplicity="1" />
+    <End Role="T_ReleaseMappings" Type="Self.T_ReleaseMappings" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_SubReleases">
         <PropertyRef Name="C_SubReleaseID" />
@@ -121,8 +130,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_T_Releases_T_Status">
-    <End Type="Self.T_Status" Multiplicity="1" Role="T_Status" />
-    <End Type="Self.T_Releases" Multiplicity="*" Role="T_Releases" />
+    <End Role="T_Status" Type="Self.T_Status" Multiplicity="1" />
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_Status">
         <PropertyRef Name="C_StatusID" />
@@ -133,8 +142,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_T_Releases_T_Streams">
-    <End Type="Self.T_Streams" Multiplicity="1" Role="T_Streams" />
-    <End Type="Self.T_Releases" Multiplicity="*" Role="T_Releases" />
+    <End Role="T_Streams" Type="Self.T_Streams" Multiplicity="1" />
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_Streams">
         <PropertyRef Name="C_StreamID" />
@@ -145,8 +154,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_T_SubReleases_T_Releases">
-    <End Type="Self.T_Releases" Multiplicity="1" Role="T_Releases" />
-    <End Type="Self.T_SubReleases" Multiplicity="*" Role="T_SubReleases" />
+    <End Role="T_Releases" Type="Self.T_Releases" Multiplicity="1" />
+    <End Role="T_SubReleases" Type="Self.T_SubReleases" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_Releases">
         <PropertyRef Name="C_ReleaseID" />
@@ -157,8 +166,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_T_SubReleases_T_Status">
-    <End Type="Self.T_Status" Multiplicity="1" Role="T_Status" />
-    <End Type="Self.T_SubReleases" Multiplicity="*" Role="T_SubReleases" />
+    <End Role="T_Status" Type="Self.T_Status" Multiplicity="1" />
+    <End Role="T_SubReleases" Type="Self.T_SubReleases" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="T_Status">
         <PropertyRef Name="C_StatusID" />
@@ -170,230 +179,53 @@
   </Association>
   <EntityContainer Name="CIEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="T_Projects" EntityType="Self.T_Projects" />
+    <EntitySet Name="T_Registrations" EntityType="Self.T_Registrations" />
     <EntitySet Name="T_ReleaseMappings" EntityType="Self.T_ReleaseMappings" />
     <EntitySet Name="T_Releases" EntityType="Self.T_Releases" />
     <EntitySet Name="T_Status" EntityType="Self.T_Status" />
     <EntitySet Name="T_Streams" EntityType="Self.T_Streams" />
     <EntitySet Name="T_SubReleases" EntityType="Self.T_SubReleases" />
     <AssociationSet Name="FK_T_Streams_T_Projects" Association="Self.FK_T_Streams_T_Projects">
-      <End EntitySet="T_Projects" Role="T_Projects" />
-      <End EntitySet="T_Streams" Role="T_Streams" />
+      <End Role="T_Projects" EntitySet="T_Projects" />
+      <End Role="T_Streams" EntitySet="T_Streams" />
     </AssociationSet>
     <AssociationSet Name="FK_T_ReleaseMappings_T_Releases" Association="Self.FK_T_ReleaseMappings_T_Releases">
-      <End EntitySet="T_Releases" Role="T_Releases" />
-      <End EntitySet="T_ReleaseMappings" Role="T_ReleaseMappings" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
+      <End Role="T_ReleaseMappings" EntitySet="T_ReleaseMappings" />
     </AssociationSet>
     <AssociationSet Name="FK_T_ReleaseMappings_T_Releases1" Association="Self.FK_T_ReleaseMappings_T_Releases1">
-      <End EntitySet="T_Releases" Role="T_Releases" />
-      <End EntitySet="T_ReleaseMappings" Role="T_ReleaseMappings" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
+      <End Role="T_ReleaseMappings" EntitySet="T_ReleaseMappings" />
     </AssociationSet>
     <AssociationSet Name="FK_T_ReleaseMappings_T_SubReleases" Association="Self.FK_T_ReleaseMappings_T_SubReleases">
-      <End EntitySet="T_SubReleases" Role="T_SubReleases" />
-      <End EntitySet="T_ReleaseMappings" Role="T_ReleaseMappings" />
+      <End Role="T_SubReleases" EntitySet="T_SubReleases" />
+      <End Role="T_ReleaseMappings" EntitySet="T_ReleaseMappings" />
     </AssociationSet>
     <AssociationSet Name="FK_T_Releases_T_Status" Association="Self.FK_T_Releases_T_Status">
-      <End EntitySet="T_Status" Role="T_Status" />
-      <End EntitySet="T_Releases" Role="T_Releases" />
+      <End Role="T_Status" EntitySet="T_Status" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
     </AssociationSet>
     <AssociationSet Name="FK_T_Releases_T_Streams" Association="Self.FK_T_Releases_T_Streams">
-      <End EntitySet="T_Streams" Role="T_Streams" />
-      <End EntitySet="T_Releases" Role="T_Releases" />
+      <End Role="T_Streams" EntitySet="T_Streams" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
     </AssociationSet>
     <AssociationSet Name="FK_T_SubReleases_T_Releases" Association="Self.FK_T_SubReleases_T_Releases">
-      <End EntitySet="T_Releases" Role="T_Releases" />
-      <End EntitySet="T_SubReleases" Role="T_SubReleases" />
+      <End Role="T_Releases" EntitySet="T_Releases" />
+      <End Role="T_SubReleases" EntitySet="T_SubReleases" />
     </AssociationSet>
     <AssociationSet Name="FK_T_SubReleases_T_Status" Association="Self.FK_T_SubReleases_T_Status">
-      <End EntitySet="T_Status" Role="T_Status" />
-      <End EntitySet="T_SubReleases" Role="T_SubReleases" />
+      <End Role="T_Status" EntitySet="T_Status" />
+      <End Role="T_SubReleases" EntitySet="T_SubReleases" />
     </AssociationSet>
-    <EntitySet Name="T_Roles" EntityType="CIModel.T_Roles" />
-    <EntitySet Name="T_UserProjectMappings" EntityType="CIModel.T_UserProjectMappings" />
-    <EntitySet Name="T_UserRoleMappings" EntityType="CIModel.T_UserRoleMappings" />
     <EntitySet Name="T_Users" EntityType="CIModel.T_Users" />
-    <AssociationSet Name="FK_T_UserProjectMappings_T_Projects" Association="CIModel.FK_T_UserProjectMappings_T_Projects">
-      <End Role="T_Projects" EntitySet="T_Projects" />
-      <End Role="T_UserProjectMappings" EntitySet="T_UserProjectMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserRoleMappings_T_Roles" Association="CIModel.FK_T_UserRoleMappings_T_Roles">
-      <End Role="T_Roles" EntitySet="T_Roles" />
-      <End Role="T_UserRoleMappings" EntitySet="T_UserRoleMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserProjectMappings_T_Users" Association="CIModel.FK_T_UserProjectMappings_T_Users">
-      <End Role="T_Users" EntitySet="T_Users" />
-      <End Role="T_UserProjectMappings" EntitySet="T_UserProjectMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_T_UserRoleMappings_T_Users" Association="CIModel.FK_T_UserRoleMappings_T_Users">
-      <End Role="T_Users" EntitySet="T_Users" />
-      <End Role="T_UserRoleMappings" EntitySet="T_UserRoleMappings" />
-    </AssociationSet>
-    <FunctionImport Name="GetAllProjects" ReturnType="Collection(CIModel.GetAllProjects_Result)">
-      <Parameter Name="Project" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Hove" ReturnType="Collection(CIModel.Hove_Result)">
-      <Parameter Name="SourceRelease" Mode="In" Type="String" />
-      <Parameter Name="InclusiveRelease" Mode="InOut" Type="String" />
-      <Parameter Name="InclusiveSubRelease" Mode="InOut" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Hover" ReturnType="Collection(String)">
-      <Parameter Name="UReleaseName" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="OnHover" ReturnType="Collection(CIModel.OnHover_Result)">
-      <Parameter Name="SourceRelease" Mode="In" Type="String" />
-      <Parameter Name="InclusiveRelease" Mode="InOut" Type="String" />
-      <Parameter Name="InclusiveSubRelease" Mode="InOut" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="Prac1" ReturnType="Collection(Int32)">
-      <Parameter Name="SourceReleaseName" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_alterdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_creatediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_dropdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(CIModel.sp_helpdiagramdefinition_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(CIModel.sp_helpdiagrams_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_renamediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="new_diagramname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_upgraddiagrams" />
-    <FunctionImport Name="Validate_User">
-      <Parameter Name="Username" Mode="In" Type="String" />
-      <Parameter Name="Password" Mode="In" Type="String" />
-    </FunctionImport>
   </EntityContainer>
-  <EntityType Name="T_Roles">
-    <Key>
-      <PropertyRef Name="C_RoleID" />
-    </Key>
-    <Property Name="C_RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="C_RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="T_UserRoleMappings" Relationship="CIModel.FK_T_UserRoleMappings_T_Roles" FromRole="T_Roles" ToRole="T_UserRoleMappings" />
-  </EntityType>
-  <EntityType Name="T_UserProjectMappings">
-    <Key>
-      <PropertyRef Name="C_MapID" />
-    </Key>
-    <Property Name="C_MapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="C_UserID" Type="Int32" Nullable="false" />
-    <Property Name="C_ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="T_Projects" Relationship="CIModel.FK_T_UserProjectMappings_T_Projects" FromRole="T_UserProjectMappings" ToRole="T_Projects" />
-    <NavigationProperty Name="T_Users" Relationship="CIModel.FK_T_UserProjectMappings_T_Users" FromRole="T_UserProjectMappings" ToRole="T_Users" />
-  </EntityType>
-  <EntityType Name="T_UserRoleMappings">
-    <Key>
-      <PropertyRef Name="C_MapID" />
-    </Key>
-    <Property Name="C_MapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="C_UserID" Type="Int32" Nullable="false" />
-    <Property Name="C_RoleID" Type="Int32" Nullable="false" />
-    <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="T_Roles" Relationship="CIModel.FK_T_UserRoleMappings_T_Roles" FromRole="T_UserRoleMappings" ToRole="T_Roles" />
-    <NavigationProperty Name="T_Users" Relationship="CIModel.FK_T_UserRoleMappings_T_Users" FromRole="T_UserRoleMappings" ToRole="T_Users" />
-  </EntityType>
   <EntityType Name="T_Users">
     <Key>
       <PropertyRef Name="C_UserID" />
     </Key>
     <Property Name="C_UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="C_UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="C_UserPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="C_UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="C_UserPassword" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
     <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="T_UserProjectMappings" Relationship="CIModel.FK_T_UserProjectMappings_T_Users" FromRole="T_Users" ToRole="T_UserProjectMappings" />
-    <NavigationProperty Name="T_UserRoleMappings" Relationship="CIModel.FK_T_UserRoleMappings_T_Users" FromRole="T_Users" ToRole="T_UserRoleMappings" />
   </EntityType>
-  <Association Name="FK_T_UserProjectMappings_T_Projects">
-    <End Type="CIModel.T_Projects" Role="T_Projects" Multiplicity="1" />
-    <End Type="CIModel.T_UserProjectMappings" Role="T_UserProjectMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Projects">
-        <PropertyRef Name="C_ProjectID" />
-      </Principal>
-      <Dependent Role="T_UserProjectMappings">
-        <PropertyRef Name="C_ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_UserRoleMappings_T_Roles">
-    <End Type="CIModel.T_Roles" Role="T_Roles" Multiplicity="1" />
-    <End Type="CIModel.T_UserRoleMappings" Role="T_UserRoleMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Roles">
-        <PropertyRef Name="C_RoleID" />
-      </Principal>
-      <Dependent Role="T_UserRoleMappings">
-        <PropertyRef Name="C_RoleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_UserProjectMappings_T_Users">
-    <End Type="CIModel.T_Users" Role="T_Users" Multiplicity="1" />
-    <End Type="CIModel.T_UserProjectMappings" Role="T_UserProjectMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Users">
-        <PropertyRef Name="C_UserID" />
-      </Principal>
-      <Dependent Role="T_UserProjectMappings">
-        <PropertyRef Name="C_UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_T_UserRoleMappings_T_Users">
-    <End Type="CIModel.T_Users" Role="T_Users" Multiplicity="1" />
-    <End Type="CIModel.T_UserRoleMappings" Role="T_UserRoleMappings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="T_Users">
-        <PropertyRef Name="C_UserID" />
-      </Principal>
-      <Dependent Role="T_UserRoleMappings">
-        <PropertyRef Name="C_UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <ComplexType Name="GetAllProjects_Result">
-    <Property Type="Int32" Name="C_ProjectID" Nullable="false" />
-    <Property Type="String" Name="C_ProjectName" Nullable="false" MaxLength="50" />
-    <Property Type="String" Name="C_ProjectDescription" Nullable="false" />
-    <Property Type="DateTime" Name="C_LastModified" Nullable="false" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="Hove_Result">
-    <Property Type="Int32" Name="C_InclusiveReleaseID" Nullable="false" />
-    <Property Type="Int32" Name="C_InclusiveSubReleaseID" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="OnHover_Result">
-    <Property Type="Int32" Name="C_InclusiveReleaseID" Nullable="false" />
-    <Property Type="Int32" Name="C_InclusiveSubReleaseID" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
 </Schema>

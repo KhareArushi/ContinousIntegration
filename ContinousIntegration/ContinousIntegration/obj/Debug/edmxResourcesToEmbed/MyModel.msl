@@ -11,6 +11,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="T_Registrations">
+      <EntityTypeMapping TypeName="CIModel.T_Registrations">
+        <MappingFragment StoreEntitySet="T_Registrations">
+          <ScalarProperty Name="C_RegisterID" ColumnName="C_RegisterID" />
+          <ScalarProperty Name="C_FirstName" ColumnName="C_FirstName" />
+          <ScalarProperty Name="C_LastName" ColumnName="C_LastName" />
+          <ScalarProperty Name="C_EmailID" ColumnName="C_EmailID" />
+          <ScalarProperty Name="C_Password" ColumnName="C_Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="T_ReleaseMappings">
       <EntityTypeMapping TypeName="CIModel.T_ReleaseMappings">
         <MappingFragment StoreEntitySet="T_ReleaseMappings">
@@ -62,35 +73,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="T_Roles">
-      <EntityTypeMapping TypeName="CIModel.T_Roles">
-        <MappingFragment StoreEntitySet="T_Roles">
-          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
-          <ScalarProperty Name="C_RoleName" ColumnName="C_RoleName" />
-          <ScalarProperty Name="C_RoleID" ColumnName="C_RoleID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="T_UserProjectMappings">
-      <EntityTypeMapping TypeName="CIModel.T_UserProjectMappings">
-        <MappingFragment StoreEntitySet="T_UserProjectMappings">
-          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
-          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
-          <ScalarProperty Name="C_UserID" ColumnName="C_UserID" />
-          <ScalarProperty Name="C_MapID" ColumnName="C_MapID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="T_UserRoleMappings">
-      <EntityTypeMapping TypeName="CIModel.T_UserRoleMappings">
-        <MappingFragment StoreEntitySet="T_UserRoleMappings">
-          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
-          <ScalarProperty Name="C_RoleID" ColumnName="C_RoleID" />
-          <ScalarProperty Name="C_UserID" ColumnName="C_UserID" />
-          <ScalarProperty Name="C_MapID" ColumnName="C_MapID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="T_Users">
       <EntityTypeMapping TypeName="CIModel.T_Users">
         <MappingFragment StoreEntitySet="T_Users">
@@ -101,58 +83,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetAllProjects" FunctionName="CIModel.Store.GetAllProjects">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="CIModel.GetAllProjects_Result">
-          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
-          <ScalarProperty Name="C_ProjectName" ColumnName="C_ProjectName" />
-          <ScalarProperty Name="C_ProjectDescription" ColumnName="C_ProjectDescription" />
-          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="Hove" FunctionName="CIModel.Store.Hove">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="CIModel.Hove_Result">
-          <ScalarProperty Name="C_InclusiveReleaseID" ColumnName="C_InclusiveReleaseID" />
-          <ScalarProperty Name="C_InclusiveSubReleaseID" ColumnName="C_InclusiveSubReleaseID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="Hover" FunctionName="CIModel.Store.Hover" />
-    <FunctionImportMapping FunctionImportName="OnHover" FunctionName="CIModel.Store.OnHover">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="CIModel.OnHover_Result">
-          <ScalarProperty Name="C_InclusiveReleaseID" ColumnName="C_InclusiveReleaseID" />
-          <ScalarProperty Name="C_InclusiveSubReleaseID" ColumnName="C_InclusiveSubReleaseID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="Prac1" FunctionName="CIModel.Store.Prac1" />
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="CIModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="CIModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="CIModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="CIModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="CIModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="CIModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="CIModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CIModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CIModel.Store.sp_upgraddiagrams" />
-    <FunctionImportMapping FunctionImportName="Validate_User" FunctionName="CIModel.Store.Validate_User" />
   </EntityContainerMapping>
 </Mapping>
