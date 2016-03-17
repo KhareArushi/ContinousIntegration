@@ -14,10 +14,19 @@ namespace ContinousIntegration
     
     public partial class T_Registrations
     {
+        public T_Registrations()
+        {
+            this.T_UserProjectMappings = new HashSet<T_UserProjectMappings>();
+            this.T_UserRoleMappings = new HashSet<T_UserRoleMappings>();
+        }
+    
         public int C_RegisterID { get; set; }
         public string C_FirstName { get; set; }
         public string C_LastName { get; set; }
         public string C_EmailID { get; set; }
         public string C_Password { get; set; }
+    
+        public virtual ICollection<T_UserProjectMappings> T_UserProjectMappings { get; set; }
+        public virtual ICollection<T_UserRoleMappings> T_UserRoleMappings { get; set; }
     }
 }

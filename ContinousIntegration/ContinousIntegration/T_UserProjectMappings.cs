@@ -15,11 +15,11 @@ namespace ContinousIntegration
     public partial class T_UserProjectMappings
     {
         public int C_MapID { get; set; }
-        public int C_UserID { get; set; }
+        public int C_RegisterID { get; set; }
         public int C_ProjectID { get; set; }
         public System.DateTime C_LastModified { get; set; }
     
         public virtual T_Projects T_Projects { get; set; }
-        public virtual T_Users T_Users { get; set; }
+        public virtual T_Registrations T_Registrations { get; set; }
     }
 }

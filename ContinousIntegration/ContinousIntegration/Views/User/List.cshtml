@@ -6,6 +6,9 @@
     grid.Pager(WebGridPagerModes.All);
 }
 
+@Html.ActionLink("Logout", "Index", "User", new { @class = "pull-right fontsize20 " })
+@*@Html.Partial("~/Views/Shared/_Welcome.cshtml",Model);*@
+
 <h2>Project Summary</h2>
 
 <style type="text/css">
@@ -45,17 +48,17 @@
     }
 </style>
 <div id:"content">
-    @*@{WebGrid grid = new WebGrid(Model,selectionFieldName:"Selected Row"*@
+   
     @grid.GetHtml(
-    tableStyle: "Webgrid-table",
-    headerStyle: "webgrid-header",
-    footerStyle: "webgrid-footer",
-    alternatingRowStyle: "webgrid-alternating-row",
-    rowStyle: "webgrid-row-style",
-    columns: grid.Columns(
-    grid.Column("C_ProjectID", "Project Id"),
-    grid.Column("C_ProjectName", "Project Name"),
-    grid.Column("", format: @<text>@Html.ActionLink("Click me", "GetTreeView", new { id = item.C_ProjectID }) </text>),
+            tableStyle: "Webgrid-table",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            rowStyle: "webgrid-row-style",
+            columns: grid.Columns(
+            grid.Column("C_ProjectID", "Project Id"),
+            grid.Column("C_ProjectName", "Project Name", format: (item) => @Html.ActionLink(((string)item.C_ProjectName), "GetTreeView", new { id = item.C_ProjectID })),
             grid.Column("C_ProjectDescription", "Project Description"),
-            grid.Column("C_LastModified", "Last Modified")))
+            grid.Column("C_LastModified", "Last Modified"))
+            )
 </div>

@@ -9,7 +9,7 @@
         <div class="col-sm-12">
 
             <h3 style="font-family: 'Palatino Linotype'; font-size: 26px; color: blue"> Development Status on All stages</h3>
-            <table class="table table-bordered table-striped" id="tree-table" style="border-collapse:collapse;">
+            <table class="table table-bordered" id="tree-table" style="border-collapse:collapse;">
                 <tr>
                     <th style="width:30%;">
 
@@ -76,77 +76,21 @@
                                     <tr data-tt-id="@item3.C_SubReleaseID-@item2.C_ReleaseID-@item1.C_StreamID-@item.C_ProjectID" data-tt-parent-id="@item2.C_ReleaseID-@item1.C_StreamID-@item.C_ProjectID" class="center-text">
                                         <td>@Html.DisplayFor(modelItem => item3.C_SubReleaseName)</td>
 
-                                        @switch (@item3.C_StatusID)
-                                        {
-
-                                            case 1:
-                                            <td> <span class="glyphicon glyphicon-ok text-primary" aria-hidden="true" aria-label="Pending" title="Pending"></span></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                                break;
-                                            case 2:
-                                                <td></td>
-                                                <td> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" aria-label="Completed" title="Completed"></span></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                break;
-                                            case 3:
-                                                <td></td>
-                                                <td></td>
-                                                <td> <span class="glyphicon glyphicon-option-horizontal text-warning" aria-hidden="true" aria-label="In Progress" title="In Progress"></span></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                break;
-                                            case 4:
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td> <span class="glyphicon glyphicon-exclamation-sign text-primary" aria-hidden="true" aria-label="Pending" title="Pending"></span></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                break;
-                                            case 5:
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" aria-label="Completed" title="Completed"></span></td>
-                                                <td></td>
-                                                <td></td>
-                                                break;
-
-                                            case 6:
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td> <span class="glyphicon glyphicon-option-horizontal text-warning" aria-hidden="true" aria-label="In Progress" title="In Progress"></span></td>
-                                                <td></td>
-                                                <td></td>
-                                                break;
-                                            case 7:
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td> <span class="glyphicon glyphicon-option-horizontal text-warning" aria-hidden="true" aria-label="In Progress" title="In Progress"></span></td>
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                                @for (int i = 1; i <=7; i++ )
+                                                {
+                                                    if (@item3.C_StatusID == i)
+                                                    {
+                                                    <td> <span class="glyphicon glyphicon-option-horizontal text-warning" aria-hidden="true" aria-label="In Progress" title="In Progress"></span></td>
+                                                     }
+                                                    else if(@item3.C_StatusID < i)
+                                                    {
+                                                     <td> <span class="glyphicon glyphicon-exclamation-sign text-primary" aria-hidden="true" aria-label="Pending" title="Pending"></span></td>   
+                                                    }
+                                                    else 
+                                                    { 
+                                                        <td> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" aria-label="Completed" title="Completed"></span></td> 
+                                       
+                                                    }}
                                     </tr>
                                 }
 
@@ -163,6 +107,7 @@
 
 <script>
     $(document).ready(function () {
-        $("#tree-table").treetable({ expandable: true });
+       // $("#tree-table").treetable({ expandable: true });
+        $("#tree-table").treetable({ expandable: true, clickableNodeNames: true });
     });
 </script>

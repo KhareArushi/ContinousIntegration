@@ -12,11 +12,14 @@ namespace ContinousIntegration
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
-    public partial class CIEntities : DbContext
+    public partial class ContinuousIntegrationEntity1 : DbContext
     {
-        public CIEntities()
-            : base("name=CIEntities")
+        public ContinuousIntegrationEntity1()
+            : base("name=ContinuousIntegrationEntity1")
         {
         }
     
@@ -29,9 +32,20 @@ namespace ContinousIntegration
         public DbSet<T_Registrations> T_Registrations { get; set; }
         public DbSet<T_ReleaseMappings> T_ReleaseMappings { get; set; }
         public DbSet<T_Releases> T_Releases { get; set; }
+        public DbSet<T_Roles> T_Roles { get; set; }
         public DbSet<T_Status> T_Status { get; set; }
         public DbSet<T_Streams> T_Streams { get; set; }
         public DbSet<T_SubReleases> T_SubReleases { get; set; }
-        public DbSet<T_Users> T_Users { get; set; }
+        public DbSet<T_UserProjectMappings> T_UserProjectMappings { get; set; }
+        public DbSet<T_UserRoleMappings> T_UserRoleMappings { get; set; }
+    
+        public virtual ObjectResult<GetAllProjects_Result> GetAllProjects(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProjects_Result>("GetAllProjects", userIdParameter);
+        }
     }
 }

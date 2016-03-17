@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = "Index";
 }
-@using (Html.BeginForm("Create", "User", FormMethod.Post, new { htmlAttributes = new { @class = "date" } }))
+@using (Html.BeginForm("Create","User",FormMethod.Post, new { htmlAttributes = new { @class = "date" }}))
 {
 
-    @Html.ValidationSummary("",  new{@style= "color: red; font-family:PoorRichard"} )
+    @Html.ValidationSummary("",new{@style="color: red; font-family:PoorRichard"} )
 
     <div class="container">
 
@@ -53,9 +53,8 @@
                 </div>
             </div>
             <br />
-
             <button class="btn  btn-primary"  type="submit" >Create User</button>
-            <button class="btn  btn-primary" id="reset">Reset Details</button>
+            <button class="btn  btn-primary" id="cancel">Reset Details</button>
             
             @*Script for autofocus*@ 
             <script type="text/javascript">

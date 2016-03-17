@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CIModelStoreContainer" CdmEntityContainer="CIEntities">
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="CIModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Projects">
+      <EntityTypeMapping TypeName="CIModel.T_Projects">
+        <MappingFragment StoreEntitySet="T_Projects">
+          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
+          <ScalarProperty Name="C_ProjectName" ColumnName="C_ProjectName" />
+          <ScalarProperty Name="C_ProjectDescription" ColumnName="C_ProjectDescription" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_ReleaseMappings">
+      <EntityTypeMapping TypeName="CIModel.T_ReleaseMappings">
+        <MappingFragment StoreEntitySet="T_ReleaseMappings">
+          <ScalarProperty Name="C_MapID" ColumnName="C_MapID" />
+          <ScalarProperty Name="C_SourceReleaseID" ColumnName="C_SourceReleaseID" />
+          <ScalarProperty Name="C_InclusiveReleaseID" ColumnName="C_InclusiveReleaseID" />
+          <ScalarProperty Name="C_InclusiveSubReleaseID" ColumnName="C_InclusiveSubReleaseID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Releases">
+      <EntityTypeMapping TypeName="CIModel.T_Releases">
+        <MappingFragment StoreEntitySet="T_Releases">
+          <ScalarProperty Name="C_ReleaseID" ColumnName="C_ReleaseID" />
+          <ScalarProperty Name="C_StreamID" ColumnName="C_StreamID" />
+          <ScalarProperty Name="C_ReleaseName" ColumnName="C_ReleaseName" />
+          <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Roles">
+      <EntityTypeMapping TypeName="CIModel.T_Roles">
+        <MappingFragment StoreEntitySet="T_Roles">
+          <ScalarProperty Name="C_RoleID" ColumnName="C_RoleID" />
+          <ScalarProperty Name="C_RoleName" ColumnName="C_RoleName" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Status">
+      <EntityTypeMapping TypeName="CIModel.T_Status">
+        <MappingFragment StoreEntitySet="T_Status">
+          <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+          <ScalarProperty Name="C_StatusName" ColumnName="C_StatusName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Streams">
+      <EntityTypeMapping TypeName="CIModel.T_Streams">
+        <MappingFragment StoreEntitySet="T_Streams">
+          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
+          <ScalarProperty Name="C_StreamID" ColumnName="C_StreamID" />
+          <ScalarProperty Name="C_StreamName" ColumnName="C_StreamName" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_SubReleases">
+      <EntityTypeMapping TypeName="CIModel.T_SubReleases">
+        <MappingFragment StoreEntitySet="T_SubReleases">
+          <ScalarProperty Name="C_SubReleaseID" ColumnName="C_SubReleaseID" />
+          <ScalarProperty Name="C_ReleaseID" ColumnName="C_ReleaseID" />
+          <ScalarProperty Name="C_SubReleaseName" ColumnName="C_SubReleaseName" />
+          <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_UserProjectMappings">
+      <EntityTypeMapping TypeName="CIModel.T_UserProjectMappings">
+        <MappingFragment StoreEntitySet="T_UserProjectMappings">
+          <ScalarProperty Name="C_MapID" ColumnName="C_MapID" />
+          <ScalarProperty Name="C_UserID" ColumnName="C_UserID" />
+          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_UserRoleMappings">
+      <EntityTypeMapping TypeName="CIModel.T_UserRoleMappings">
+        <MappingFragment StoreEntitySet="T_UserRoleMappings">
+          <ScalarProperty Name="C_MapID" ColumnName="C_MapID" />
+          <ScalarProperty Name="C_UserID" ColumnName="C_UserID" />
+          <ScalarProperty Name="C_RoleID" ColumnName="C_RoleID" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_Users">
+      <EntityTypeMapping TypeName="CIModel.T_Users">
+        <MappingFragment StoreEntitySet="T_Users">
+          <ScalarProperty Name="C_UserID" ColumnName="C_UserID" />
+          <ScalarProperty Name="C_UserName" ColumnName="C_UserName" />
+          <ScalarProperty Name="C_UserPassword" ColumnName="C_UserPassword" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetAllProjects" FunctionName="CIModel.Store.GetAllProjects">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CIModel.GetAllProjects_Result">
+          <ScalarProperty Name="C_ProjectID" ColumnName="C_ProjectID" />
+          <ScalarProperty Name="C_ProjectName" ColumnName="C_ProjectName" />
+          <ScalarProperty Name="C_ProjectDescription" ColumnName="C_ProjectDescription" />
+          <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Hove" FunctionName="CIModel.Store.Hove">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CIModel.Hove_Result">
+          <ScalarProperty Name="C_InclusiveReleaseID" ColumnName="C_InclusiveReleaseID" />
+          <ScalarProperty Name="C_InclusiveSubReleaseID" ColumnName="C_InclusiveSubReleaseID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Hover" FunctionName="CIModel.Store.Hover" />
+    <FunctionImportMapping FunctionImportName="OnHover" FunctionName="CIModel.Store.OnHover">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CIModel.OnHover_Result">
+          <ScalarProperty Name="C_InclusiveReleaseID" ColumnName="C_InclusiveReleaseID" />
+          <ScalarProperty Name="C_InclusiveSubReleaseID" ColumnName="C_InclusiveSubReleaseID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Prac1" FunctionName="CIModel.Store.Prac1" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="CIModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="CIModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="CIModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="CIModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CIModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="CIModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CIModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CIModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CIModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="Validate_User" FunctionName="CIModel.Store.Validate_User" />
+  </EntityContainerMapping>
+</Mapping>

@@ -99,6 +99,21 @@ table.treetable tr.expanded span.indenter a {
     text-align: right;
 }
 
+#image{
+    
+
+    position:relative;
+    top:-20px;
+    right:-10px;
+}
+
+.text{
+
+    font-family:'Poor Richard';
+    font-size:18px;
+    color:red;
+}
+
 /*Sign in css*/
 
 .form-signin {
@@ -146,20 +161,18 @@ table.treetable tr.expanded span.indenter a {
     margin-top: 15px;
 }
 
-#image{
-    
-
-    position:relative;
-    top:-20px;
-    right:-10px;
-}
-
-.text{
-
-    font-family:'Poor Richard';
-    font-size:18px;
-    color:red;
-}
-
 /*sign in css end*/
 
+.fontsize20{
+    font-size:20px;
+}
+
+.underline{
+   
+}
+.registerBtn{
+    width:48%; float:right; margin-top:0px !important;
+}
+#tree-table tr td:first-child{
+    cursor:default;
+}

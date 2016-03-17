@@ -8,6 +8,13 @@ namespace ContinousIntegration.Models
 {
     public class URegisteration
     {
+        public object reg;
+
+        public URegisteration(object reg)
+        {
+            // TODO: Complete member initialization
+            this.reg = reg;
+        }
        [Required(ErrorMessage="Please provide First name")]
         public string C_FirstName { get; set; }
 
@@ -24,5 +31,10 @@ namespace ContinousIntegration.Models
         
         [Compare("C_Password", ErrorMessage = "does not match")]
         public string C_CnfPassword { get; set; }
+
+        public URegisteration()
+        {
+           
+        }
     }
 }

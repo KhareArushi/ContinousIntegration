@@ -4,23 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3c81b6fd059c4b16a382babe20d68420" Name="Diagram1">
-        <EntityTypeShape EntityType="CIModel.T_Projects" Width="1.5" PointX="1.5" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Registrations" Width="1.5" PointX="3.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_ReleaseMappings" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Releases" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Status" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_Streams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIModel.T_SubReleases" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
-        <AssociationConnector Association="CIModel.FK_T_Streams_T_Projects" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_Releases" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_Releases1" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_ReleaseMappings_T_SubReleases" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_Releases_T_Status" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_Releases_T_Streams" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_SubReleases_T_Releases" ManuallyRouted="false" />
-        <AssociationConnector Association="CIModel.FK_T_SubReleases_T_Status" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CIModel.T_Users" Width="1.5" PointX="3.375" PointY="0.75" />
+      <Diagram DiagramId="632673f918e340a094e761db15712a4c" Name="Diagram1">
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_Projects" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_Registrations" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_ReleaseMappings" Width="1.5" PointX="7.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_Releases" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_Roles" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_Status" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_Streams" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_SubReleases" Width="1.5" PointX="10.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_UserProjectMappings" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContinuousIntegrationModel.T_UserRoleMappings" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_Streams_T_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_UserProjectMappings_T_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_UserProjectMappings_T_Registrations" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_UserRoleMappings_T_Registrations" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_ReleaseMappings_T_Releases" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_ReleaseMappings_T_Releases1" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_ReleaseMappings_T_SubReleases" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_Releases_T_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_Releases_T_Streams" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_SubReleases_T_Releases" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_UserRoleMappings_T_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="ContinuousIntegrationModel.FK_T_SubReleases_T_Status" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

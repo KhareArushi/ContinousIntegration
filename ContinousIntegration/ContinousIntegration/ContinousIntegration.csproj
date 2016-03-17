@@ -232,25 +232,29 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\JavascriptResult.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ParentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="GetAllProjects_Result.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Data.cs" />
-    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\MessageServices.cs" />
     <Compile Include="Models\Parent.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectList.cs" />
     <Compile Include="Models\Releases.cs" />
+    <Compile Include="Models\SendMailViewModel.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Streams.cs" />
     <Compile Include="Models\SubReleases.cs" />
     <Compile Include="Models\URegisteration.cs" />
+    <Compile Include="Models\Validation.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -279,6 +283,9 @@
     <Compile Include="T_Releases.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="T_Roles.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_Status.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -288,7 +295,10 @@
     <Compile Include="T_SubReleases.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="T_Users.cs">
+    <Compile Include="T_UserProjectMappings.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T_UserRoleMappings.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -420,15 +430,7 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -436,10 +438,13 @@
     <Content Include="Views\Parent\TreeView.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\GetTreeView.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\validateuser.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Error.cshtml" />
+    <Content Include="Views\Account\EmailSent.cshtml" />
+    <Content Include="Views\templates\WelcomeEmail.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

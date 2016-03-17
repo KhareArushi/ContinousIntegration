@@ -6,11 +6,16 @@ using System.Web.Mvc;
 
 namespace ContinousIntegration.Controllers
 {
+    /// <summary>
+    /// Parent controller of all the projects
+    /// </summary>
     public class ParentController : Controller
     {
-        //
-        // GET: /Parent/
-
+        /// <summary>
+        /// This method will generate tree view of the projects
+        /// and its details
+        /// </summary>
+        /// <returns>Treeview of all the projects</returns>
         public ActionResult TreeView()
         {
             ContinousIntegration.Models.Data pqr = new ContinousIntegration.Models.Data();
