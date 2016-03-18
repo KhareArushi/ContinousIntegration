@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.Security;
 
+
 namespace ContinousIntegration.Controllers
 {
     /// <summary>
@@ -78,7 +79,7 @@ namespace ContinousIntegration.Controllers
             {
                 var projects = new List<T_Projects>();
                 T_Projects project;
-                using (ContinuousIntegrationEntity1 ci = new ContinuousIntegrationEntity1())
+                using (ContinuousIntegrationEntity ci = new ContinuousIntegrationEntity())
                 {
                     var listOfProjects = ci.GetAllProjects(userID);
 
@@ -99,7 +100,7 @@ namespace ContinousIntegration.Controllers
                 throw new ApplicationException("Error: " + e);
             }
         }
-
+       
         /// <summary>
         /// This method will send an email to notify the user
         /// of his registration
@@ -112,19 +113,20 @@ namespace ContinousIntegration.Controllers
             try
             {
                 var model = val;
-
+ 
                 //Validate the user
-                ContinuousIntegrationEntity1 ci = new ContinuousIntegrationEntity1();
+                ContinuousIntegrationEntity ci = new ContinuousIntegrationEntity();
                 var user = (from a in ci.T_Registrations 
                             where a.C_FirstName == val.C_UserName && a.C_Password == val.C_UserPassword
                             select a).FirstOrDefault();
-
+                
                 if (user == null)
                 {
                     ModelState.AddModelError("", "Invalid username or password");
                     return View("Login");
                 }
-
+                Session["LoggedUserID"] = user.C_RegisterID.ToString();
+                Session["LoggedUserName"] = user.C_FirstName.ToString();
                 return RedirectToAction("List", "User", new { userID = user.C_RegisterID });
             }
             catch (Exception e)
@@ -132,7 +134,7 @@ namespace ContinousIntegration.Controllers
                 throw new ApplicationException("Error: " + e);
             }
         }
-
+       
         /// <summary>
         /// This method will display the view having
         /// development status
@@ -151,8 +153,9 @@ namespace ContinousIntegration.Controllers
                     Streams = dataObj.GetallStreams(),
                     Release = dataObj.GetallReleases(),
                     SubReleases = dataObj.GetallSubReleases()
-                };
 
+                };
+              
                 return View("GetTreeView", parent);
             }
             catch (Exception e)

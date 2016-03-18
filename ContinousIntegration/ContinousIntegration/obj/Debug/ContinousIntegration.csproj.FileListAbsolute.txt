@@ -162,5 +162,6 @@ D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegrati
 D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegration\ContinousIntegration\bin\ru\System.Spatial.resources.dll
 D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegration\ContinousIntegration\bin\zh-Hans\System.Spatial.resources.dll
 D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegration\ContinousIntegration\bin\zh-Hant\System.Spatial.resources.dll
+D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegration\ContinousIntegration\obj\Debug\ContinousIntegration.csprojResolveAssemblyReference.cache
 D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegration\ContinousIntegration\obj\Debug\ContinousIntegration.dll
 D:\Projects\ContinuousIntegration\Source\ContinousIntegration\ContinousIntegration\ContinousIntegration\obj\Debug\ContinousIntegration.pdb

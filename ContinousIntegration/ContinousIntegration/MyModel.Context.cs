@@ -16,10 +16,10 @@ namespace ContinousIntegration
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class ContinuousIntegrationEntity1 : DbContext
+    public partial class ContinuousIntegrationEntity : DbContext
     {
-        public ContinuousIntegrationEntity1()
-            : base("name=ContinuousIntegrationEntity1")
+        public ContinuousIntegrationEntity()
+            : base("name=ContinuousIntegrationEntity")
         {
         }
     
