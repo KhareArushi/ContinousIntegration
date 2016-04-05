@@ -10,16 +10,16 @@
 namespace ContinousIntegration
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class T_UserProjectMappings
+    public partial class ProjectDetails_Result
     {
-        public int C_MapID { get; set; }
-        public int C_RegisterID { get; set; }
-        public Nullable<int> C_ProjectID { get; set; }
-        public System.DateTime C_LastModified { get; set; }
-    
-        public virtual T_Projects T_Projects { get; set; }
-        public virtual T_Registrations T_Registrations { get; set; }
+        public int C_StreamID { get; set; }
+        public string C_StreamName { get; set; }
+        public Nullable<int> C_ReleaseID { get; set; }
+        public string C_ReleaseName { get; set; }
+        public Nullable<int> C_SubReleaseID { get; set; }
+        public string C_SubReleaseName { get; set; }
+        public Nullable<int> C_StatusID { get; set; }
+        public string C_StatusName { get; set; }
     }
 }

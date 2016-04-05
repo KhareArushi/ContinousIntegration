@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ContinousIntegration.Models
 {
-    public class Project
+    public class Statuses
     {
         public string C_StatusName { get; set; }
     }

@@ -2,13 +2,9 @@
 
 @{
     ViewBag.Title = "Login";
-}
-
-@{
     Layout = "~/Views/Shared/_Login.cshtml";
+    Html.EnableClientValidation();
 }
-
-@{ Html.EnableClientValidation(); }
 
 @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "date" }))
 {
@@ -22,11 +18,10 @@
             @Html.PasswordFor(model => model.C_UserPassword, new { @class = "form-control ", placeholder = "Password", id = "inputPassword" })
             @Html.ValidationSummary("", new { @style = "color: red; font-family:PoorRichard" })
             <br />
-
             <br />
             <button class="btn btn-lg btn-primary btn-block" type="submit" style="width:50%; float:left;">Login</button>
             @Html.ActionLink("Register", "Registration", "User", new { @class = "btn btn-lg btn-primary btn-block registerBtn" })
             <br /><br />
         </form>
-    </div>}
-
+    </div>
+}

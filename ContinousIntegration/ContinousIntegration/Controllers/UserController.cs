@@ -9,7 +9,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.Security;
 
-
 namespace ContinousIntegration.Controllers
 {
     /// <summary>
@@ -73,17 +72,18 @@ namespace ContinousIntegration.Controllers
         /// </summary>
         /// <param name="reg">TProjects model</param>
         /// <returns>List view</returns>
-        public ActionResult List(int? userID)
+        public ActionResult List() //int? userID is for receiving id through querystring 
         {
             try
             {
                 var projects = new List<T_Projects>();
                 T_Projects project;
-                using (ContinuousIntegrationEntity ci = new ContinuousIntegrationEntity())
+                using (ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
                 {
-                    var listOfProjects = ci.GetAllProjects(userID);
+                    var UID = Convert.ToInt32(Session["LoggedUserID"]);
+                    var listOfProjects = ci.GetAllProjects(UID);
 
-                    foreach (var item in listOfProjects) //loop to populate Projects with list of projects
+                    foreach (var item in listOfProjects) //loop to populate Project with list of projects
                     {
                         project = new T_Projects();
                         project.C_ProjectID = item.C_ProjectID;
@@ -100,7 +100,7 @@ namespace ContinousIntegration.Controllers
                 throw new ApplicationException("Error: " + e);
             }
         }
-       
+
         /// <summary>
         /// This method will send an email to notify the user
         /// of his registration
@@ -113,13 +113,13 @@ namespace ContinousIntegration.Controllers
             try
             {
                 var model = val;
- 
+
                 //Validate the user
-                ContinuousIntegrationEntity ci = new ContinuousIntegrationEntity();
-                var user = (from a in ci.T_Registrations 
+                ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities();
+                var user = (from a in ci.T_Registrations
                             where a.C_FirstName == val.C_UserName && a.C_Password == val.C_UserPassword
                             select a).FirstOrDefault();
-                
+
                 if (user == null)
                 {
                     ModelState.AddModelError("", "Invalid username or password");
@@ -127,41 +127,135 @@ namespace ContinousIntegration.Controllers
                 }
                 Session["LoggedUserID"] = user.C_RegisterID.ToString();
                 Session["LoggedUserName"] = user.C_FirstName.ToString();
-                return RedirectToAction("List", "User", new { userID = user.C_RegisterID });
+                //TempData["UserID"] = user.C_RegisterID;
+                return RedirectToAction("List", "User");
+
+                //return RedirectToAction("List", "User", new { userID = user.C_RegisterID });
             }
             catch (Exception e)
             {
                 throw new ApplicationException("Error: " + e);
             }
         }
-       
+
         /// <summary>
         /// This method will display the view having
         /// development status
         /// </summary>
-        /// <param name="reg"></param>
+        /// <param name="id">Project Id</param>
         /// <returns>GetTreeView view</returns>
         public ActionResult GetTreeView(int id)
         {
-            try
-            {
-                Data dataObj = new Data();
-                Parent parent = new Parent
-                {
-                    Project = dataObj.GetallStatus(),
-                    ProjectList = dataObj.GetallProjects(),
-                    Streams = dataObj.GetallStreams(),
-                    Release = dataObj.GetallReleases(),
-                    SubReleases = dataObj.GetallSubReleases()
+            Data dataObj = new Data();
+            Parent parent = new Parent();
+            T_Status t = new T_Status();
 
-                };
-              
-                return View("GetTreeView", parent);
-            }
-            catch (Exception e)
+            parent.Statuses = dataObj.GetallStatus();
+
+            using (ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
             {
-                throw new ApplicationException("Error:" + e);
+                var UID = Convert.ToInt32(Session["LoggedUserID"]);
+
+                //linq to check user has access to given project or not
+                var isUser = (from a in ci.T_UserProjectMappings
+                              where a.C_RegisterID == UID && a.C_ProjectID == id
+                              select a).FirstOrDefault();
+
+                var isAdmin = (from t1 in ci.T_UserRoleMappings
+                               where t1.C_RoleID == 1 && t1.C_RegisterID == UID
+                               select t1).FirstOrDefault();
+
+                var doesProjectExists = (from t1 in ci.T_Projects
+                                         where t1.C_ProjectID == id
+                                         select t1).FirstOrDefault();
+
+                if (doesProjectExists == null)
+                {
+                    ViewBag.Msg = "This project doesnot exists!";
+                    return View("ErrorPage");
+                }
+                else if (isAdmin == null && isUser == null)
+                {
+                    ViewBag.Msg = "You are not assigned this project.";
+                    return View("ErrorPage");
+                }
+                else
+                {
+                    var projectDetails = ci.ProjectDetails(UID, id);
+
+                    parent.Release = new List<T_Releases>();
+                    parent.SubReleases = new List<T_SubReleases>();
+                    parent.Project = new List<T_Status>();
+                    parent.Streams = new List<T_Streams>();
+
+                    foreach (var item in projectDetails) //loop to populate with Pdetails
+                    {
+                        #region Streams
+
+                        var stream = new T_Streams()
+                        {
+                            C_StreamName = item.C_StreamName,
+                            C_StreamID = item.C_StreamID
+                        };
+                        parent.Streams.Add(stream);
+
+                        #endregion
+
+                        #region Release
+
+                        var release = new T_Releases()
+                        {
+                            C_ReleaseName = item.C_ReleaseName,
+                            C_StreamID = item.C_StreamID,
+                            C_ReleaseID = Convert.ToInt32(item.C_ReleaseID)
+                        };
+                        parent.Release.Add(release);
+
+                        #endregion
+
+                        #region SubRelease
+
+                        T_SubReleases subRelease = new T_SubReleases()
+                        {
+                            C_SubReleaseName = item.C_SubReleaseName,
+                            C_ReleaseID = Convert.ToInt32(item.C_ReleaseID),
+                            C_StatusID = Convert.ToInt32(item.C_StatusID)
+                        };
+                        parent.SubReleases.Add(subRelease);
+
+                        #endregion
+
+                        #region ProjectStatus
+
+                        T_Status status = new T_Status()
+                        {
+                            C_StatusName = item.C_StatusName,
+                            C_StatusID = Convert.ToInt32(item.C_StatusID)
+                        };
+                        parent.Project.Add(status);
+
+                        #endregion
+                    }
+
+                    return View("GetTreeView", parent);
+                }
             }
+        }
+
+        /// <summary>
+        /// Logs out the user
+        /// </summary>
+        /// <returns>To the login pages</returns>
+        public ActionResult Logout()
+        {
+            //Disable back button In all browsers.
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index", "User");
         }
     }
 }

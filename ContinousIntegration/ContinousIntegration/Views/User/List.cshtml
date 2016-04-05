@@ -8,44 +8,8 @@
 
 
 <h2>Project Summary</h2>
-<style type="text/css">
-    .webgrid-table {
-        font-family: "Trebuchet MS",Arial,Melvetica,sans-serif;
-        font-size: 2px;
-        width: 100%;
-        display: table;
-        border-collapse: separate;
-        border: solid 1px #988F21;
-        background-color: white;
-    }
 
-    .webgrid-table, td, th {
-        border: 1px solid #98BF21;
-        padding: 3px 7px 2px;
-    }
-
-    .webgrid-header {
-        background-color: #A7C942;
-        color: #FFFFFF;
-        padding-bottom: 4px;
-        padding-top: 5px;
-        text-align: left;
-    }
-
-    .webgrid-footer {
-    }
-
-    .webgrid-row-style {
-        padding: 3px 7px 2px;
-    }
-
-    .webgrid-alternating-row {
-        background-color: #EAF203;
-        padding: 3px 7px 2px;
-    }
-</style>
 <div id:"content">
-   
     @grid.GetHtml(
             tableStyle: "Webgrid-table",
             headerStyle: "webgrid-header",
@@ -54,7 +18,7 @@
             rowStyle: "webgrid-row-style",
             columns: grid.Columns(
             grid.Column("C_ProjectID", "Project Id"),
-            grid.Column("C_ProjectName", "Project Name", format: (item) => @Html.ActionLink(((string)item.C_ProjectName), "GetTreeView", new { id = item.C_ProjectID })),
+            grid.Column("C_ProjectName", "Project Name", format: (item) => @Html.RouteLink(((string)item.C_ProjectName), new { action = "GetTreeView", id = item.C_ProjectID })),
             grid.Column("C_ProjectDescription", "Project Description"),
             grid.Column("C_LastModified", "Last Modified"))
             )

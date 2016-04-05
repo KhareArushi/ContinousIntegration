@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ContinuousIntegrationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ContinuousIntegrationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="T_Projects">
           <Key>
             <PropertyRef Name="C_ProjectID" />
@@ -84,7 +84,7 @@
           </Key>
           <Property Name="C_MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="C_RegisterID" Type="int" Nullable="false" />
-          <Property Name="C_ProjectID" Type="int" Nullable="false" />
+          <Property Name="C_ProjectID" Type="int" />
           <Property Name="C_LastModified" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="T_UserRoleMappings">
@@ -193,7 +193,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_T_UserProjectMappings_T_Projects">
-          <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="1" />
+          <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="0..1" />
           <End Role="T_UserProjectMappings" Type="Self.T_UserProjectMappings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Projects">
@@ -242,6 +242,10 @@
         </Association>
         <Function Name="GetAllProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProjectDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ContinuousIntegrationModelStoreContainer">
           <EntitySet Name="T_Projects" EntityType="Self.T_Projects" Schema="dbo" store:Type="Tables" />
@@ -303,8 +307,7 @@
             <End Role="T_UserRoleMappings" EntitySet="T_UserRoleMappings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ContinuousIntegrationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -407,7 +410,7 @@
           </Key>
           <Property Name="C_MapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="C_RegisterID" Type="Int32" Nullable="false" />
-          <Property Name="C_ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="C_ProjectID" Type="Int32" />
           <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="T_Projects" Relationship="Self.FK_T_UserProjectMappings_T_Projects" FromRole="T_UserProjectMappings" ToRole="T_Projects" />
           <NavigationProperty Name="T_Registrations" Relationship="Self.FK_T_UserProjectMappings_T_Registrations" FromRole="T_UserProjectMappings" ToRole="T_Registrations" />
@@ -436,7 +439,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_T_UserProjectMappings_T_Projects">
-          <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="1" />
+          <End Role="T_Projects" Type="Self.T_Projects" Multiplicity="0..1" />
           <End Role="T_UserProjectMappings" Type="Self.T_UserProjectMappings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="T_Projects">
@@ -567,7 +570,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ContinuousIntegrationEntity1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ContinuousIntegrationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_Projects" EntityType="Self.T_Projects" />
           <EntitySet Name="T_Registrations" EntityType="Self.T_Registrations" />
           <EntitySet Name="T_ReleaseMappings" EntityType="Self.T_ReleaseMappings" />
@@ -627,7 +630,11 @@
             <End Role="T_SubReleases" EntitySet="T_SubReleases" />
           </AssociationSet>
           <FunctionImport Name="GetAllProjects" ReturnType="Collection(ContinuousIntegrationModel.GetAllProjects_Result)">
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProjectDetails" ReturnType="Collection(ContinuousIntegrationModel.ProjectDetails_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllProjects_Result">
@@ -636,12 +643,22 @@
           <Property Type="String" Name="C_ProjectDescription" Nullable="false" />
           <Property Type="DateTime" Name="C_LastModified" Nullable="false" Precision="23" />
         </ComplexType>
+        <ComplexType Name="ProjectDetails_Result">
+          <Property Type="Int32" Name="C_StreamID" Nullable="false" />
+          <Property Type="String" Name="C_StreamName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="C_ReleaseID" Nullable="true" />
+          <Property Type="String" Name="C_ReleaseName" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="C_SubReleaseID" Nullable="true" />
+          <Property Type="String" Name="C_SubReleaseName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="C_StatusID" Nullable="true" />
+          <Property Type="String" Name="C_StatusName" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ContinuousIntegrationModelStoreContainer" CdmEntityContainer="ContinuousIntegrationEntity1">
+        <EntityContainerMapping StorageEntityContainer="ContinuousIntegrationModelStoreContainer" CdmEntityContainer="ContinuousIntegrationEntities">
           <EntitySetMapping Name="T_Projects">
             <EntityTypeMapping TypeName="ContinuousIntegrationModel.T_Projects">
               <MappingFragment StoreEntitySet="T_Projects">
@@ -750,6 +767,20 @@
                 <ScalarProperty Name="C_ProjectName" ColumnName="C_ProjectName" />
                 <ScalarProperty Name="C_ProjectDescription" ColumnName="C_ProjectDescription" />
                 <ScalarProperty Name="C_LastModified" ColumnName="C_LastModified" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProjectDetails" FunctionName="ContinuousIntegrationModel.Store.ProjectDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContinuousIntegrationModel.ProjectDetails_Result">
+                <ScalarProperty Name="C_StreamID" ColumnName="C_StreamID" />
+                <ScalarProperty Name="C_StreamName" ColumnName="C_StreamName" />
+                <ScalarProperty Name="C_ReleaseID" ColumnName="C_ReleaseID" />
+                <ScalarProperty Name="C_ReleaseName" ColumnName="C_ReleaseName" />
+                <ScalarProperty Name="C_SubReleaseID" ColumnName="C_SubReleaseID" />
+                <ScalarProperty Name="C_SubReleaseName" ColumnName="C_SubReleaseName" />
+                <ScalarProperty Name="C_StatusID" ColumnName="C_StatusID" />
+                <ScalarProperty Name="C_StatusName" ColumnName="C_StatusName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

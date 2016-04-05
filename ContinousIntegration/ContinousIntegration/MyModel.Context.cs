@@ -16,10 +16,10 @@ namespace ContinousIntegration
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class ContinuousIntegrationEntity : DbContext
+    public partial class ContinuousIntegrationEntities : DbContext
     {
-        public ContinuousIntegrationEntity()
-            : base("name=ContinuousIntegrationEntity")
+        public ContinuousIntegrationEntities()
+            : base("name=ContinuousIntegrationEntities")
         {
         }
     
@@ -46,6 +46,19 @@ namespace ContinousIntegration
                 new ObjectParameter("UserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProjects_Result>("GetAllProjects", userIdParameter);
+        }
+    
+        public virtual ObjectResult<ProjectDetails_Result> ProjectDetails(Nullable<int> userID, Nullable<int> projectID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectDetails_Result>("ProjectDetails", userIDParameter, projectIDParameter);
         }
     }
 }

@@ -14,6 +14,11 @@ namespace ContinousIntegration.Models
         /// Model containing the status
         /// </summary>
         public List<T_Status> Project { get; set; }
+         
+        /// <summary>
+        /// Model containing unique status 
+        /// </summary>
+        public List<T_Status> Statuses { get; set; }
 
         /// <summary>
         /// Model containing all projects
@@ -35,9 +40,9 @@ namespace ContinousIntegration.Models
         /// </summary>
         public List<T_SubReleases> SubReleases { get; set; }
 
-        /// <summary>
-        /// Model containing Registration details
-        /// </summary>
-        public List<T_Registrations> Users { get; set; }     
+        ///// <summary>
+        ///// Model containing Registration details
+        ///// </summary>
+        //public List<T_Registrations> Users { get; set; }     
     }
 }

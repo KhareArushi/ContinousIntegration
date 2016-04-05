@@ -16,82 +16,69 @@
                         <div class="sepCrossLine" style=""></div>
                         Stream <i class="fa  fa-angle-down"></i>
                     </th>
-
                     @*Loops*@
 
-                    @foreach (var item in Model.Project)
+                    @foreach (var item in Model.Statuses)
                     {
-                        <th style="width:10%;" class="text-center">@Html.DisplayFor(modelItem => item.C_StatusName)</th>
+                        <th style="width:10%;" class="text-center">@Html.DisplayFor(modelItem => @item.C_StatusName)</th>
                     }
                 </tr>
 
-                @foreach (var item in Model.ProjectList)
+                @foreach (var item in Model.Streams.Select(x => new { x.C_StreamName, x.C_StreamID }).Distinct())
                 {
-                    @*<tr data-tt-id="@item.C_ProjectID">
-                            @Html.Label("", "Project Details Of")
-                            <td>@Html.DisplayFor(modelItem => item.C_ProjectName)</td>
+                    <tr data-tt-id="@item.C_StreamID">
+                        <td class="text-primary">@Html.DisplayFor(modelItem => @item.C_StreamName)</td>
+                        <td>&nbsp;</td>
+                        <td> &nbsp;</td>
+                        <td> &nbsp;</td>
+                        <td> &nbsp;</td>
+                        <td> &nbsp;</td>
+                        <td> &nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
 
-                        </tr>*@
-
-
-                    foreach (var item1 in Model.Streams)
+                    foreach (var item1 in Model.Release.Select(x => new { x.C_ReleaseName, x.C_StreamID, x.C_ReleaseID }).Distinct())
                     {
-                        if (@item.C_ProjectID == @item1.C_ProjectID)
+                        if (@item1.C_ReleaseName != null)
                         {
-                            <tr data-tt-id="@item1.C_StreamID-@item.C_ProjectID" data-tt-parent-id="@item.C_ProjectID">
-                                <td class="text-primary">@Html.DisplayFor(modelItem => item1.C_StreamName)</td>
-                                <td>&nbsp;</td>
-                                <td> &nbsp;</td>
-                                <td> &nbsp;</td>
-                                <td> &nbsp;</td>
-                                <td> &nbsp;</td>
-                                <td> &nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                        }
-
-                        foreach (var item2 in Model.Release)
-                        {
-                            if (@item1.C_StreamID == @item2.C_StreamID && @item.C_ProjectID == @item1.C_ProjectID)
+                            if (@item.C_StreamID == @item1.C_StreamID)
                             {
-                                <tr data-tt-id="@item2.C_ReleaseID-@item1.C_StreamID-@item.C_ProjectID" data-tt-parent-id="@item1.C_StreamID-@item.C_ProjectID">
-                                    <td>@Html.DisplayFor(modelItem => item2.C_ReleaseName)</td>
+                                <tr data-tt-id="@item1.C_ReleaseID-@item.C_StreamID" data-tt-parent-id="@item.C_StreamID">
+                                    <td>@Html.DisplayFor(modelItem => @item1.C_ReleaseName)</td>
                                     <td>&nbsp;</td>
                                     <td> &nbsp;</td>
                                     <td> &nbsp;</td>
                                     <td> &nbsp;</td>
                                     <td> &nbsp;</td>
                                     <td> &nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td> &nbsp;</td>
                                 </tr>
                             }
 
-
-                            foreach (var item3 in Model.SubReleases)
+                            foreach (var item2 in Model.SubReleases)
                             {
-                                if (@item2.C_ReleaseID == @item3.C_ReleaseID && @item1.C_StreamID == @item2.C_StreamID && @item.C_ProjectID == @item1.C_ProjectID)
+                                if (@item1.C_ReleaseID == @item2.C_ReleaseID && @item.C_StreamID == @item1.C_StreamID)
                                 {
-                                    <tr data-tt-id="@item3.C_SubReleaseID-@item2.C_ReleaseID-@item1.C_StreamID-@item.C_ProjectID" data-tt-parent-id="@item2.C_ReleaseID-@item1.C_StreamID-@item.C_ProjectID" class="center-text">
-                                        <td>@Html.DisplayFor(modelItem => item3.C_SubReleaseName)</td>
+                                    <tr data-tt-id="@item2.C_SubReleaseID-@item1.C_ReleaseID-@item.C_StreamID" data-tt-parent-id="@item1.C_ReleaseID-@item.C_StreamID" class="center-text">
+                                        <td>@Html.DisplayFor(modelItem => @item2.C_SubReleaseName)</td>
 
-                                                @for (int i = 1; i <=7; i++ )
-                                                {
-                                                    if (@item3.C_StatusID == i)
-                                                    {
-                                                    <td> <span class="glyphicon glyphicon-option-horizontal text-warning" aria-hidden="true" aria-label="In Progress" title="In Progress"></span></td>
-                                                     }
-                                                    else if(@item3.C_StatusID < i)
-                                                    {
-                                                     <td> <span class="glyphicon glyphicon-exclamation-sign text-primary" aria-hidden="true" aria-label="Pending" title="Pending"></span></td>   
-                                                    }
-                                                    else 
-                                                    { 
-                                                        <td> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" aria-label="Completed" title="Completed"></span></td> 
-                                       
-                                                    }}
+                                        @for (int i = 1; i <= 7; i++)
+                                        {
+                                            if (@item2.C_StatusID == i)
+                                            {
+                                                <td> <span class="glyphicon glyphicon-option-horizontal text-warning" aria-hidden="true" aria-label="In Progress" title="In Progress"></span></td>
+                                            }
+                                            else if (@item2.C_StatusID < i)
+                                            {
+                                                <td> <span class="glyphicon glyphicon-exclamation-sign text-primary" aria-hidden="true" aria-label="Pending" title="Pending"></span></td>
+                                            }
+                                            else
+                                            {
+                                                <td> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" aria-label="Completed" title="Completed"></span></td>
+                                            }
+                                        }
                                     </tr>
                                 }
-
                             }
                         }
                     }
@@ -104,8 +91,7 @@
 @*Script for collapse*@
 
 <script>
-    $(document).ready(function () {
-       // $("#tree-table").treetable({ expandable: true });
+    $(document).ready(function () {        
         $("#tree-table").treetable({ expandable: true, clickableNodeNames: true });
     });
 </script>
