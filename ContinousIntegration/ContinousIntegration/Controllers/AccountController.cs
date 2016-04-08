@@ -28,7 +28,7 @@ namespace ContinousIntegration.Controllers
         /// <param name="reg">URegistration model</param>
         /// <returns>Email sent view</returns>
         [HttpGet]
-        public ActionResult SendEmail(URegisteration reg)
+        public ActionResult SendEmail(UserRegisteration reg)
         {           
             var message = EMailTemplate("WelcomeEmail");
             message = message.Replace("@ViewBag.Name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reg.C_FirstName));

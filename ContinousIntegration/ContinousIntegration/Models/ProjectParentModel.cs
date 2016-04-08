@@ -8,22 +8,22 @@ namespace ContinousIntegration.Models
     /// <summary>
     /// Contains all the models
     /// </summary>
-    public class Parent
+    public class ProjectParentModel
     {
         /// <summary>
-        /// Model containing the status
+        /// Model containing the status details
         /// </summary>
-        public List<T_Status> Project { get; set; }
+        public List<T_Status> ProjectStatus { get; set; }
          
         /// <summary>
-        /// Model containing unique status 
+        /// Model containing unique status details
         /// </summary>
         public List<T_Status> Statuses { get; set; }
 
         /// <summary>
-        /// Model containing all projects
+        /// Model containing all projects details
         /// </summary>
-        public List<T_Projects> ProjectList { get; set; }
+        public List<T_Projects> Projects { get; set; }
 
         /// <summary>
         /// Model containing streams of department
@@ -33,16 +33,11 @@ namespace ContinousIntegration.Models
         /// <summary>
         /// Model containing Releases
         /// </summary>
-        public List<T_Releases> Release { get; set; }
+        public List<T_Releases> Releases { get; set; }
 
         /// <summary>
         /// Model containing SubReleases
         /// </summary>
         public List<T_SubReleases> SubReleases { get; set; }
-
-        ///// <summary>
-        ///// Model containing Registration details
-        ///// </summary>
-        //public List<T_Registrations> Users { get; set; }     
     }
 }

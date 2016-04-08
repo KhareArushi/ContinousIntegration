@@ -9,13 +9,23 @@ using System.Web;
 
 namespace ContinousIntegration.Models
 {
+    /// <summary>
+    /// Message service class
+    /// </summary>
     public class MessageServices
     {
-        public  static void SendEmail(string email, string subject, string message)
+        /// <summary>
+        /// Method to send email to the register user
+        /// </summary>
+        /// <param name="email">Email of the user</param>
+        /// <param name="subject">Subject of the email</param>
+        /// <param name="message">Message to be sent</param>
+        public static void SendEmail(string email, string subject, string message)
         {
             var _email = ConfigurationManager.AppSettings["FromMail"];
             var _epass = ConfigurationManager.AppSettings["EmailPassword"];
             var _dispName = ConfigurationManager.AppSettings["CI_Team"];
+
             MailMessage mymessage = new MailMessage();
             mymessage.To.Add(new MailAddress(email));
             mymessage.From = new MailAddress(_email, _dispName);
@@ -37,7 +47,7 @@ namespace ContinousIntegration.Models
                 }
                 catch (Exception ex)
                 {
-                   throw ex;
+                    throw ex;
                 }
             }
         }

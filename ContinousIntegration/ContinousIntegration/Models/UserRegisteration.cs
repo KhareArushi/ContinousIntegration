@@ -6,35 +6,38 @@ using System.Web;
 
 namespace ContinousIntegration.Models
 {
-    public class URegisteration
+    /// <summary>
+    /// Class used for user registration
+    /// </summary>
+    public class UserRegisteration
     {
+
         public object reg;
 
-        public URegisteration(object reg)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public UserRegisteration()
         {
-            // TODO: Complete member initialization
-            this.reg = reg;
+
         }
-       [Required(ErrorMessage="Please provide First name")]
+
+        [Required(ErrorMessage = "Please provide First name")]
         public string C_FirstName { get; set; }
 
         [Required(ErrorMessage = "Please provide Last name")]
         public string C_LastName { get; set; }
 
         [Required(ErrorMessage = "Please provide Email Address")]
-        [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$",ErrorMessage="Email Address not valid")]
+        [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$", ErrorMessage = "Email Address not valid")]
         public string C_EmailID { get; set; }
 
         [Required(ErrorMessage = "Please provide Password")]
         public string C_Password { get; set; }
 
-        
-        [Compare("C_Password", ErrorMessage = "does not match")]
+        [Compare("C_Password", ErrorMessage = "Password does not match")]
         public string C_CnfPassword { get; set; }
 
-        public URegisteration()
-        {
-           
-        }
+
     }
 }

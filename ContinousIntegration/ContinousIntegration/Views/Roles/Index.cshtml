@@ -1,0 +1,180 @@
+﻿@model ContinousIntegration.Models.ConfigurationModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("AccessRoles", "Roles", FormMethod.Post))
+{
+
+    <div>
+        @Html.Label("Users:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px" })
+
+        @Html.DropDownListFor(p => p.SelectedUserID, Model.Users, "Select", new
+       {
+           @class = "form-control",
+           style = "width:20%",
+           name = "list",
+           @onchange = "FillProjectListBoxes()"
+       })
+    </div>
+    <br /><br />
+
+    <div style="font-size: large; font-weight: bold; font-family:Andalus;">
+        @foreach (var item in Model.Roles)
+        {
+            @Html.RadioButtonFor(p => p.SelectedRoleID, item.C_RoleID, new { style = "width:20%, height:20%", name = "radiobtn" })
+            @Html.Label(item.C_RoleName)
+        }
+
+    </div>
+    <br /><br />
+
+    <div>
+        <table>
+            <tr>
+                <td>@Html.Label("Projects Available:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px" })</td>
+                <td>&nbsp;</td>
+                <td>@Html.Label("Projects Assigned:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px" })</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ListBoxFor(p => p.ProjectsAvailable, Model.AvailableProjects, new { @class = "form-control", style = "width: 200px; height: 140px;" })
+                </td>
+
+                <td>
+                    <button class="btn btn-primary" type="submit" id="btnAdd" style="width:60px;height:30px;">> </button><br />
+                    <button class="btn btn-primary" type="submit" id="btnAddAll" style="width: 60px; height: 30px;">>></button><br />
+                    <button class="btn btn-primary" type="submit" id="btnRemove" style="width: 60px; height: 30px;"> <</button><br />
+                    <button class="btn btn-primary" type="submit" id="btnRemoveAll" style="width:60px; height: 30px;"><<</button>
+                </td>
+
+                <td>
+                    @Html.ListBoxFor(p => p.ProjectsAssigned, Model.AssignedProjects, new { @class = "form-control", style = "width: 200px; height: 140px;" })
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <button class="btn  btn-primary" type="button" id="sub" onclick="SaveProjectDetails()">Submit</button>
+
+
+    @*Script to swap values *@
+    <script type="text/javascript">
+        $(document).ready(
+            function () {
+                $('#btnAdd').click(
+               function (event) {
+                   $('#ProjectsAvailable > option:selected').appendTo('#ProjectsAssigned');
+                   event.preventDefault();
+               });
+
+                $('#btnAddAll').click(
+                function (event) {
+                    $('#ProjectsAvailable > option').appendTo('#ProjectsAssigned');
+                    event.preventDefault();
+                });
+
+                $('#btnRemove').click(
+                function (event) {
+                    $('#ProjectsAssigned > option:selected').appendTo('#ProjectsAvailable');
+                    event.preventDefault();
+                });
+
+                $('#btnRemoveAll').click(
+                function (event) {
+                    $('#ProjectsAssigned > option').appendTo('#ProjectsAvailable');
+                    event.preventDefault();
+                });
+            });
+
+        //Ajax method to get the data from GetRoleID controller
+        function FillProjectListBoxes() {
+            var userID = $('#SelectedUserID').val();
+            $.ajax({
+                url: '/Roles/GetConfigurationDetails',
+                type: 'GET',
+                dataType: 'JSON',
+                data: { userId: userID },
+                success: function (configurationDetails) {
+                    $('#ProjectsAssigned').empty();
+
+                    //populating project details in ProjectsAssigned Listbox
+                    $.each(configurationDetails.AssignedProjects, function (value, index) {
+                        ($('<option>').text(index.Text).val(index.Value)).appendTo('#ProjectsAssigned');
+                    });
+
+                    //populating project details in ProjectsAvailable Listbox
+                    $('#ProjectsAvailable').empty();
+                    $.each(configurationDetails.AvailableProjects, function (value, index) {
+                        ($('<option>').text(index.Text).val(index.Value)).appendTo('#ProjectsAvailable');
+                    });
+
+                    //checking role id for radioutton to be checked
+                    if (configurationDetails.RoleId == 1) {                      
+                        $("input[name=SelectedRoleID][value='1']").prop('checked', true);
+                    }
+                    else if (configurationDetails.RoleId == 2) {
+                        $("input[name=SelectedRoleID][value='2']").prop("checked", true);
+                    }
+                },
+                error: function (exception) {
+                    debugger
+                    var responseMessage = jQuery.parseJSON(exception.responseText);
+                    alert("Message: " + responseMessage.Message);
+                    alert("StackTrace: " + responseMessage.StackTrace);
+                    alert("ExceptionType: " + responseMessage.ExceptionType);
+                }
+            });
+        }
+
+        //Ajax call to send user selected data to controller
+        function SaveProjectDetails() {
+
+            //array for getting project details which are in  ProjectsAssigned listbox
+            var assignedValues = [];
+            $('#ProjectsAssigned option').each(function (counter, index) {
+                assignedValues[counter] = $(index).val();
+            });
+
+            //array for getting project details which are in  ProjectsAvailable listbox
+            var availableValues = [];
+            $('#ProjectsAvailable option').each(function (counter, index) {
+                availableValues[counter] = $(index).val();
+            });
+
+            //json object to send to the controller
+            var projectDetails = JSON.stringify({
+
+                'SelectedUserID': $('#SelectedUserID').val(),
+                'SelectedRoleID': $('#SelectedRoleID').val(),
+                'ProjectsAssigned': assignedValues,
+                'ProjectsAvailable': availableValues
+            });
+
+            $.ajax({
+                url: '/Roles/AccessRoles',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'JSON',
+                data: projectDetails,
+                success: function (isSuccess) {
+                    debugger
+                    if (isSuccess == true) {
+                        alert("Changes saved successfully.");
+                    }
+                    else {
+                        alert("There was some problem while saving.");
+                    }
+                },
+                error: function (ex) {
+                    alert("There was some problem while saving.");
+                    var responseText = jQuery.parseJSON(ex.responseText);
+                    alert("Message: " + responseMessage.Message);
+                    alert("StackTrace: " + responseMessage.StackTrace);
+                    alert("ExceptionType: " + responseMessage.ExceptionType);
+                }
+            });
+        }
+    </script>
+}

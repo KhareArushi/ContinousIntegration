@@ -42,22 +42,23 @@ namespace ContinousIntegration.Controllers
         /// <summary>
         /// This method will save the details of user
         /// </summary>
-        /// <param name="reg">model</param>
+        /// <param name="register">User details</param>
         /// <returns>Index View</returns>
         [HttpPost]
-        public ActionResult Create(URegisteration reg) //reg will contain the values inserted by user
+        public ActionResult Create(UserRegisteration register)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Data da = new Data();
-                    da.SaveDetails(reg);
-                    return RedirectToAction("SendEmail", "Account", reg);
+                    DBHelper da = new DBHelper();
+                    da.SaveUserDetails(register);
+                    return RedirectToAction("SendEmail", "Account", register);
                 }
                 else
                 {
-                    return View("Login", reg);  //It will return view with validation msg 
+                    //this will return view with validation msg 
+                    return View("Index", register);
                 }
             }
             catch (Exception e)
@@ -72,26 +73,31 @@ namespace ContinousIntegration.Controllers
         /// </summary>
         /// <param name="reg">TProjects model</param>
         /// <returns>List view</returns>
-        public ActionResult List() //int? userID is for receiving id through querystring 
+        public ActionResult List()
         {
             try
             {
                 var projects = new List<T_Projects>();
                 T_Projects project;
+
                 using (ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
                 {
-                    var UID = Convert.ToInt32(Session["LoggedUserID"]);
-                    var listOfProjects = ci.GetAllProjects(UID);
+                    //userID is received through querystring 
+                    var userId = Convert.ToInt32(Session["LoggedUserID"]);
+                    var listOfProjects = ci.GetAllProjects(userId);
 
                     foreach (var item in listOfProjects) //loop to populate Project with list of projects
                     {
-                        project = new T_Projects();
-                        project.C_ProjectID = item.C_ProjectID;
-                        project.C_ProjectName = item.C_ProjectName;
-                        project.C_ProjectDescription = item.C_ProjectDescription;
-                        project.C_LastModified = item.C_LastModified;
+                        project = new T_Projects
+                        {
+                            C_ProjectID = item.C_ProjectID,
+                            C_ProjectName = item.C_ProjectName,
+                            C_ProjectDescription = item.C_ProjectDescription,
+                            C_LastModified = item.C_LastModified
+                        };
                         projects.Add(project);
                     }
+
                     return View(projects);
                 }
             }
@@ -108,7 +114,7 @@ namespace ContinousIntegration.Controllers
         /// <param name="reg"> model</param>
         /// <returns>List view</returns>
         [HttpPost]
-        public ActionResult Login(Validation val)
+        public ActionResult Login(UserLoginModel val)
         {
             try
             {
@@ -125,12 +131,11 @@ namespace ContinousIntegration.Controllers
                     ModelState.AddModelError("", "Invalid username or password");
                     return View("Login");
                 }
+
                 Session["LoggedUserID"] = user.C_RegisterID.ToString();
                 Session["LoggedUserName"] = user.C_FirstName.ToString();
-                //TempData["UserID"] = user.C_RegisterID;
-                return RedirectToAction("List", "User");
 
-                //return RedirectToAction("List", "User", new { userID = user.C_RegisterID });
+                return RedirectToAction("List", "User");
             }
             catch (Exception e)
             {
@@ -146,23 +151,22 @@ namespace ContinousIntegration.Controllers
         /// <returns>GetTreeView view</returns>
         public ActionResult GetTreeView(int id)
         {
-            Data dataObj = new Data();
-            Parent parent = new Parent();
+            DBHelper dataObj = new DBHelper();
+            ProjectParentModel parentProjectModel;
             T_Status t = new T_Status();
 
-            parent.Statuses = dataObj.GetallStatus();
 
             using (ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
             {
-                var UID = Convert.ToInt32(Session["LoggedUserID"]);
+                var userId = Convert.ToInt32(Session["LoggedUserID"]);
 
-                //linq to check user has access to given project or not
+                //Linq to check user has access to given project or not
                 var isUser = (from a in ci.T_UserProjectMappings
-                              where a.C_RegisterID == UID && a.C_ProjectID == id
+                              where a.C_RegisterID == userId && a.C_ProjectID == id
                               select a).FirstOrDefault();
 
                 var isAdmin = (from t1 in ci.T_UserRoleMappings
-                               where t1.C_RoleID == 1 && t1.C_RegisterID == UID
+                               where t1.C_RoleID == 1 && t1.C_RegisterID == userId
                                select t1).FirstOrDefault();
 
                 var doesProjectExists = (from t1 in ci.T_Projects
@@ -171,7 +175,7 @@ namespace ContinousIntegration.Controllers
 
                 if (doesProjectExists == null)
                 {
-                    ViewBag.Msg = "This project doesnot exists!";
+                    ViewBag.Msg = "This project does not exists!";
                     return View("ErrorPage");
                 }
                 else if (isAdmin == null && isUser == null)
@@ -181,12 +185,16 @@ namespace ContinousIntegration.Controllers
                 }
                 else
                 {
-                    var projectDetails = ci.ProjectDetails(UID, id);
+                    var projectDetails = ci.ProjectDetails(userId, id);
 
-                    parent.Release = new List<T_Releases>();
-                    parent.SubReleases = new List<T_SubReleases>();
-                    parent.Project = new List<T_Status>();
-                    parent.Streams = new List<T_Streams>();
+                    parentProjectModel = new ProjectParentModel
+                    {
+                        Releases = new List<T_Releases>(),
+                        SubReleases = new List<T_SubReleases>(),
+                        ProjectStatus = new List<T_Status>(),
+                        Streams = new List<T_Streams>()
+                    };
+                    parentProjectModel.Statuses = dataObj.GetAllStatuses();
 
                     foreach (var item in projectDetails) //loop to populate with Pdetails
                     {
@@ -197,7 +205,7 @@ namespace ContinousIntegration.Controllers
                             C_StreamName = item.C_StreamName,
                             C_StreamID = item.C_StreamID
                         };
-                        parent.Streams.Add(stream);
+                        parentProjectModel.Streams.Add(stream);
 
                         #endregion
 
@@ -209,7 +217,7 @@ namespace ContinousIntegration.Controllers
                             C_StreamID = item.C_StreamID,
                             C_ReleaseID = Convert.ToInt32(item.C_ReleaseID)
                         };
-                        parent.Release.Add(release);
+                        parentProjectModel.Releases.Add(release);
 
                         #endregion
 
@@ -221,7 +229,7 @@ namespace ContinousIntegration.Controllers
                             C_ReleaseID = Convert.ToInt32(item.C_ReleaseID),
                             C_StatusID = Convert.ToInt32(item.C_StatusID)
                         };
-                        parent.SubReleases.Add(subRelease);
+                        parentProjectModel.SubReleases.Add(subRelease);
 
                         #endregion
 
@@ -232,12 +240,12 @@ namespace ContinousIntegration.Controllers
                             C_StatusName = item.C_StatusName,
                             C_StatusID = Convert.ToInt32(item.C_StatusID)
                         };
-                        parent.Project.Add(status);
+                        parentProjectModel.ProjectStatus.Add(status);
 
                         #endregion
                     }
 
-                    return View("GetTreeView", parent);
+                    return View("GetTreeView", parentProjectModel);
                 }
             }
         }
@@ -252,7 +260,6 @@ namespace ContinousIntegration.Controllers
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
             Response.Cache.SetNoStore();
-
             FormsAuthentication.SignOut();
             Session.Abandon();
             return RedirectToAction("Index", "User");

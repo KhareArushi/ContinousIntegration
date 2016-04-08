@@ -1,4 +1,4 @@
-﻿@model ContinousIntegration.Models.Parent
+﻿@model ContinousIntegration.Models.ProjectParentModel
 
 @{
     ViewBag.Title = "GetTreeView";
@@ -37,7 +37,7 @@
                         <td>&nbsp;</td>
                     </tr>
 
-                    foreach (var item1 in Model.Release.Select(x => new { x.C_ReleaseName, x.C_StreamID, x.C_ReleaseID }).Distinct())
+                    foreach (var item1 in Model.Releases.Select(x => new { x.C_ReleaseName, x.C_StreamID, x.C_ReleaseID }).Distinct())
                     {
                         if (@item1.C_ReleaseName != null)
                         {

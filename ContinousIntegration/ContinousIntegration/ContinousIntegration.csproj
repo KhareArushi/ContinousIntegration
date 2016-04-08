@@ -232,7 +232,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ParentController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="GetAllProjects_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
@@ -240,21 +240,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Data.cs" />
+    <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\DBHelper.cs" />
     <Compile Include="Models\MessageServices.cs" />
-    <Compile Include="Models\Parent.cs" />
+    <Compile Include="Models\ProjectParentModel.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectList.cs" />
     <Compile Include="Models\Releases.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\SendMailViewModel.cs" />
     <Compile Include="Models\Statuses.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Streams.cs" />
     <Compile Include="Models\SubReleases.cs" />
-    <Compile Include="Models\URegisteration.cs" />
-    <Compile Include="Models\Validation.cs" />
+    <Compile Include="Models\UserRegisteration.cs" />
+    <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -270,6 +271,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="ProjectDetails_Result.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -306,6 +310,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\DotNetOpenAuth.AspNet.dll" />
+    <Content Include="bin\DotNetOpenAuth.Core.dll" />
+    <Content Include="bin\DotNetOpenAuth.OAuth.Consumer.dll" />
+    <Content Include="bin\DotNetOpenAuth.OAuth.dll" />
+    <Content Include="bin\DotNetOpenAuth.OpenId.dll" />
+    <Content Include="bin\DotNetOpenAuth.OpenId.RelyingParty.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\Microsoft.Data.Edm.dll" />
+    <Content Include="bin\Microsoft.Data.OData.dll" />
+    <Content Include="bin\Microsoft.Web.Mvc.FixedDisplayModes.dll" />
+    <Content Include="bin\System.Core.dll" />
+    <Content Include="bin\System.Spatial.dll" />
+    <Content Include="bin\System.Web.Http.OData.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\adv-logo.jpg" />
@@ -375,6 +395,14 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Models\MyModel.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Models\MyModel.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Models\MyModel.ssdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\MyModel.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\MyModel.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\MyModel.ssdl" />
     <EntityDeploy Include="MyModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
@@ -393,6 +421,11 @@
       <LastGenOutput>MyModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="obj\Debug\TempPE\Model1.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Model1.Designer.cs.dll" />
+    <Content Include="obj\Debug\TempPE\MyModel.Context.cs.dll" />
+    <Content Include="obj\Debug\TempPE\MyModel.cs.dll" />
+    <Content Include="obj\Debug\TempPE\MyModel.Designer.cs.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -435,11 +468,9 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Parent\TreeView.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\GetTreeView.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
@@ -447,9 +478,17 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\ErrorPage.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Invalid.cshtml" />
+    <Content Include="Views\Notactive.cshtml" />
+    <Content Include="Views\templates\WelcomeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Service References\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

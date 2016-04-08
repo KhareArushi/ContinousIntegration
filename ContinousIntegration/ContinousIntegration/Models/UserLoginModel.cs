@@ -8,7 +8,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ContinousIntegration.Models
 {
-    public class Validation
+    /// <summary>
+    /// Model used while login
+    /// </summary>
+    public class UserLoginModel
     {
         [Required(ErrorMessage = "Please provide User name")]
         public string C_UserName { get; set; }

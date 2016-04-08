@@ -60,5 +60,41 @@ namespace ContinousIntegration
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectDetails_Result>("ProjectDetails", userIDParameter, projectIDParameter);
         }
+    
+        public virtual int RemoveAllProjectsID(Nullable<int> registerID)
+        {
+            var registerIDParameter = registerID.HasValue ?
+                new ObjectParameter("RegisterID", registerID) :
+                new ObjectParameter("RegisterID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveAllProjectsID", registerIDParameter);
+        }
+    
+        public virtual int RemoveAllRoleID(Nullable<int> registerID)
+        {
+            var registerIDParameter = registerID.HasValue ?
+                new ObjectParameter("RegisterID", registerID) :
+                new ObjectParameter("RegisterID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveAllRoleID", registerIDParameter);
+        }
+    
+        public virtual int RemoveAllMapProjectIdsOfUser(Nullable<int> registerID)
+        {
+            var registerIDParameter = registerID.HasValue ?
+                new ObjectParameter("RegisterID", registerID) :
+                new ObjectParameter("RegisterID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveAllMapProjectIdsOfUser", registerIDParameter);
+        }
+    
+        public virtual int RemoveAllMapRoleIdsOfUser(Nullable<int> registerID)
+        {
+            var registerIDParameter = registerID.HasValue ?
+                new ObjectParameter("RegisterID", registerID) :
+                new ObjectParameter("RegisterID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveAllMapRoleIdsOfUser", registerIDParameter);
+        }
     }
 }

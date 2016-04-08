@@ -1,9 +1,9 @@
-﻿@model ContinousIntegration.Models.URegisteration
+﻿@model ContinousIntegration.Models.UserRegisteration
 
 @{
     ViewBag.Title = "Index";
 }
-@using (Html.BeginForm("Create","User",FormMethod.Post, new { htmlAttributes = new { @class = "date" }}))
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { htmlAttributes = new { @class = "date" } }))
 {
 
     @Html.ValidationSummary("",new{@style="color: red; font-family:PoorRichard"} )
@@ -20,8 +20,7 @@
             <div class="row marTop15">
                 <div class="col-sm-4">
                     @Html.TextBoxFor(model => model.C_FirstName, "", new { @class = "form-control", placeholder = "First Name",id="firstname"})
-                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">
-                        @*@Html.ValidationMessageFor(model => model.C_FirstName)*@                 
+                    <img src="~/Content/Images/starimg.png" align="right" style="height: 6px;  width:6px" id="image">                         
                 </div>
             </div>
 
@@ -74,8 +73,8 @@
                     $("#password2").val("");
                 });
             </script>
-    </form>
-        </div>
+      </form>
+ </div>
 }
 
 
