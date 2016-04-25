@@ -1,0 +1,97 @@
+﻿@model ContinousIntegration.Models.NewReleaseModel
+
+@{
+    Layout = null;
+}
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm("CreateRelease", "ManageProjects", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>ProjectModel</legend>
+        <table width="100%">
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_ReleaseName, "Release Name")</td>
+                <td>
+                    @Html.EditorFor(model => model.C_ReleaseName)
+                    @Html.ValidationMessageFor(model => model.C_ReleaseName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_ProjectName, "Project Name")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_ProjectID, @ViewBag.ProjectName as SelectList, "---Please Select---", new
+               {
+                   @onchange = "ProjectDropDownChangeEvent(this.value)"
+               })
+                    @Html.ValidationMessageFor(model => model.C_ProjectName)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.C_StreamName, "Stream Name")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_StreamID, @ViewBag.StreamName as SelectList, "---Please Select---")
+                    @Html.ValidationMessageFor(model => model.C_StreamName)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_StatusID, "Status")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_StatusID, (SelectList)ViewBag.StatusName, "---Please Select---")
+                    @Html.ValidationMessageFor(model => model.C_StatusID)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" id="btnSave" name="Command" value="Save" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Save</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+<script type="text/javascript">
+    function ProjectDropDownChangeEvent(projectId) {
+
+        //this will call when project select change
+
+        if (projectId != "") {
+            //var ddstream = $("#StreamID").val;
+            //ddstream.empty();
+            //ddstream.append($("<option></option>").val("").html("Select stream"));
+
+            //calling controller action method to load the dropdown according to the project selected
+            $.ajax({
+                url: '/ManageProjects/GetStreamByProject',
+                type: 'GET',
+                dataType: 'JSON',
+                data: { ProjectID: projectId },
+                success: function (data) {
+                    debugger;
+                    $.each(data, function (value, index) {
+                        ($('<option>').text(index.Text).val(index.Value)).appendTo('#C_StreamID');
+                    });
+                },
+                error: function (exception) {
+                    debugger;
+                    var responseMessage = jQuery.parseJSON(exception.responseText);
+                    alert("Message: " + responseMessage.Message);
+                    alert("StackTrace: " + responseMessage.StackTrace);
+                    alert("ExceptionType: " + responseMessage.ExceptionType);
+                }
+            });
+        }
+    }
+</script>
+}

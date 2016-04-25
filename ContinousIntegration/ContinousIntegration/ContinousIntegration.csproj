@@ -232,6 +232,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ManageProjectsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="GetAllProjects_Result.cs">
@@ -243,13 +244,21 @@
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\DBHelper.cs" />
     <Compile Include="Models\MessageServices.cs" />
+    <Compile Include="Models\NewReleaseModel.cs" />
+    <Compile Include="Models\NewStreamModel.cs" />
+    <Compile Include="Models\NewSubReleaseModel.cs" />
+    <Compile Include="Models\ParentConfigModel.cs" />
     <Compile Include="Models\ProjectParentModel.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectList.cs" />
+    <Compile Include="Models\ProjectServices.cs" />
     <Compile Include="Models\Releases.cs" />
+    <Compile Include="Models\ReleaseServices.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\SendMailViewModel.cs" />
     <Compile Include="Models\Statuses.cs" />
+    <Compile Include="Models\StreamServices.cs" />
+    <Compile Include="Models\SubReleaseServices.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Streams.cs" />
@@ -485,9 +494,24 @@
     <Content Include="Views\Invalid.cshtml" />
     <Content Include="Views\Notactive.cshtml" />
     <Content Include="Views\templates\WelcomeEmail.cshtml" />
+    <Content Include="Views\ManageProjects\ConfigView.cshtml" />
+    <Content Include="Views\ManageProjects\SearchProject.cshtml" />
+    <Content Include="Views\ManageProjects\SearchRelease.cshtml" />
+    <Content Include="Views\ManageProjects\SearchStream.cshtml" />
+    <Content Include="Views\ManageProjects\SearchSubRelease.cshtml" />
+    <Content Include="Views\ManageProjects\_CreateProject.cshtml" />
+    <Content Include="Views\ManageProjects\_CreateRelease.cshtml" />
+    <Content Include="Views\ManageProjects\_CreateStream.cshtml" />
+    <Content Include="Views\ManageProjects\_CreateSubRelease.cshtml" />
+    <Content Include="Views\ManageProjects\_EditProject.cshtml" />
+    <Content Include="Views\ManageProjects\_EditRelease.cshtml" />
+    <Content Include="Views\ManageProjects\_EditStream.cshtml" />
+    <Content Include="Views\ManageProjects\_EditSubRelease.cshtml" />
+    <Content Include="Views\User\ListCss.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
     <Folder Include="Service References\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>

@@ -1,0 +1,69 @@
+﻿@model ContinousIntegration.Models.NewSubReleaseModel
+
+@{
+    Layout = null;
+}
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm("CreateSubRelease", "ManageProjects", FormMethod.Post))
+{
+
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>SubRelease Model</legend>
+        <table width="100%">
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_SubReleaseName, "SubRelease Name")</td>
+                <td>
+                    @Html.EditorFor(model => model.C_SubReleaseName)
+                    @Html.ValidationMessageFor(model => model.C_SubReleaseName)
+                </td>
+
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.C_ProjectName, "Project Name")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_ProjectID, (SelectList)ViewBag.ProjectName, "---Please Select---")
+                    @Html.ValidationMessageFor(model => model.C_ProjectName)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.C_StreamID, "Stream Name")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_StreamID, (SelectList)ViewBag.StreamName, "---Please Select---")
+                    @Html.ValidationMessageFor(model => model.C_StreamID)
+                </td>
+
+            </tr>
+           
+            <tr>
+                <td>@Html.LabelFor(model => model.C_ReleaseName, "Release Name")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_ReleaseID, (SelectList)ViewBag.ReleaseName, "---Please Select---")
+                    @Html.ValidationMessageFor(model => model.C_ReleaseName)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_StatusName, "Status")</td>
+                <td>
+                    @Html.DropDownListFor(model => model.C_StatusID, (SelectList)ViewBag.StatusName, "---Please Select---")
+                    @Html.ValidationMessageFor(model => model.C_StatusName)
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" id="btnSave" name="Command" value="Save" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Save</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+}

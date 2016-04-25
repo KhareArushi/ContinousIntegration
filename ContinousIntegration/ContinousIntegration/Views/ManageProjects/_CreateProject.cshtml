@@ -1,0 +1,48 @@
+﻿@model ContinousIntegration.Models.ProjectModel
+
+@{
+    Layout = null;
+}
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm("CreateProject", "ManageProjects", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>ProjectModel</legend>
+        @Html.HiddenFor(model => model.C_ProjectID)
+        <table width="100%">
+           
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_ProjectName)</td>
+                <td>
+                    @Html.EditorFor(model => model.C_ProjectName)
+                    @Html.ValidationMessageFor(model => model.C_ProjectName)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.C_ProjectDescription)</td>
+                <td>
+                    @Html.EditorFor(model => model.C_ProjectDescription)
+                    @Html.ValidationMessageFor(model => model.C_ProjectDescription)
+                </td>
+
+            </tr>
+           
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" id="btnSave" name="Command" value="Save" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Save</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+}
+

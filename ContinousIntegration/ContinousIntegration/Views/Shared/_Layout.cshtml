@@ -41,6 +41,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="width:100%">
                     <li style="color:#fff;font-size:15px">Home</li>
+                    <li style="color:#fff" ;font-size:3px">@Html.ActionLink("Configure", "ConfigView", "ManageProjects")</li>
                     <li class="pull-right">@Html.ActionLink("Logout", "Logout", "User", new { @class = "pull-right fontsize20 " })</li>
                     <li class="pull-right fontsize20" style="color:#fff;font-size:15px">
                         @if (Session["LoggedUserName"] != null)

@@ -11,7 +11,7 @@
           </Key>
           <Property Name="C_ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="C_ProjectName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="C_ProjectDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="C_ProjectDescription" Type="varchar(max)" />
           <Property Name="C_LastModified" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="T_Registrations">
@@ -323,7 +323,7 @@
           </Key>
           <Property Name="C_ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="C_ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="C_ProjectDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C_ProjectDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="C_LastModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="T_Streams" Relationship="Self.FK_T_Streams_T_Projects" FromRole="T_Projects" ToRole="T_Streams" />
           <NavigationProperty Name="T_UserProjectMappings" Relationship="Self.FK_T_UserProjectMappings_T_Projects" FromRole="T_Projects" ToRole="T_UserProjectMappings" />
@@ -642,17 +642,11 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="RemoveAllProjectsID">
+          <FunctionImport Name="RemoveAllMapProjectIdsOfUser">
           <Parameter Name="RegisterID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="RemoveAllRoleID">
-            <Parameter Name="RegisterID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="RemoveAllMapProjectIdsOfUser">
-            <Parameter Name="RegisterID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="RemoveAllMapRoleIdsOfUser">
-            <Parameter Name="RegisterID" Mode="In" Type="Int32" />
+          <Parameter Name="RegisterID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllProjects_Result">

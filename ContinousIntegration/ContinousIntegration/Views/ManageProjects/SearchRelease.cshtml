@@ -1,0 +1,185 @@
+﻿@model ContinousIntegration.Models.ReleaseServices.ReleaseModel
+
+@{
+    WebGrid grid = new WebGrid(rowsPerPage:Model.PageSize);
+    grid.Bind(Model.Releases,
+              autoSortAndPage: false,
+              rowCount: Model.TotalRows
+    );
+}
+
+<link href="~/Content/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#ADDRelease").live("click", function (e) {
+                var url = $(this).attr('href');
+                $("#dialog-edit").dialog({
+                    title: 'Add New Release',
+                    autoOpen: false,
+                    resizable: false,
+                    height: 455,
+                    width: 550,
+                    show: { effect: 'drop', direction: "up" },
+                    modal: true,
+                    draggable: true,
+                    open: function (event, ui) {
+                        $(this).load(url);
+
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('close');
+                    }
+                });
+
+
+                $("#dialog-edit").dialog('open');
+                return false;
+            });
+
+            $(".editDialog").live("click", function (e) {
+                var url = $(this).attr('href');
+                $("#dialog-edit").dialog({
+                    title: 'Edit Release Detail',
+                    autoOpen: false,
+                    resizable: false,
+                    height: 455,
+                    width: 550,
+                    show: { effect: 'drop', direction: "up" },
+                    modal: true,
+                    draggable: true,
+                    open: function (event, ui) {
+                        $(this).load(url);
+
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('close');
+                    }
+                });
+
+                $("#dialog-edit").dialog('open');
+                return false;
+            });
+
+            $(".confirmDialog").live("click", function (e) {
+                var url = $(this).attr('href');
+                $("#dialog-confirm").dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    height: 170,
+                    width: 350,
+                    show: { effect: 'drop', direction: "up" },
+                    modal: true,
+                    draggable: true,
+                    buttons: {
+                        "OK": function () {
+                            $(this).dialog("close");
+                            window.location = url;
+
+                        },
+                        "Cancel": function () {
+                            $(this).dialog("close");
+
+                        }
+                    }
+                });
+
+                $("#dialog-confirm").dialog('open');
+                return false;
+            });
+
+            $(".viewDialog").live("click", function (e) {
+                var url = $(this).attr('href');
+                $("#dialog-view").dialog({
+                    title: 'Release Detail',
+
+                    autoOpen: false,
+                    resizable: false,
+                    height: 350,
+                    width: 400,
+                    show: { effect: 'drop', direction: "up" },
+                    modal: true,
+                    draggable: true,
+                    open: function (event, ui) {
+                        $(this).load(url);
+
+                    },
+                    buttons: {
+                        "Close": function () {
+                            $(this).dialog("close");
+
+                        }
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('close');
+                    }
+                });
+
+                $("#dialog-view").dialog('open');
+                return false;
+            });
+
+            $("#btncancel").live("click", function (e) {
+                $("#dialog-edit").dialog('close');
+
+            });
+        });
+        </script>
+
+    <h2>All Release Listing</h2>
+    <br />
+    <div style="color: red; font-weight: bold">
+        @TempData["OperStatus"]
+    </div>
+    <br />
+
+    @grid.GetHtml(
+        fillEmptyRows: false,
+        alternatingRowStyle: "alternate-row",
+        headerStyle: "grid-header",
+        footerStyle: "grid-footer",
+        mode: WebGridPagerModes.All,
+                firstText: "<< First",
+                previousText: "< Prev",
+                nextText: "Next >",
+                lastText: "Last >>",
+        columns: new[] {
+            grid.Column("C_ProjectName","Project Name"),
+            grid.Column("C_ReleaseName", "Release Name"),
+             grid.Column("C_StreamName","Stream Name"),
+             grid.Column("C_StatusName","Status"),
+            grid.Column("C_LastModified","LastModified"),
+            grid.Column("",
+                        header: "Actions",
+                        format: @<text>
+                            @Html.ActionLink("Edit", "EditRelease", new { releaseId = item.C_ReleaseID }, new { @class = "editDialog" })
+                            |
+                            @Html.ActionLink("Delete", "DeleteR", new { releaseId = item.C_ReleaseID }, new { @class = "confirmDialog" })
+                        </text>
+            )
+    })
+<br />
+<b>
+    <a id="ADDRelease" href="..\ManageProjects\CreateR">Add New Release</a>
+</b>
+<div id="dialog-confirm" style="display: none">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+        Are you sure to delete ?
+    </p>
+</div>
+<div id="dialog-edit" style="display: none">
+</div>
+<div id="dialog-view" style="display: none">
+</div>
+
+<br /><br /><br />
+@Html.ActionLink("Back to Home Page", "ConfigView")
+
+
+
+
