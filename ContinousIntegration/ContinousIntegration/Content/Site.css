@@ -60,9 +60,9 @@ a:focus {
 }
 
 .logoMain {
-    background: url(Images/adv-logo.jpg) no-repeat left top;
-    width: 171px;
-    height: 55px;
+    background: url(Images/logo.png) no-repeat left top;
+    width: 250px;
+    height: 65px;
     display: block;
     text-indent: -90000px;
 }
@@ -188,7 +188,7 @@ table.treetable tr.expanded span.indenter a {
         width: 100%;
         display: table;
         border-collapse: separate;
-        border: solid 1px #988F21;
+        border: solid 1px #E53E00;
         background-color: white;
     }
 
@@ -198,8 +198,8 @@ table.treetable tr.expanded span.indenter a {
     }
 
     .webgrid-header {
-        background-color: #A7C942;
-        color: #FFFFFF;
+        background-color: #98BF21;
+        color: #E53E00;
         padding-bottom: 4px;
         padding-top: 5px;
         text-align: left;
@@ -215,4 +215,8 @@ table.treetable tr.expanded span.indenter a {
     .webgrid-alternating-row {
         background-color: #EAF203;
         padding: 3px 7px 2px;
+    }
+
+    .table{
+        border:none;
     }

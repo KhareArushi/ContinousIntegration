@@ -12,11 +12,8 @@ namespace ContinousIntegration.Models
     /// Model used while login
     /// </summary>
     public class UserLoginModel
-    {
-        [Required(ErrorMessage = "Please provide User name")]
+    {       
         public string C_UserName { get; set; }
-
-        [Required(ErrorMessage = "Please provide Password")]
         public string C_UserPassword { get; set; }
     }
 }

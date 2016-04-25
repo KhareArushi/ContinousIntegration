@@ -3,25 +3,57 @@
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Login.cshtml";
-    Html.EnableClientValidation();
+
 }
 
-@using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "date" }))
-{
-    <div class="form-signin" style="margin-top:90px;">
-        <form class="">
-            <h3 class="form-signin-heading">Login</h3>
-            <br />
-            @Html.TextBoxFor(model => model.C_UserName, "", new { @class = "form-control", placeholder = "User Name", id = "inputUname" })
 
+@using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "date"  }))
+{
+      
+    <div class="form-signin" style="margin-top:90px;">
+       
+            <h3 class="form-signin-heading" style="color: #E53E00">Login</h3>
             <br />
-            @Html.PasswordFor(model => model.C_UserPassword, new { @class = "form-control ", placeholder = "Password", id = "inputPassword" })
-            @Html.ValidationSummary("", new { @style = "color: red; font-family:PoorRichard" })
-            <br />
-            <br />
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="width:50%; float:left;">Login</button>
-            @Html.ActionLink("Register", "Registration", "User", new { @class = "btn btn-lg btn-primary btn-block registerBtn" })
+            @Html.TextBoxFor(model => model.C_UserName, "", new { @class = "form-control", placeholder = "User Name", id = "inputUname"})
+            <span id="namemsg" style="color: #E53E00; font-family: PoorRichard; font-size: 16px; "></span>
             <br /><br />
-        </form>
-    </div>
+            @Html.PasswordFor(model => model.C_UserPassword, new { @class = "form-control ", placeholder = "Password", id = "inputPassword" })
+            <span id="passwordmsg" style="color: #E53E00; font-family: PoorRichard; font-size:16px;"></span>
+            <br />
+
+            @Html.ValidationSummary("", new { @style = "color: #E53E00; font-family:PoorRichard" })
+            <br />
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="return validation()"  style="width:50%; float:left;">Login</button>
+            @Html.ActionLink("Register", "Registration", "User", new { @class = "btn btn-lg btn-primary btn-block registerBtn" })
+            <br /><br/>
+     </div>
+
+
+            @*Script for autofocus*@
+            <script type="text/javascript">
+                $("#inputUname").val("");
+                $("#inputUname").focus();
+              
+                //Script for validation of login
+                function validation() {
+                        var username = document.getElementById("inputUname").value;
+                        var password = document.getElementById("inputPassword").value;
+                        if (username == null || username == "") {
+                            document.getElementById("namemsg").innerHTML =
+                            "User Name is required";                          
+                            return false;
+                            document.getElementById("inputUname").val("");                           
+                        }
+                        else if (password == null || password == "" && username != null)
+                        {
+                            document.getElementById("namemsg").innerHTML =
+                            "";                           
+                            document.getElementById("passwordmsg").innerHTML =
+                                "Password is required";
+                            inputPassword.focus();
+                            return false;
+                        }                        
+                      }
+             </script>
 }

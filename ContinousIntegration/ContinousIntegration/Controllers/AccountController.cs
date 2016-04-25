@@ -29,15 +29,15 @@ namespace ContinousIntegration.Controllers
         /// <returns>Email sent view</returns>
         [HttpGet]
         public ActionResult SendEmail(UserRegisteration reg)
-        {           
-            var message = EMailTemplate("WelcomeEmail");
+        {
+            var message = EmailTemplate("WelcomeEmail");
             message = message.Replace("@ViewBag.Name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reg.C_FirstName));
 
             //Sends email
             MessageServices.SendEmail(reg.C_EmailID, "Welcome to Continuous Integration!", message);
             return View("EmailSent");
         }
-       
+
         /// <summary>
         /// This will return confirmation of email sent
         /// </summary>
@@ -45,11 +45,11 @@ namespace ContinousIntegration.Controllers
         [HttpGet]
         public ActionResult EmailSent()
         {
-            return View();
+            return View("EmailSent");
         }
-       
+
         /// <summary>
-        /// This method will be called whilst user is logging in
+        /// This method will be called while user is logging in
         /// </summary>
         /// <param name="returnUrl">String parameter of url</param>
         /// <returns>Login view</returns>
@@ -57,17 +57,17 @@ namespace ContinousIntegration.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
-        }      
+        }
 
-          public static string EMailTemplate(string template)
+        public static string EmailTemplate(string template)
         {
             var templateFilePath = HostingEnvironment.MapPath("~/Views/templates/") + template + ".cshtml";
-            StreamReader objstreamreaderfile = new StreamReader(templateFilePath); 
+            StreamReader objstreamreaderfile = new StreamReader(templateFilePath);
             var body = objstreamreaderfile.ReadToEnd();
             objstreamreaderfile.Close();
             return body;
         }
-            
+
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -80,10 +80,6 @@ namespace ContinousIntegration.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
         #endregion
-
-
-
     }
 }

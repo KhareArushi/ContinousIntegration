@@ -2,18 +2,19 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Login.cshtml";
 }
 @using (Html.BeginForm("Create", "User", FormMethod.Post, new { htmlAttributes = new { @class = "date" } }))
 {
 
-    @Html.ValidationSummary("",new{@style="color: red; font-family:PoorRichard"} )
+    @Html.ValidationSummary("", new { @style = "color: #E53E00; font-family:PoorRichard; font-size:15px;" })
 
     <div class="container">
 
         <form name="formctrl" id="form1">
             <div class="row marTop15">
                 <div class="col-sm-12">
-                    <h2 class="form-signin-heading">Sign Up for Your New Account</h2>
+                    <h2 class="form-signin-heading" style="color: #E53E00;">Sign Up </h2>
                 </div>
             </div>
 
@@ -63,9 +64,7 @@
        @*Script for reset*@
             <script type="text/javascript">
                 $("#cancel").click(function ()
-                {
-                    debugger;
-                    //$('#form1')[0].reset();
+                {                                      
                     $("#firstname").val("");
                     $("#lastname").val("");
                     $("#emailid").val("");

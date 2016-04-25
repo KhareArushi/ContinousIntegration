@@ -31,7 +31,7 @@ namespace ContinousIntegration.Controllers
         /// This method will return registration page for 
         /// registering new user
         /// </summary>
-        /// <param name="reg">URegisteration model</param>
+        /// <param name="reg">UserRegisteration model</param>
         /// <returns>Index View</returns>
         [HttpGet]
         public ActionResult Registration()
@@ -98,6 +98,11 @@ namespace ContinousIntegration.Controllers
                         projects.Add(project);
                     }
 
+                    if (projects.Count == 0)
+                    {
+                        ViewBag.Msg = "You are not assigned any project.";
+                        return View("ErrorPage");
+                    }
                     return View(projects);
                 }
             }
@@ -106,6 +111,7 @@ namespace ContinousIntegration.Controllers
                 throw new ApplicationException("Error: " + e);
             }
         }
+        
 
         /// <summary>
         /// This method will send an email to notify the user
@@ -126,12 +132,14 @@ namespace ContinousIntegration.Controllers
                             where a.C_FirstName == val.C_UserName && a.C_Password == val.C_UserPassword
                             select a).FirstOrDefault();
 
-                if (user == null)
+                
+                if (user==null)
                 {
-                    ModelState.AddModelError("", "Invalid username or password");
+                    ModelState.AddModelError("", "Invalid name and password");
                     return View("Login");
                 }
 
+                
                 Session["LoggedUserID"] = user.C_RegisterID.ToString();
                 Session["LoggedUserName"] = user.C_FirstName.ToString();
 
@@ -139,7 +147,7 @@ namespace ContinousIntegration.Controllers
             }
             catch (Exception e)
             {
-                throw new ApplicationException("Error: " + e);
+                throw new ApplicationException("Error: " +e);
             }
         }
 
@@ -182,7 +190,7 @@ namespace ContinousIntegration.Controllers
                 {
                     ViewBag.Msg = "You are not assigned this project.";
                     return View("ErrorPage");
-                }
+                }                
                 else
                 {
                     var projectDetails = ci.ProjectDetails(userId, id);

@@ -33,6 +33,7 @@ namespace ContinousIntegration.Models
         public string C_EmailID { get; set; }
 
         [Required(ErrorMessage = "Please provide Password")]
+        [StringLength(6, ErrorMessage = "Password must be a maximum of 6 characters.")]
         public string C_Password { get; set; }
 
         [Compare("C_Password", ErrorMessage = "Password does not match")]

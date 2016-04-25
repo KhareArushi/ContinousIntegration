@@ -330,6 +330,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\adv-logo.jpg" />
     <Content Include="Content\Images\adv-logo.png" />
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\starimg.png" />
     <Content Include="Content\jquery.treetable.css" />
     <Content Include="Content\jquery.treetable.theme.default.css" />
