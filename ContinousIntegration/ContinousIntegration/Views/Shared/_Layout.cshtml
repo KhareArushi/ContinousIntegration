@@ -16,7 +16,49 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <style>
+    .dropbtn {
+    background-color: #0691ce;
+    color: white;
+    /*padding: 16px;*/
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    }
+
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    z-index:200;
+    }
+
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #808080;
+    min-width: 160px;
+    }
+
+    .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #0691ce}
+
+    .dropdown:hover .dropdown-content {
+    display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+    background-color: #0691ce;
+    }
+    </style>
+
 </head>
+
 <body>
     <div class="container">
         <div class="row">
@@ -41,18 +83,32 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="width:100%">
                     <li style="color:#fff;font-size:15px">Home</li>
-                    <li style="color:#fff" ;font-size:3px">@Html.ActionLink("Configure", "ConfigView", "ManageProjects")</li>
-                    <li class="pull-right">@Html.ActionLink("Logout", "Logout", "User", new { @class = "pull-right fontsize20 " })</li>
-                    <li class="pull-right fontsize20" style="color:#fff;font-size:15px">
-                        @if (Session["LoggedUserName"] != null)
-                        {
-                            <text>
-                                Signed in as @Session["LoggedUserName"].ToString()
-                            </text>
-                        }
-                    </li>
-                </ul>
-            </div>
+                    
+                        &nbsp;&nbsp;
+                        <div class="dropdown">
+                            <button class="dropbtn">Configuration</button>
+                            <div class="dropdown-content">
+                                <div style="position :relative; z-index :5000;">
+                                    <a href="/ManageProjects/SearchProject">Projects</a>
+                                    <a href="/ManageProjects/SearchStream">Streams</a>
+                                    <a href="/ManageProjects/SearchRelease">Releases</a>
+                                    <a href="/ManageProjects/SearchSubRelease">SubReleases</a>
+                                    <a href="/Roles/Index">Roles</a>
+                                </div>
+                            </div>
+                        </div>
+<li class="pull-right">@Html.ActionLink("Logout", "Logout", "User", new { @class = "pull-right fontsize20 " })</li>
+            <li class="pull-right fontsize20" style="color:#fff;font-size:15px">
+                @if (Session["LoggedUserName"] != null)
+                {
+                    <text>
+                        Signed in as @Session["LoggedUserName"].ToString()
+                    </text>
+                }
+            </li>
+            </ul>
+        </div>
+
         </div>
     </nav>
     <div class="container">
