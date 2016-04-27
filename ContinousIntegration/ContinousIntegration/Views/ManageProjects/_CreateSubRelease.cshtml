@@ -26,14 +26,21 @@
             <tr>
                 <td>@Html.LabelFor(model => model.C_ProjectName, "Project Name")</td>
                 <td>
-                    @Html.DropDownListFor(model => model.C_ProjectID, (SelectList)ViewBag.ProjectName, "---Please Select---")
+                    @Html.DropDownListFor(model => model.C_ProjectID, (SelectList)ViewBag.ProjectName, "---Please Select---",new
+                 {
+                     @onchange = "ProjectDropDownChangeEvent(this.value)"
+                 })
                     @Html.ValidationMessageFor(model => model.C_ProjectName)
                 </td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(model => model.C_StreamID, "Stream Name")</td>
                 <td>
-                    @Html.DropDownListFor(model => model.C_StreamID, (SelectList)ViewBag.StreamName, "---Please Select---")
+                    @Html.DropDownListFor(model => model.C_StreamID, (SelectList)ViewBag.StreamName, "---Please Select---", new 
+               { 
+                   @onchange = "StreamDropDownChangeEvent(this.value)"
+               })
+
                     @Html.ValidationMessageFor(model => model.C_StreamID)
                 </td>
 
@@ -66,4 +73,56 @@
             </tr>
         </table>
     </fieldset>
+    
+    <script type="text/javascript">
+    function ProjectDropDownChangeEvent(projectId) {
+        if (projectId != "") {
+            $.ajax({
+                url: '/ManageProjects/GetStreamsByProject',
+                type: 'GET',
+                dataType: 'JSON',
+                data: { ProjectID: projectId },
+                success: function (data) {
+                    $('#C_StreamID').empty();
+                    $('<option>').text("Select").val(0).appendTo('#C_StreamID');
+                    $.each(data, function (value, index) {
+                        ($('<option>').text(index.Name).val(index.Id)).appendTo('#C_StreamID');
+                    });
+                },
+                error: function (exception) {
+                    var responseMessage = jQuery.parseJSON(exception.responseText);
+                    alert("Message: " + responseMessage.Message);
+                    alert("StackTrace: " + responseMessage.StackTrace);
+                    alert("ExceptionType: " + responseMessage.ExceptionType);
+                }
+            });
+        }
+    }
+</script>
+    
+    <script type="text/javascript">
+        function StreamDropDownChangeEvent(streamId) {
+        if (streamId != "") {
+            $.ajax({
+                url: '/ManageProjects/GetReleasesbyStreams',
+                type: 'GET',
+                dataType: 'JSON',
+                data: { StreamID : streamId },
+                success: function (data) {
+                    $('#C_ReleaseID').empty();
+                    $('<option>').text("Select").val(0).appendTo('#C_ReleaseID');
+                    $.each(data, function (value, index) {
+                        ($('<option>').text(index.Name).val(index.Id)).appendTo('#C_ReleaseID');
+                    });
+                },
+                error: function (exception) {
+                    var responseMessage = jQuery.parseJSON(exception.responseText);
+                    alert("Message: " + responseMessage.Message);
+                    alert("StackTrace: " + responseMessage.StackTrace);
+                    alert("ExceptionType: " + responseMessage.ExceptionType);
+                }
+            });
+        }
+    }
+</script>
 }

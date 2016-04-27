@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 
@@ -116,16 +117,17 @@ namespace ContinousIntegration.Models
         {
             try
             {
+                var subrelease = entities.T_SubReleases.FirstOrDefault(x => x.C_SubReleaseID.Equals(tsubrelease.C_SubReleaseID));
+
                 //Populate T_SubReleases with NewSubRelease Model
-                T_SubReleases relobj = new T_SubReleases()
-                {
-                    C_ReleaseID = tsubrelease.C_ReleaseID,
-                    C_SubReleaseID = tsubrelease.C_SubReleaseID,
-                    C_SubReleaseName = tsubrelease.C_SubReleaseName,
-                    C_StatusID = tsubrelease.C_StatusID,
-                    C_LastModified = DateTime.Now
-                };
-                entities.T_SubReleases.Add(relobj);
+            
+                    subrelease.C_ReleaseID = tsubrelease.C_ReleaseID;
+                    subrelease.C_SubReleaseID = tsubrelease.C_SubReleaseID;
+                    subrelease.C_SubReleaseName = tsubrelease.C_SubReleaseName;
+                    subrelease.C_StatusID = tsubrelease.C_StatusID;
+                    subrelease.C_LastModified = DateTime.Now;
+
+                    entities.T_SubReleases.AddOrUpdate(subrelease);
                 entities.SaveChanges();
                 return true;
             }

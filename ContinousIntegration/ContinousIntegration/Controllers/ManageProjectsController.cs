@@ -615,6 +615,48 @@ namespace ContinousIntegration.Controllers
             return PartialView("_CreateSubRelease");
         }
 
+        /// <summary>
+        /// Method to get cascading dropdown list 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="sort"></param>
+        /// <param name="sortDir"></param>
+        /// <returns></returns>
+        public JsonResult GetStreamsByProject(string projectID)
+        {
+            JsonResult jsonResult;
+            int id;
+            if (int.TryParse(projectID, out id))
+            {
+                using (var ci = new ContinuousIntegrationEntities())
+                {
+                    var mappedStreams = (from stream in ci.T_Streams
+                                         where stream.C_ProjectID == id
+                                         select new { Id = stream.C_StreamID, Name = stream.C_StreamName }).ToList();
+
+                    return Json(mappedStreams, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Not Valid Request", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetReleasesbyStreams(string streamID)
+        {
+            JsonResult jsonResult;
+            int id;
+            if (int.TryParse(streamID, out id))
+            {
+                using (var ci = new ContinuousIntegrationEntities())
+                {
+                    var mappedreleases = (from release in ci.T_Releases 
+                                          where release.C_StreamID == id
+                                          select new { Id = release.C_ReleaseID, Name = release.C_ReleaseName }).ToList();
+
+                    return Json(mappedreleases, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Not Valid Request", JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// Method to populate the edit popup
@@ -661,9 +703,9 @@ namespace ContinousIntegration.Controllers
                 Obj.C_StreamName = data.C_StreamName;
 
                 ViewBag.ProjectName = new SelectList(ci.T_Projects, "C_ProjectID", "C_ProjectName");
-                ViewBag.ReleaseName = new SelectList(ci.T_Releases, "C_ReleaseID", "C_ReleaseName");
+                ViewBag.ReleaseName = new SelectList(ci.T_Releases.Where(x=> x.C_StreamID.Equals(data.C_StreamID)), "C_ReleaseID", "C_ReleaseName",ci.T_Releases.Where(x=> x.C_ReleaseID.Equals(data.C_ReleaseID)));
                 ViewBag.StatusName = new SelectList(ci.T_Status, "C_StatusID", "C_StatusName");
-                ViewBag.StreamName = new SelectList(ci.T_Streams, "C_StreamID", "C_StreamName");
+                ViewBag.StreamName = new SelectList(ci.T_Streams.Where(x => x.C_ProjectID.Equals(data.C_ProjectID)), "C_StreamID", "C_StreamName", ci.T_Streams.Where(x => x.C_StreamID.Equals(data.C_StreamID)));
                 ViewBag.IsUpdate = true;
                 return View("_EditSubRelease", Obj);
             }
@@ -710,6 +752,21 @@ namespace ContinousIntegration.Controllers
             return RedirectToAction("SearchSubRelease");
         }
 
+
+        /// <summary>
+        /// Logs out the user
+        /// </summary>
+        /// <returns>To the login pages</returns>
+        public ActionResult Logout()
+        {
+            //Disable back button In all browsers.
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            //FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index", "User");
+        }
     }
 }
 
