@@ -26,7 +26,7 @@ namespace ContinousIntegration.Controllers
             configurationDetails.Users = new SelectList(dbHelper.GetAllUsers(), "C_RegisterID", "C_FirstName");
 
             //Code for populating roles          
-            configurationDetails.Roles = (dbHelper.GetAllRoles());
+            configurationDetails.Roles = new SelectList(dbHelper.GetAllRoles(), "C_RoleID", "C_RoleName");
 
             //code for populating projects
             configurationDetails.AvailableProjects = new SelectList(dbHelper.GetAllProjects(), "C_ProjectID", "C_ProjectName");
@@ -89,9 +89,10 @@ namespace ContinousIntegration.Controllers
             ConfigurationModel configurationDetails = new ConfigurationModel();
             configurationDetails.Users = new SelectList(dbHelper.GetAllUsers(), "C_RegisterID", "C_FirstName");
 
-            //Code for populating role details               
-            configurationDetails.Roles = (dbHelper.GetAllRoles());
+            //Code for populating role details        
             configurationDetails.RoleId = (dbHelper.GetRoleId(userId));
+            configurationDetails.Roles = new SelectList(dbHelper.GetAllRoles(), "C_RoleID", "C_RoleName", configurationDetails.RoleId);
+           
 
             //Code for populating project details
             configurationDetails.AvailableProjects = new SelectList(dbHelper.GetAvailableProjects(userId), "C_ProjectID", "C_ProjectName");

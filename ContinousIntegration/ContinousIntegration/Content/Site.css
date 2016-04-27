@@ -133,7 +133,8 @@ table.treetable tr.expanded span.indenter a {
 
     .form-signin .form-control {
         position: relative;
-        height: auto;
+        height: auto
+
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
@@ -188,7 +189,7 @@ table.treetable tr.expanded span.indenter a {
         width: 100%;
         display: table;
         border-collapse: separate;
-        border: solid 1px #E53E00;
+        border: solid 1px #e3811f;
         background-color: white;
     }
 
@@ -198,8 +199,8 @@ table.treetable tr.expanded span.indenter a {
     }
 
     .webgrid-header {
-        background-color: #98BF21;
-        color: #E53E00;
+        background-color: #9E9E9E;
+        color: #337ab7;
         padding-bottom: 4px;
         padding-top: 5px;
         text-align: left;
@@ -213,7 +214,7 @@ table.treetable tr.expanded span.indenter a {
     }
 
     .webgrid-alternating-row {
-        background-color: #EAF203;
+        background-color:#F3F3F3;
         padding: 3px 7px 2px;
     }
 

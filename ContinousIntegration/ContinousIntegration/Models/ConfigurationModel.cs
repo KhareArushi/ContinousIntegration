@@ -16,12 +16,13 @@ namespace ContinousIntegration.Models
         public List<int> ProjectsAvailable { get; set; }
         public List<int> ProjectsAssigned { get; set; }
         public int SelectedRoleID { get; set; }
+       
 
         //Contains user name
         public SelectList Users { get; set; }
 
         [ScriptIgnore]
-        public List<T_Roles> Roles { get; set; }
+        public SelectList Roles { get; set; }
         public List<int> RoleId { get; set; }
 
         //Contain project name
