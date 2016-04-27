@@ -494,7 +494,6 @@
     <Content Include="Views\Invalid.cshtml" />
     <Content Include="Views\Notactive.cshtml" />
     <Content Include="Views\templates\WelcomeEmail.cshtml" />
-    <Content Include="Views\ManageProjects\ConfigView.cshtml" />
     <Content Include="Views\ManageProjects\SearchProject.cshtml" />
     <Content Include="Views\ManageProjects\SearchRelease.cshtml" />
     <Content Include="Views\ManageProjects\SearchStream.cshtml" />
