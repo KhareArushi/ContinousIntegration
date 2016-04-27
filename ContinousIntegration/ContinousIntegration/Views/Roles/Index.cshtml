@@ -22,7 +22,7 @@
     </div>
     <br /><br />
 
-    <div style="font-size: large; font-weight: bold; font-family:Andalus;" id="RolesDiv">
+    <div id="RolesDiv">
     
          @Html.Label("Roles:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px;" })
     @Html.DropDownListFor(p => p.SelectedRoleID, Model.Roles, "Select", new
@@ -68,6 +68,8 @@
 
     //Script to swap values 
     <script type="text/javascript">
+        $("#tab").hide();
+        $('#RolesDiv').hide();
         $(document).ready(
             function () {
                 $('#btnAdd').click(
@@ -112,7 +114,9 @@
 
         //Ajax method to get the data from GetRoleID controller
         function FillProjectListBoxes() {
+            
             var userID = $('#SelectedUserID').val();
+         
             if (userID == "")
             {
                 $("#tab").hide();
@@ -128,7 +132,6 @@
             }
 
             $.ajax({
-
                 url: '/Roles/GetConfigurationDetails',
                 type: 'GET',
                 dataType: 'JSON',
