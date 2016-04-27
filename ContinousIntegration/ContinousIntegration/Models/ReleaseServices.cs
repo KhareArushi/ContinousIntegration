@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Http.ModelBinding;
@@ -103,18 +104,17 @@ namespace ContinousIntegration.Models
         {
             try
             {
+                var release = entities.T_Releases.FirstOrDefault(x => x.C_ReleaseID.Equals(trelease.C_ReleaseID));
 
                 //Populate T_Releases with NewRelease Model
-                T_Releases relobj = new T_Releases()
-                {
-                    C_ReleaseID = trelease.C_ReleaseID,
-                    C_ReleaseName = trelease.C_ReleaseName,
-                    C_StatusID = trelease.C_StatusID,
-                    C_StreamID = trelease.C_StreamID,
-                    C_LastModified = DateTime.Now
-                };
 
-                entities.T_Releases.Add(relobj);
+                release.C_ReleaseID = trelease.C_ReleaseID;
+                release.C_ReleaseName = trelease.C_ReleaseName;
+                release.C_StatusID = trelease.C_StatusID;
+                release.C_StreamID = trelease.C_StreamID;
+                release.C_LastModified = DateTime.Now;
+
+                entities.T_Releases.AddOrUpdate(release);
                 entities.SaveChanges();
                 return true;
             }

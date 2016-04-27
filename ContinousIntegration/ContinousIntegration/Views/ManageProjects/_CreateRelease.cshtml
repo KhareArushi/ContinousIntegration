@@ -63,28 +63,20 @@
 
 <script type="text/javascript">
     function ProjectDropDownChangeEvent(projectId) {
-
-        //this will call when project select change
-
         if (projectId != "") {
-            //var ddstream = $("#StreamID").val;
-            //ddstream.empty();
-            //ddstream.append($("<option></option>").val("").html("Select stream"));
-
-            //calling controller action method to load the dropdown according to the project selected
             $.ajax({
                 url: '/ManageProjects/GetStreamByProject',
                 type: 'GET',
                 dataType: 'JSON',
                 data: { ProjectID: projectId },
                 success: function (data) {
-                    debugger;
+                    $('#C_StreamID').empty();
+                    $('<option>').text("Select").val(0).appendTo('#C_StreamID');
                     $.each(data, function (value, index) {
-                        ($('<option>').text(index.Text).val(index.Value)).appendTo('#C_StreamID');
+                        ($('<option>').text(index.Name).val(index.Id)).appendTo('#C_StreamID');
                     });
                 },
                 error: function (exception) {
-                    debugger;
                     var responseMessage = jQuery.parseJSON(exception.responseText);
                     alert("Message: " + responseMessage.Message);
                     alert("StackTrace: " + responseMessage.StackTrace);

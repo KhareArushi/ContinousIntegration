@@ -14,121 +14,118 @@
 
 
 <script type="text/javascript">
-        $(document).ready(function () {
+    var addRelease;
+    var editRelease;
+    var editURL;
+    var addURL;
+    var confirmDialog;
+    var confirmURL;
+    var viewDialog;
+    var viewURL;
 
-            $("#ADDRelease").live("click", function (e) {
-                var url = $(this).attr('href');
-                $("#dialog-edit").dialog({
-                    title: 'Add New Release',
-                    autoOpen: false,
-                    resizable: false,
-                    height: 455,
-                    width: 550,
-                    show: { effect: 'drop', direction: "up" },
-                    modal: true,
-                    draggable: true,
-                    open: function (event, ui) {
-                        $(this).load(url);
+    $(document).ready(function () {
 
-                    },
-                    close: function (event, ui) {
-                        $(this).dialog('close');
-                    }
-                });
-
-
-                $("#dialog-edit").dialog('open');
-                return false;
-            });
-
-            $(".editDialog").live("click", function (e) {
-                var url = $(this).attr('href');
-                $("#dialog-edit").dialog({
-                    title: 'Edit Release Detail',
-                    autoOpen: false,
-                    resizable: false,
-                    height: 455,
-                    width: 550,
-                    show: { effect: 'drop', direction: "up" },
-                    modal: true,
-                    draggable: true,
-                    open: function (event, ui) {
-                        $(this).load(url);
-
-                    },
-                    close: function (event, ui) {
-                        $(this).dialog('close');
-                    }
-                });
-
-                $("#dialog-edit").dialog('open');
-                return false;
-            });
-
-            $(".confirmDialog").live("click", function (e) {
-                var url = $(this).attr('href');
-                $("#dialog-confirm").dialog({
-                    autoOpen: false,
-                    resizable: false,
-                    height: 170,
-                    width: 350,
-                    show: { effect: 'drop', direction: "up" },
-                    modal: true,
-                    draggable: true,
-                    buttons: {
-                        "OK": function () {
-                            $(this).dialog("close");
-                            window.location = url;
-
-                        },
-                        "Cancel": function () {
-                            $(this).dialog("close");
-
-                        }
-                    }
-                });
-
-                $("#dialog-confirm").dialog('open');
-                return false;
-            });
-
-            $(".viewDialog").live("click", function (e) {
-                var url = $(this).attr('href');
-                $("#dialog-view").dialog({
-                    title: 'Release Detail',
-
-                    autoOpen: false,
-                    resizable: false,
-                    height: 350,
-                    width: 400,
-                    show: { effect: 'drop', direction: "up" },
-                    modal: true,
-                    draggable: true,
-                    open: function (event, ui) {
-                        $(this).load(url);
-
-                    },
-                    buttons: {
-                        "Close": function () {
-                            $(this).dialog("close");
-
-                        }
-                    },
-                    close: function (event, ui) {
-                        $(this).dialog('close');
-                    }
-                });
-
-                $("#dialog-view").dialog('open');
-                return false;
-            });
-
-            $("#btncancel").live("click", function (e) {
-                $("#dialog-edit").dialog('close');
-
-            });
+        addRelease = $("#dialog-add").dialog({
+            title: 'Add New Release',
+            autoOpen: false,
+            resizable: false,
+            height: 455,
+            width: 550,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            open: function (event, ui) {
+                $(this).load(addURL);
+            }
         });
-        </script>
+
+        editRelease = $("#dialog-edit").dialog({
+            title: 'Edit Release Detail',
+            autoOpen: false,
+            resizable: false,
+            height: 455,
+            width: 550,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            open: function (event, ui) {
+                $(this).load(editURL);
+
+            }
+        });
+
+        confirmDialog = $("#dialog-confirm").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 170,
+            width: 350,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            buttons: {
+                "OK": function () {
+                    confirmDialog.dialog("close");
+                    window.location = confirmURL;
+                },
+                "Cancel": function () {
+                    confirmDialog.dialog("close");
+                }
+            }
+        });
+
+        viewDialog = $("#dialog-view").dialog({
+            title: 'Release Detail',
+            autoOpen: false,
+            resizable: false,
+            height: 350,
+            width: 400,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            open: function (event, ui) {
+                $(this).load(viewURL);
+            },
+            buttons: {
+                "Close": function () {
+                    viewDialog.dialog("close");
+                }
+            }
+        });
+
+        $("#ADDRelease").live("click", function (e) {
+            addURL = $(this).attr('href');
+            addRelease.dialog('open');
+
+            return false;
+        });
+
+        $(".editDialog").live("click", function (e) {
+            editURL = $(this).attr('href');
+            editRelease.dialog('open');
+
+            return false;
+        });
+
+        $(".confirmDialog").live("click", function (e) {
+            confirmURL = $(this).attr('href');
+            confirmDialog.dialog('open');
+
+            return false;
+        });
+
+        $(".viewDialog").live("click", function (e) {
+            viewURL = $(this).attr('href');
+            viewDialog.dialog('open');
+
+            return false;
+        });
+
+        $("#btncancel").live("click", function (e) {
+            $("#dialog-edit").dialog('close');
+
+        });
+    });
+</script>
 
     <h2>All Release Listing</h2>
     <br />
@@ -173,6 +170,8 @@
     </p>
 </div>
 <div id="dialog-edit" style="display: none">
+</div>
+<div id="dialog-add" style="display: none">
 </div>
 <div id="dialog-view" style="display: none">
 </div>

@@ -32,8 +32,8 @@ namespace ContinousIntegration.Models
         [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$", ErrorMessage = "Email Address not valid")]
         public string C_EmailID { get; set; }
 
-        [Required(ErrorMessage = "Please provide Password")]
-        [StringLength(6, ErrorMessage = "Password must be a maximum of 6 characters.")]
+        [StringLength(50, ErrorMessage = "Password must be a minimum of 6 characters.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Please provide Password")]     
         public string C_Password { get; set; }
 
         [Compare("C_Password", ErrorMessage = "Password does not match")]

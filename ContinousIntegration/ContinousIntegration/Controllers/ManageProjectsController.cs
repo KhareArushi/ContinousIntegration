@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using ContinousIntegration.Models;
@@ -67,8 +68,8 @@ namespace ContinousIntegration.Controllers
             if (Request.IsAjaxRequest())
             {
                 ViewBag.IsUpdate = false;
-               return View("_CreateProject");
-              
+                return View("_CreateProject");
+
             }
             else
                 return View();
@@ -78,20 +79,20 @@ namespace ContinousIntegration.Controllers
         [HttpPost]
         public ActionResult CreateProject(ProjectModel tproject, string Command)
         {
-            
-                T_Projects Obj = new T_Projects();
-                Obj.C_ProjectName = tproject.C_ProjectName;
-                Obj.C_ProjectDescription = tproject.C_ProjectDescription;
-                Obj.C_LastModified = DateTime.Now;
 
-                bool IsSuccess = mobjModel.AddProject(Obj);
-                if (IsSuccess)
-                {
-                    TempData["OperStatus"] = "Project added successfully";
-                    ModelState.Clear();
-                    return RedirectToAction("SearchProject", "ManageProjects");
-                }
-            
+            T_Projects Obj = new T_Projects();
+            Obj.C_ProjectName = tproject.C_ProjectName;
+            Obj.C_ProjectDescription = tproject.C_ProjectDescription;
+            Obj.C_LastModified = DateTime.Now;
+
+            bool IsSuccess = mobjModel.AddProject(Obj);
+            if (IsSuccess)
+            {
+                TempData["OperStatus"] = "Project added successfully";
+                ModelState.Clear();
+                return RedirectToAction("SearchProject", "ManageProjects");
+            }
+
 
             return PartialView("_CreateProject");
         }
@@ -106,22 +107,19 @@ namespace ContinousIntegration.Controllers
         //Edit Project
         public ActionResult EditProject(int id)
         {
-            var data = mobjModel.GetProjectDetails(id);
-
-            if (Request.IsAjaxRequest())
-            {
-                ProjectModel Obj = new ProjectModel();
-                Obj.C_ProjectID = data.C_ProjectID;
-                Obj.C_ProjectName = data.C_ProjectName;
-                Obj.C_ProjectDescription = data.C_ProjectDescription;
-                Obj.C_LastModified = data.C_LastModified;
+            var data = mobjModel.GetProjectDetails(Convert.ToInt32(id));
 
 
-                ViewBag.IsUpdate = true;
-                return View("_EditProject", Obj);
-            }
-            else
-                return View(data);
+            ProjectModel Obj = new ProjectModel();
+            Obj.C_ProjectID = data.C_ProjectID;
+            Obj.C_ProjectName = data.C_ProjectName;
+            Obj.C_ProjectDescription = data.C_ProjectDescription;
+            Obj.C_LastModified = data.C_LastModified;
+
+
+            ViewBag.IsUpdate = true;
+            return View("_EditProject", Obj);
+
         }
 
         /// <summary>
@@ -245,7 +243,7 @@ namespace ContinousIntegration.Controllers
 
                 bool IsSuccess = sobjModel.AddStream(Obj);
 
-                
+
                 if (IsSuccess)
                 {
                     TempData["OperStatus"] = "Stream added successfully";
@@ -268,7 +266,7 @@ namespace ContinousIntegration.Controllers
         {
             ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities();
             var data = sobjModel.GetStreamDetails(streamId);
-        
+
             if (Request.IsAjaxRequest())
             {
                 NewStreamModel Obj = new NewStreamModel();
@@ -277,7 +275,7 @@ namespace ContinousIntegration.Controllers
                 Obj.C_StreamID = data.C_StreamID;
                 Obj.C_LastModified = data.C_LastModified;
 
-            
+
                 ViewBag.ProjectName = new SelectList(ci.T_Projects, "C_ProjectID", "C_ProjectName");
                 ViewBag.IsUpdate = true;
                 return View("_EditStream", Obj);
@@ -355,7 +353,7 @@ namespace ContinousIntegration.Controllers
 
             sortDir = sortDir.Equals("desc", StringComparison.CurrentCultureIgnoreCase) ? sortDir : "asc";
 
-            var validColumns = new[] { "Release ID", "Release Name", "Stream ID","Project Name", "Last Modified" };
+            var validColumns = new[] { "Release ID", "Release Name", "Stream ID", "Project Name", "Last Modified" };
 
             if (!validColumns.Any(c => c.Equals(sort, StringComparison.CurrentCultureIgnoreCase)))
                 sort = "id";
@@ -385,11 +383,11 @@ namespace ContinousIntegration.Controllers
                 List<T_Projects> allproject = new List<T_Projects>();
                 List<T_Streams> allstream = new List<T_Streams>();
                 ViewBag.IsUpdate = false;
-               using( ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
-               {
-                   allproject = ci.T_Projects.OrderBy(a => a.C_ProjectName).ToList();
-               }
-               ContinuousIntegrationEntities c = new ContinuousIntegrationEntities();
+                using (ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
+                {
+                    allproject = ci.T_Projects.OrderBy(a => a.C_ProjectName).ToList();
+                }
+                ContinuousIntegrationEntities c = new ContinuousIntegrationEntities();
                 ViewBag.StatusName = new SelectList(c.T_Status, "C_StatusID", "C_StatusName");
                 ViewBag.ProjectName = new SelectList(allproject, "C_ProjectID", "C_ProjectName");
                 ViewBag.StreamName = new SelectList(allstream, "C_StreamID", "C_StreamName");
@@ -401,11 +399,11 @@ namespace ContinousIntegration.Controllers
         }
 
 
-       
+
         [HttpPost]
         public ActionResult CreateRelease(ContinousIntegration.Models.NewReleaseModel trelease, string Command)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return PartialView("_CreateRelease", trelease);
@@ -417,7 +415,7 @@ namespace ContinousIntegration.Controllers
                 Obj.C_StreamID = trelease.C_StreamID;
                 Obj.C_StatusID = trelease.C_StatusID;
                 Obj.C_LastModified = DateTime.Now;
-               
+
                 bool IsSuccess = robjModel.AddRelease(trelease);
                 if (IsSuccess)
                 {
@@ -438,28 +436,21 @@ namespace ContinousIntegration.Controllers
         /// <param name="sortDir"></param>
         /// <returns></returns>
         public JsonResult GetStreamByProject(string projectID)
-        {          
-            List<T_Streams> allstream = new List<T_Streams>();
-            int ID = 0;
-            if(int.TryParse(projectID, out ID))
+        {
+            JsonResult jsonResult;
+            int id;
+            if (int.TryParse(projectID, out id))
             {
-                using(ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities())
+                using (var ci = new ContinuousIntegrationEntities())
                 {
-                    allstream = ci.T_Streams.Where(a => a.C_ProjectID.Equals(ID)).OrderBy(a => a.C_StreamName).ToList();
+                    var mappedStreams = (from stream in ci.T_Streams
+                                         where stream.C_ProjectID == id
+                                         select new { Id = stream.C_ProjectID, Name = stream.C_StreamName }).ToList();
+
+                    return Json(mappedStreams, JsonRequestBehavior.AllowGet);
                 }
             }
-            if (allstream != null)
-            {
-                return Json(allstream, JsonRequestBehavior.AllowGet);
-                
-            }
-            else
-            {
-                return new JsonResult
-                {
-                    Data = "Not Valid Request"
-                };
-            }
+            return Json("Not Valid Request", JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -478,8 +469,8 @@ namespace ContinousIntegration.Controllers
                           on a.C_ProjectID equals b.C_ProjectID
                         join c in ci.T_Releases
                           on b.C_StreamID equals c.C_StreamID
-                          where releaseId == c.C_ReleaseID
-                          select new { a.C_ProjectID, c.C_ReleaseID, c.C_ReleaseName, c.C_StatusID, c.C_StreamID, c.C_LastModified,b.C_StreamName }).FirstOrDefault();
+                        where releaseId == c.C_ReleaseID
+                        select new { a.C_ProjectID, c.C_ReleaseID, c.C_ReleaseName, c.C_StatusID, c.C_StreamID, c.C_LastModified, b.C_StreamName }).FirstOrDefault();
             NewReleaseModel Obj;
             if (Request.IsAjaxRequest())
             {
@@ -490,8 +481,8 @@ namespace ContinousIntegration.Controllers
                 Obj.C_StatusID = data.C_StatusID;
                 Obj.C_LastModified = data.C_LastModified;
                 Obj.C_ProjectID = data.C_ProjectID;
-                
-                ViewBag.StreamName = new SelectList(ci.T_Streams, "C_StreamID", "C_StreamName");
+
+                ViewBag.StreamName = new SelectList(ci.T_Streams.Where(x=>x.C_ProjectID.Equals(data.C_ProjectID)), "C_StreamID", "C_StreamName",ci.T_Streams.Where(x=>x.C_StreamID.Equals(data.C_StreamID)));
                 ViewBag.StatusName = new SelectList(ci.T_Status, "C_StatusID", "C_StatusName");
                 ViewBag.ProjectName = new SelectList(ci.T_Projects, "C_ProjectID", "C_ProjectName");
                 ViewBag.IsUpdate = true;
@@ -512,14 +503,14 @@ namespace ContinousIntegration.Controllers
         [HttpPost]
         public ActionResult UpdateRelease(ContinousIntegration.Models.NewReleaseModel trelease, string Command)
         {
-                bool IsSuccess = robjModel.UpdateRelease(trelease);
-                if (IsSuccess)
-                {
-                    TempData["OperStatus"] = "Release updated successfully";
-                    ModelState.Clear();
-                    return RedirectToAction("SearchRelease", "ManageProjects");
-                }
-            
+            bool IsSuccess = robjModel.UpdateRelease(trelease);
+            if (IsSuccess)
+            {
+                TempData["OperStatus"] = "Release updated successfully";
+                ModelState.Clear();
+                return RedirectToAction("SearchRelease", "ManageProjects");
+            }
+
 
             return PartialView("_EditRelease");
         }
@@ -555,7 +546,7 @@ namespace ContinousIntegration.Controllers
 
             sortDir = sortDir.Equals("desc", StringComparison.CurrentCultureIgnoreCase) ? sortDir : "asc";
 
-            var validColumns = new[] { "SubRelease Name", "Release Name", "Status","Project Name", "Last Modified" };
+            var validColumns = new[] { "SubRelease Name", "Release Name", "Status", "Project Name", "Last Modified" };
 
             if (!validColumns.Any(c => c.Equals(sort, StringComparison.CurrentCultureIgnoreCase)))
                 sort = "id";
@@ -584,7 +575,7 @@ namespace ContinousIntegration.Controllers
             {
                 ViewBag.IsUpdate = false;
                 ContinuousIntegrationEntities ci = new ContinuousIntegrationEntities();
-                
+
                 ViewBag.StatusName = new SelectList(ci.T_Status, "C_StatusID", "C_StatusName");
                 ViewBag.ProjectName = new SelectList(ci.T_Projects, "C_ProjectID", "C_ProjectName");
                 ViewBag.ReleaseName = new SelectList(ci.T_Releases, "C_ReleaseID", "C_ReleaseName");
@@ -611,7 +602,7 @@ namespace ContinousIntegration.Controllers
                 Obj.C_ReleaseID = tsubrelease.C_ReleaseID;
                 Obj.C_StatusID = tsubrelease.C_StatusID;
                 Obj.C_LastModified = DateTime.Now;
-               
+
                 bool IsSuccess = srobjModel.AddSubRelease(Obj);
                 if (IsSuccess)
                 {
@@ -639,13 +630,22 @@ namespace ContinousIntegration.Controllers
             var data = (from a in ci.T_Projects
                         join b in ci.T_Streams
                           on a.C_ProjectID equals b.C_ProjectID
-                          join c in ci.T_Releases
-                          on b.C_StreamID equals c.C_StreamID
+                        join c in ci.T_Releases
+                        on b.C_StreamID equals c.C_StreamID
                         join d in ci.T_SubReleases
                           on c.C_ReleaseID equals d.C_ReleaseID
                         where subreleaseId == d.C_SubReleaseID
-                        select new { a.C_ProjectID, c.C_ReleaseID, d.C_SubReleaseName,d.C_SubReleaseID, 
-                            d.C_StatusID, d.C_LastModified,b.C_StreamID,b.C_StreamName }).FirstOrDefault();
+                        select new
+                        {
+                            a.C_ProjectID,
+                            c.C_ReleaseID,
+                            d.C_SubReleaseName,
+                            d.C_SubReleaseID,
+                            d.C_StatusID,
+                            d.C_LastModified,
+                            b.C_StreamID,
+                            b.C_StreamName
+                        }).FirstOrDefault();
 
             NewSubReleaseModel Obj;
             if (Request.IsAjaxRequest())
@@ -682,15 +682,15 @@ namespace ContinousIntegration.Controllers
         [HttpPost]
         public ActionResult UpdateSubRelease(ContinousIntegration.Models.NewSubReleaseModel tsubrelease, string Command)
         {
-            
-                bool IsSuccess = srobjModel.UpdateSubRelease(tsubrelease);
-                if (IsSuccess)
-                {
-                    TempData["OperStatus"] = "Sub-Release updated successfully";
-                    ModelState.Clear();
-                    return RedirectToAction("SearchSubRelease", "ManageProjects");
-                }
-            
+
+            bool IsSuccess = srobjModel.UpdateSubRelease(tsubrelease);
+            if (IsSuccess)
+            {
+                TempData["OperStatus"] = "Sub-Release updated successfully";
+                ModelState.Clear();
+                return RedirectToAction("SearchSubRelease", "ManageProjects");
+            }
+
 
             return PartialView("_EditSubRelease");
         }

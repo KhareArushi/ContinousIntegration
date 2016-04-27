@@ -13,118 +13,113 @@
 <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
 
 <script type="text/javascript">
+    var editURL;
+    var addProjectURL;
+    var editDialog;
+    var addProject;
+    var confirmURL;
+    var confirmDialog;
+    var viewDialog;
+    var viewURL;
+
     $(document).ready(function () {
 
+       editDialog= $("#dialog-edit").dialog({
+            title: 'Edit Project Detail',
+            autoOpen: false,
+            resizable: false,
+            height: 455,
+            width: 550,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            open: function (event, ui) {
+                $(this).load(editURL);
+            }
+       });
+
+       addProject = $("#dialog-add").dialog({
+           title: 'Add New Project',
+           autoOpen: false,
+           resizable: false,
+           height: 455,
+           width: 550,
+           show: { effect: 'drop', direction: "up" },
+           modal: true,
+           draggable: true,
+           open: function (event, ui) {
+               $(this).load(addProjectURL);
+           }
+       });
+
+       confirmDialog = $("#dialog-confirm").dialog({
+           autoOpen: false,
+           resizable: false,
+           height: 170,
+           width: 350,
+           show: { effect: 'drop', direction: "up" },
+           modal: true,
+           draggable: true,
+           buttons: {
+               "OK": function () {
+                   confirmDialog.dialog("close");
+                   window.location = confirmURL;
+               },
+               "Cancel": function () {
+                   confirmDialog.dialog("close");
+               }
+           }
+       });
+
+       viewDialog = $("#dialog-view").dialog({
+           title: 'Project Detail',
+           autoOpen: false,
+           resizable: false,
+           height: 350,
+           width: 400,
+           show: { effect: 'drop', direction: "up" },
+           modal: true,
+           draggable: true,
+           open: function (event, ui) {
+               $(this).load(viewURL);
+           },
+           buttons: {
+               "Close": function () {
+                   viewDialog.dialog("close");
+               }
+           }           
+       });
+
         $("#ADDProject").live("click", function (e) {
-            var url = $(this).attr('href');
-            $("#dialog-edit").dialog({
-                title: 'Add New Project',
-                autoOpen: false,
-                resizable: false,
-                height: 455,
-                width: 550,
-                show: { effect: 'drop', direction: "up" },
-                modal: true,
-                draggable: true,
-                open: function (event, ui) {
-                    $(this).load(url);
+            addProjectURL = $(this).attr('href');          
+            addProject.dialog('open');
 
-                },
-                close: function (event, ui) {
-                    $(this).dialog('close');
-                }
-            });
-
-
-            $("#dialog-edit").dialog('open');
             return false;
         });
 
         $(".editDialog").live("click", function (e) {
-            var url = $(this).attr('href');
-            $("#dialog-edit").dialog({
-                title: 'Edit Project Detail',
-                autoOpen: false,
-                resizable: false,
-                height: 455,
-                width: 550,
-                show: { effect: 'drop', direction: "up" },
-                modal: true,
-                draggable: true,
-                open: function (event, ui) {
-                    $(this).load(url); 
+            editURL = $(this).attr('href');
+            editDialog.dialog('open');
 
-                },
-                close: function (event, ui) {
-                    $(this).dialog('close');
-                }
-            });
-
-            $("#dialog-edit").dialog('open');
             return false;
         });
 
         $(".confirmDialog").live("click", function (e) {
-            var url = $(this).attr('href');
-            $("#dialog-confirm").dialog({
-                autoOpen: false,
-                resizable: false,
-                height: 170,
-                width: 350,
-                show: { effect: 'drop', direction: "up" },
-                modal: true,
-                draggable: true,
-                buttons: {
-                    "OK": function () {
-                        $(this).dialog("close");
-                        window.location = url;
+            confirmURL = $(this).attr('href');           
+            confirmDialog.dialog('open');
 
-                    },
-                    "Cancel": function () {
-                        $(this).dialog("close");
-
-                    }
-                }
-            });
-
-            $("#dialog-confirm").dialog('open');
             return false;
         });
 
         $(".viewDialog").live("click", function (e) {
-            var url = $(this).attr('href');
-            $("#dialog-view").dialog({
-                title: 'Project Detail',
+            viewURL = $(this).attr('href');           
+            viewDialog.dialog('open');
 
-                autoOpen: false,
-                resizable: false,
-                height: 350,
-                width: 400,
-                show: { effect: 'drop', direction: "up" },
-                modal: true,
-                draggable: true,
-                open: function (event, ui) {
-                    $(this).load(url);
-
-                },
-                buttons: {
-                    "Close": function () {
-                        $(this).dialog("close");
-
-                    }
-                },
-                close: function (event, ui) {
-                    $(this).dialog('close');
-                }
-            });
-
-            $("#dialog-view").dialog('open');
             return false;
         });
 
         $("#btncancel").live("click", function (e) {
             $("#dialog-edit").dialog('close');
-
         });
     });
 </script>
@@ -171,6 +166,8 @@
     </p>
 </div>
 <div id="dialog-edit" style="display: none">
+</div>
+<div id="dialog-add" style="display: none">
 </div>
 <div id="dialog-view" style="display: none">
 </div>

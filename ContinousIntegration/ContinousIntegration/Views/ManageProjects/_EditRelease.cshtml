@@ -26,7 +26,10 @@
             <tr>
                 <td>@Html.LabelFor(model => model.C_ProjectName, "Project Name")</td>
                 <td>
-                    @Html.DropDownListFor(model => model.C_ProjectID, (SelectList)ViewBag.ProjectName)
+                    @Html.DropDownListFor(model => model.C_ProjectID, (SelectList)ViewBag.ProjectName,new
+                    {
+                        @onchange = "ProjectDropDownChangeEvent(this.value)"
+                    })
                     @Html.ValidationMessageFor(model => model.C_ProjectName)
                 </td>
             </tr>
@@ -50,10 +53,35 @@
             <tr>
                 <td></td>
                 <td>
-                    <button type="submit" id="btnUpdate" name="Command" value="Update" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Update</span>
-                    </button>
+                <button type="submit" id="btnUpdate" name="Command" value="Update" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                    <span class="ui-button-text">Update</span>
+                </button>
             </tr>
         </table>
     </fieldset>
+    <script type="text/javascript">
+        function ProjectDropDownChangeEvent(projectId) {
+        if (projectId != "") {
+            $.ajax({
+                url: '/ManageProjects/GetStreamByProject',
+                type: 'GET',
+                dataType: 'JSON',
+                data: { ProjectID: projectId },
+                success: function (data) {
+                    $('#C_StreamID').empty();
+                    $('<option>').text("Select").val(0).appendTo('#C_StreamID');
+                    $.each(data, function (value, index) {
+                        ($('<option>').text(index.Name).val(index.Id)).appendTo('#C_StreamID');
+                    });
+                },
+                error: function (exception) {
+                    var responseMessage = jQuery.parseJSON(exception.responseText);
+                    alert("Message: " + responseMessage.Message);
+                    alert("StackTrace: " + responseMessage.StackTrace);
+                    alert("ExceptionType: " + responseMessage.ExceptionType);
+                }
+            });
+        }
+    }
+</script>
 }

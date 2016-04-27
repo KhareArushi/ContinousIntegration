@@ -23,11 +23,15 @@
     <br /><br />
 
     <div style="font-size: large; font-weight: bold; font-family:Andalus;" id="RolesDiv">
-        @foreach (var item in Model.Roles)
-        {
-            @Html.RadioButtonFor(p => p.SelectedRoleID, item.C_RoleID, new { style = "width:20% ,height:20%;", name = "radiobtn", @onchange = "Change(this.value)" })
-            @Html.Label(item.C_RoleName)           
-        }
+        @*@foreach (var item in Model.Roles)
+        {*@
+            @Html.RadioButtonFor(x => x.SelectedRoleID, 1, new { style = "width:20% ,height:20%;", name = "radiobtn", @onchange = "Change(this.value)" })
+        @Html.Label("Admin")           
+
+        @Html.RadioButtonFor(x => x.SelectedRoleID, 2, new { style = "width:20% ,height:20%;", name = "radiobtn", @onchange = "Change(this.value)" })
+        @Html.Label("User")
+        
+        @*}*@
 
     </div>
     <br /><br />
