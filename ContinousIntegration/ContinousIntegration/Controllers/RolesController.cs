@@ -54,21 +54,48 @@ namespace ContinousIntegration.Controllers
                 //Remove role id from T_UserRoleMappings table
                 db.RemoveAllMapRoleIdsOfUser(configurationDetails.SelectedUserID);
 
-                if (configurationDetails.ProjectsAssigned != null)
+               
+                //PREVIOUS CODE
+                // if (configurationDetails.ProjectsAssigned != null)
+                //{
+                //    //Loop to save data in T_UserProjectMappings table
+                //    foreach (var item in configurationDetails.ProjectsAssigned)
+                //    {
+                //        userProjectMappings = new T_UserProjectMappings
+                //        {
+                //            C_RegisterID = configurationDetails.SelectedUserID,
+                //            C_ProjectID = item,
+                //            C_LastModified = DateTime.Now
+                //        };
+
+                //        db.T_UserProjectMappings.Add(userProjectMappings);
+                //        db.SaveChanges();
+                //    }
+                //}
+
+                if (configurationDetails.SelectedRoleID.Equals(2))
                 {
                     //Loop to save data in T_UserProjectMappings table
-                    foreach (var item in configurationDetails.ProjectsAssigned)
+                    if (configurationDetails.ProjectsAssigned != null)
                     {
-                        userProjectMappings = new T_UserProjectMappings
+                        foreach (var item in configurationDetails.ProjectsAssigned)
                         {
-                            C_RegisterID = configurationDetails.SelectedUserID,
-                            C_ProjectID = item,
-                            C_LastModified = DateTime.Now
-                        };
+                            userProjectMappings = new T_UserProjectMappings
+                            {
+                                C_RegisterID = configurationDetails.SelectedUserID,
+                                C_ProjectID = item,
+                                C_LastModified = DateTime.Now
+                            };
 
-                        db.T_UserProjectMappings.Add(userProjectMappings);
-                        db.SaveChanges();
+                            db.T_UserProjectMappings.Add(userProjectMappings);
+                            db.SaveChanges();
+                        }
                     }
+                }
+
+                else if (configurationDetails.SelectedRoleID.Equals(1))
+                {
+                    db.RemoveAllMapProjectIdsOfUser(configurationDetails.SelectedUserID);
                 }
                 dbHelper.SaveUserRoleDetails(configurationDetails);
                 return ("true");
@@ -93,13 +120,29 @@ namespace ContinousIntegration.Controllers
             configurationDetails.RoleId = (dbHelper.GetRoleId(userId));
             configurationDetails.Roles = new SelectList(dbHelper.GetAllRoles(), "C_RoleID", "C_RoleName", configurationDetails.RoleId);
            
-
             //Code for populating project details
             configurationDetails.AvailableProjects = new SelectList(dbHelper.GetAvailableProjects(userId), "C_ProjectID", "C_ProjectName");
             configurationDetails.AssignedProjects = new SelectList(dbHelper.GetAssignedProjects(userId), "C_ProjectID", "C_ProjectName");
 
             //configuration details in json format
             return Json(configurationDetails, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        /// <summary>
+        /// Logs out the user
+        /// </summary>
+        /// <returns>To the login pages</returns>
+        public ActionResult Logout()
+        {
+            //Disable back button In all browsers.
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            //FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index", "User");
         }
     }
 }

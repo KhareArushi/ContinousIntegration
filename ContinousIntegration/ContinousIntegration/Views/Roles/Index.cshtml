@@ -7,69 +7,65 @@
 @using (Html.BeginForm("AccessRoles", "Roles", FormMethod.Post))
 {
 
-    <div>
-       
-            @Html.Label("Users:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px;"})
 
-            @Html.DropDownListFor(p => p.SelectedUserID, Model.Users, "Select", new
+    <div>
+        @Html.Label("Users:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px;" })
+
+        @Html.DropDownListFor(p => p.SelectedUserID, Model.Users, "Select", new
        {
            @class = "form-control",
            style = "width:20%",
            name = "list",
            @onchange = "FillProjectListBoxes()"
-       })
-         
-    </div>
-    <br /><br />
+       })      
+ 
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               @Html.Label("Roles:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px;"  ,id="RolesDiv"})
+               @Html.DropDownListFor(p => p.SelectedRoleID, Model.Roles, "Select", new { @class = "form-control", style = "width:20%", @onchange = "Change(this.value)" })
 
-    <div id="RolesDiv">
-    
-         @Html.Label("Roles:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px;" })
-    @Html.DropDownListFor(p => p.SelectedRoleID, Model.Roles, "Select", new
-       {
-           @class = "form-control",
-           style = "width:20%",
-           @onchange = "Change(this.value)"           
-       })
-          
-    </div>
-    <br /><br />
-
-    <div>
-        <table id="tab" style="border: none; border-collapse: collapse;" >
+           </div>
+       
+    <br /><br /> <br /><br />    
+    <div style="">
+        <table id="tab" style="border: none; border-collapse: collapse; position: relative; left: 70px; ">
             <tr>
-                <td style=" border:none; outline:none;">
-                @Html.Label("Projects Available:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px" })</td>
-                <td style="border: none; outline: none;">&nbsp; &nbsp;&nbsp;</td>
+                <td style="border: none; outline: none;">
+                    @Html.Label("Projects Available:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px" })
+                </td>
+                <td style="border: none; outline: none;">&nbsp; &nbsp;&nbsp;&nbsp;</td>
                 <td style="border: none; outline: none;">@Html.Label("Projects Assigned:", new { style = "font-weight:bold ;font-family:Andalus;font-size:20px" })</td>
             </tr>
 
-                <tr>
-                    <td style="border: none; outline: none;">
-                        @Html.ListBoxFor(p => p.ProjectsAvailable, Model.AvailableProjects, new { @class = "form-control", style = "width: 200px; height: 140px;" })
-                    </td>
-
-                    <td style="border: none; outline: none;">
-                        <button class="btn btn-primary" type="submit" id="btnAdd" style="width:60px;height:30px;">> </button><br />
-                        <button class="btn btn-primary" type="submit" id="btnAddAll" style="width: 60px; height: 30px;">>></button><br />
-                        <button class="btn btn-primary" type="submit" id="btnRemove" style="width: 60px; height: 30px;"> <</button><br />
-                        <button class="btn btn-primary" type="submit" id="btnRemoveAll" style="width:60px; height: 30px;"><<</button>
-                    </td>
-
-                    <td style="border: none; outline: none;">
-                        @Html.ListBoxFor(p => p.ProjectsAssigned, Model.AssignedProjects, new { @class = "form-control", style = "width: 200px; height: 140px;" })
-                    </td>
-                </tr>
-            </table>
+            <tr>
+                <td style="border: none; outline: none;">
+                    @Html.ListBoxFor(p => p.ProjectsAvailable, Model.AvailableProjects, new { @class = "form-control", style = "width: 200px; height: 140px;" })
+                </td>
+               
+                <td style="border: none; outline: none;">
+                    <button class="btn btn-primary" type="submit" id="btnAdd" style="width:60px;height:30px;">> </button><br />
+                    <button class="btn btn-primary" type="submit" id="btnAddAll" style="width: 60px; height: 30px;">>></button><br />
+                    <button class="btn btn-primary" type="submit" id="btnRemove" style="width: 60px; height: 30px;"> <</button><br />
+                    <button class="btn btn-primary" type="submit" id="btnRemoveAll" style="width:60px; height: 30px;"><<</button>
+                </td>
+                                
+                <td style="border: none; outline: none;">
+                    @Html.ListBoxFor(p => p.ProjectsAssigned, Model.AssignedProjects, new { @class = "form-control", style = "width: 200px; height: 140px;" })
+                </td>
+            </tr>
+        </table>
     </div>
-    <br />
-    <button class="btn  btn-primary" type="button" id="submit" onclick="SaveProjectDetails()">Submit</button>
+    <br /><br /><br/>
+    <div >
+        <button style=" position: relative; left: 260px; width:10%;" class="btn  btn-primary" type="button" id="submit" onclick="SaveProjectDetails()">Submit</button>
+    </div>
 
 
-    //Script to swap values 
+
+    //Script to swap values
     <script type="text/javascript">
         $("#tab").hide();
         $('#RolesDiv').hide();
+        $('#SelectedRoleID').hide();
         $(document).ready(
             function () {
                 $('#btnAdd').click(
@@ -121,6 +117,7 @@
             {
                 $("#tab").hide();
                 $('#RolesDiv').hide();
+                $('#SelectedRoleID').hide();
                 $('#submit').hide();
                 return false;
             }
@@ -128,6 +125,7 @@
             {
                 $("#tab").show();
                 $('#RolesDiv').show();
+                $('#SelectedRoleID').show();
                 $('#submit').show();
             }
 
@@ -171,9 +169,7 @@
                     alert("StackTrace: " + responseMessage.StackTrace);
                     alert("ExceptionType: " + responseMessage.ExceptionType);
                 }
-            });
-
-            
+            });           
         }
 
         //Ajax call to send user selected data to controller
@@ -200,7 +196,6 @@
             });
 
             $.ajax({
-
                 url: '/Roles/AccessRoles',
                 type: 'POST',
                 contentType: 'application/json',
@@ -213,7 +208,7 @@
                         alert("Changes saved successfully.");
                     }
                     else {
-                        alert("Please Assign thre Roles first");
+                        alert("Please Assign the Roles first");
                     }
                 },
                 error: function (ex) {
